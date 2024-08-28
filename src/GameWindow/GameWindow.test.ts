@@ -7,7 +7,7 @@ describe('GameWindow tests', () => {
     GameWindow.destroy();
   });
 
-  test('root is in html', () => {
+  test('root is in layout', () => {
     expect(screen.queryByTestId('root')).not.toBeInTheDocument();
 
     new GameWindow();
@@ -15,7 +15,7 @@ describe('GameWindow tests', () => {
     expect(screen.getByTestId('root')).toBeInTheDocument();
   });
 
-  test('game-window is in html', () => {
+  test('game-window is in layout', () => {
     expect(screen.queryByTestId('game-window')).not.toBeInTheDocument();
 
     new GameWindow();
