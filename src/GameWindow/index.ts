@@ -1,28 +1,15 @@
-import addId from '~/shared/addId';
-import * as consts from '~/shared/consts';
+import * as layoutAPI from './layoutAPI';
 
 export default class GameWindow {
   private static instance: GameWindow | null = null;
 
-  private static init(): HTMLElement {
-    const body = document.querySelector('body') as HTMLBodyElement;
-    const root = document.createElement('div');
-    const window = document.createElement('div');
-
-    addId(root, consts.ROOT_ID);
-    addId(window, consts.GAME_WINDOW_ID);
-
-    body.appendChild(root);
-    root.appendChild(window);
-
-    return window;
-  }
-
-  private window: HTMLElement;
+  private windowLayout: object;
 
   constructor() {
     if (!GameWindow.instance) {
-      this.window = GameWindow.init();
+      layoutAPI.createInitLayout();
+
+      this.windowLayout = layoutAPI.getGameWindow();
 
       GameWindow.instance = this;
     }
@@ -31,11 +18,11 @@ export default class GameWindow {
   }
 
   static destroy() {
+    layoutAPI.clearLayout();
     GameWindow.instance = null;
-    document.body.innerHTML = '';
   }
 
   draw() {
-    this.window;
+    this.windowLayout;
   }
 }
