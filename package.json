@@ -9,22 +9,29 @@
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
     "predeploy": "npm run build:prod",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "test": "jest --no-cache --preset=ts-jest --testEnvironment=jsdom"
   },
   "author": "Daniil Maikovskii",
   "license": "ISC",
   "devDependencies": {
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/jest-dom": "6.5.0",
+    "@types/jest": "29.5.12",
     "@types/node": "22.5.1",
     "@types/webpack": "5.28.5",
     "@types/webpack-dev-server": "4.7.2",
     "css-loader": "7.1.2",
+    "gh-pages": "6.1.0",
     "html-webpack-plugin": "5.6.0",
+    "jest": "29.7.0",
+    "jest-environment-jsdom": "29.7.0",
     "style-loader": "4.0.0",
+    "ts-jest": "29.2.5",
     "ts-loader": "9.5.1",
     "ts-node": "10.9.2",
     "typescript": "5.5.4",
     "webpack-cli": "5.1.4",
-    "webpack-dev-server": "5.0.4",
-    "gh-pages": "6.1.0"
+    "webpack-dev-server": "5.0.4"
   }
 }

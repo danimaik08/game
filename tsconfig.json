@@ -12,11 +12,14 @@
       "~/*": ["src/*"]
     },
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "resolveJsonModule": true
   },
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
-  }
+  },
+  "include": ["./**/*"]
 }

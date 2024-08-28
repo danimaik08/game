@@ -2,6 +2,8 @@ import webpack from 'webpack';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
+require('dotenv').config();
+
 type Env = {
   mode?: 'development' | 'production';
 };
@@ -46,6 +48,9 @@ export default (env: Env) => {
         template: path.resolve(__dirname, 'public', 'index.html'),
       }),
       isDev && new webpack.ProgressPlugin(),
+      new webpack.DefinePlugin({
+        'process.env': { ...process.env },
+      }),
     ],
     devServer: {
       port,
