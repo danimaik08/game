@@ -13,3 +13,7 @@
 1. npm install
 2. add in .env (root directory) this text: `WITH_TESTS = true`
 3. npm run test
+
+### What if you found a bug or a problem
+
+My email: maikovsky.danil@gmail.com
