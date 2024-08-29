@@ -16,9 +16,19 @@ export default class GameWindow {
   }
 
   static destroy() {
-    if (GameWindow.instance) {
-      GameWindow.renderAPI.clearAll();
-      GameWindow.instance = null;
+    if (!GameWindow.instance) {
+      throw new Error(
+        'GameWindow Error: called method "destroy" without instance'
+      );
     }
+
+    if (!GameWindow.renderAPI) {
+      throw new Error(
+        'GameWindow Error: called method "destroy" without adding of renderAPI'
+      );
+    }
+
+    GameWindow.renderAPI.clearAll();
+    GameWindow.instance = null;
   }
 }
