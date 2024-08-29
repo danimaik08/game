@@ -15,7 +15,7 @@ export default class GameWindow {
     return GameWindow.instance;
   }
 
-  static destroy() {
+  private static handleErrorsForDestroy() {
     if (!process.env.WITH_TESTS) {
       throw new Error(
         'GameWindow Error: called method "destroy" (which for tests only!) not in tests'
@@ -33,7 +33,10 @@ export default class GameWindow {
         'GameWindow Error: called method "destroy" without adding of renderAPI'
       );
     }
+  }
 
+  static destroy() {
+    GameWindow.handleErrorsForDestroy();
     GameWindow.renderAPI.clearAll();
     GameWindow.instance = null;
   }
