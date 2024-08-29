@@ -1,4 +1,6 @@
 import * as consts from '~/shared/consts';
+import { rootCSS, windowCSS } from './BrowserAPIStyles';
+
 import RenderAPI from './index';
 
 export default class BrowserAPI extends RenderAPI {
@@ -17,6 +19,11 @@ export default class BrowserAPI extends RenderAPI {
 
     BrowserAPI.addId(root, consts.ROOT_ID);
     BrowserAPI.addId(window, consts.GAME_WINDOW_ID);
+
+    root.setAttribute('style', rootCSS);
+    window.setAttribute('style', windowCSS);
+
+    window.innerHTML = 'hello';
 
     body.appendChild(root);
     root.appendChild(window);
