@@ -1,8 +1,9 @@
 import webpack from 'webpack';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
 
 type Env = {
   mode?: 'development' | 'production';
@@ -49,7 +50,10 @@ export default (env: Env) => {
       }),
       isDev && new webpack.ProgressPlugin(),
       new webpack.DefinePlugin({
-        'process.env': { ...process.env },
+        'process.env.RENDER_API': process.env.RENDER_API
+          ? JSON.stringify(process.env.RENDER_API)
+          : undefined,
+        'process.env.WITH_TESTS': process.env.WITH_TESTS,
       }),
     ],
     devServer: {

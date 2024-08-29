@@ -1,15 +1,13 @@
-import * as layoutAPI from './layoutAPI';
+import RenderAPI from '~/RenderAPI';
+import getRenderAPI from '~/RenderAPI/getRenderAPI';
 
 export default class GameWindow {
   private static instance: GameWindow | null = null;
-
-  private windowLayout: object;
+  private static renderAPI: RenderAPI = getRenderAPI();
 
   constructor() {
     if (!GameWindow.instance) {
-      layoutAPI.createInitLayout();
-
-      this.windowLayout = layoutAPI.getGameWindow();
+      GameWindow.renderAPI.renderGameWindow();
 
       GameWindow.instance = this;
     }
@@ -18,11 +16,7 @@ export default class GameWindow {
   }
 
   static destroy() {
-    layoutAPI.clearLayout();
+    GameWindow.renderAPI.clearAll();
     GameWindow.instance = null;
-  }
-
-  draw() {
-    this.windowLayout;
   }
 }
