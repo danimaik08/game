@@ -16,6 +16,12 @@ export default class GameWindow {
   }
 
   static destroy() {
+    if (!process.env.WITH_TESTS) {
+      throw new Error(
+        'GameWindow Error: called method "destroy" (which for tests only!) not in tests'
+      );
+    }
+
     if (!GameWindow.instance) {
       throw new Error(
         'GameWindow Error: called method "destroy" without instance'

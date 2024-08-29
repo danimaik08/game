@@ -12,8 +12,7 @@
 ## For testing
 
 1. npm install
-2. add in .env (root directory) this text: `WITH_TESTS = true`
-3. npm run test
+2. npm run test
 
 ## Custom RenderAPI
 
