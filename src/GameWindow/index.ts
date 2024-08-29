@@ -1,12 +1,12 @@
 import RenderAPI from '~/RenderAPI';
-import getRenderAPI from '~/RenderAPI/getRenderAPI';
 
 export default class GameWindow {
   private static instance: GameWindow | null = null;
-  private static renderAPI: RenderAPI = getRenderAPI();
+  private static renderAPI: RenderAPI | null = null;
 
-  constructor() {
+  constructor(renderAPI: RenderAPI) {
     if (!GameWindow.instance) {
+      GameWindow.renderAPI = renderAPI;
       GameWindow.renderAPI.renderGameWindow();
 
       GameWindow.instance = this;
@@ -16,7 +16,9 @@ export default class GameWindow {
   }
 
   static destroy() {
-    GameWindow.renderAPI.clearAll();
-    GameWindow.instance = null;
+    if (GameWindow.instance) {
+      GameWindow.renderAPI.clearAll();
+      GameWindow.instance = null;
+    }
   }
 }
