@@ -1,3 +1,10 @@
+const fontCSS = `
+  font-family: 'Roboto';
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+`;
+
 export const rootCSS = `
   width: 100%;
   height: 100vh;
@@ -5,6 +12,7 @@ export const rootCSS = `
   display: flex;
   justify-content: center;
   align-items: center;
+  ${fontCSS}
 `;
 
 export const windowCSS = `
