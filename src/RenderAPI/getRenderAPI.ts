@@ -1,10 +1,10 @@
 import BrowserAPI from './BrowserAPI';
 import FakeAPI from './FakeAPI';
-import { RenderAPIType } from './index';
+import RenderAPI, { RenderAPIType } from './index';
 
 const ENV_RENDER_API = process.env.RENDER_API;
 
-export default function getRenderAPI() {
+export default function getRenderAPI(): RenderAPI {
   const type: RenderAPIType = (ENV_RENDER_API as RenderAPIType) ?? 'browser';
 
   switch (type) {
