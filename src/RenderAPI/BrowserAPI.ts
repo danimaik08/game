@@ -23,7 +23,7 @@ export default class BrowserAPI extends RenderAPI {
     root.setAttribute('style', rootCSS);
     window.setAttribute('style', windowCSS);
 
-    window.innerHTML = 'hello';
+    window.innerHTML = '<span>hello</span>';
 
     body.appendChild(root);
     root.appendChild(window);
