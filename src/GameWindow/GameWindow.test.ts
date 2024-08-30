@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/dom';
 
 import GameWindow from '~/GameWindow';
-import getRenderAPI from '~/RenderAPI/getRenderAPI';
+import BrowserAPI from '~/RenderAPI/BrowserAPI';
 
 describe('GameWindow tests', () => {
   test('root is in layout', () => {
     expect(screen.queryByTestId('root')).not.toBeInTheDocument();
 
-    const gameWindow = new GameWindow(getRenderAPI());
+    const gameWindow = new GameWindow(new BrowserAPI());
 
     gameWindow.render();
 
@@ -19,7 +19,7 @@ describe('GameWindow tests', () => {
   test('game-window is in layout', () => {
     expect(screen.queryByTestId('game-window')).not.toBeInTheDocument();
 
-    const gameWindow = new GameWindow(getRenderAPI());
+    const gameWindow = new GameWindow(new BrowserAPI());
 
     gameWindow.render();
 
