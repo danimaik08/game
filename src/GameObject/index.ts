@@ -14,7 +14,6 @@ export default abstract class GameObject {
   }
 
   public abstract render(): void;
-  public abstract clear(): void;
 
   public getPoint() {
     return this.point.clone();
