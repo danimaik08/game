@@ -9,6 +9,8 @@ describe('GameWindow tests', () => {
 
     const gameWindow = new GameWindow(getRenderAPI());
 
+    gameWindow.render();
+
     expect(screen.getByTestId('root')).toBeInTheDocument();
 
     gameWindow.destroy();
@@ -18,6 +20,8 @@ describe('GameWindow tests', () => {
     expect(screen.queryByTestId('game-window')).not.toBeInTheDocument();
 
     const gameWindow = new GameWindow(getRenderAPI());
+
+    gameWindow.render();
 
     expect(screen.getByTestId('game-window')).toBeInTheDocument();
 

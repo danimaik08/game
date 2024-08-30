@@ -7,8 +7,6 @@ export default class GameWindow {
   constructor(renderAPI: RenderAPI) {
     if (!GameWindow.instance) {
       this.renderAPI = renderAPI;
-      this.renderAPI.renderGameWindow();
-
       GameWindow.instance = this;
     }
 
@@ -27,6 +25,10 @@ export default class GameWindow {
         'GameWindow Error: called method "destroy" without adding of renderAPI'
       );
     }
+  }
+
+  public render() {
+    this.renderAPI.renderGameWindow();
   }
 
   public destroy() {
