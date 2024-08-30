@@ -2,7 +2,13 @@ import Point from '~/Point';
 import Size from '~/Size';
 import getUniqueId from '~/shared/getUniqueId';
 
-export default abstract class GameObject {
+export interface GameObjectAPI {
+  getPoint(): Point;
+  getSize(): Size;
+  getId(): string;
+}
+
+export default abstract class GameObject implements GameObjectAPI {
   protected id: string;
   protected point: Point;
   protected size: Size;

@@ -5,7 +5,6 @@ import GameObject from './index';
 
 class TestGameObject extends GameObject {
   render() {}
-  clear() {}
 }
 
 describe('GameObject tests', () => {
