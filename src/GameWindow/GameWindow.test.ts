@@ -7,18 +7,20 @@ describe('GameWindow tests', () => {
   test('root is in layout', () => {
     expect(screen.queryByTestId('root')).not.toBeInTheDocument();
 
-    new GameWindow(getRenderAPI());
+    const gameWindow = new GameWindow(getRenderAPI());
 
     expect(screen.getByTestId('root')).toBeInTheDocument();
 
-    GameWindow.destroy();
+    gameWindow.destroy();
   });
 
   test('game-window is in layout', () => {
     expect(screen.queryByTestId('game-window')).not.toBeInTheDocument();
 
-    new GameWindow(getRenderAPI());
+    const gameWindow = new GameWindow(getRenderAPI());
 
     expect(screen.getByTestId('game-window')).toBeInTheDocument();
+
+    gameWindow.destroy();
   });
 });
