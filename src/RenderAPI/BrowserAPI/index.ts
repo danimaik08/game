@@ -1,7 +1,7 @@
 import * as consts from '~/shared/consts';
-import { rootCSS, windowCSS } from './BrowserAPIStyles';
+import RenderAPI from '~/RenderAPI';
 
-import RenderAPI from './index';
+import { rootCSS, windowCSS } from './css';
 
 export default class BrowserAPI extends RenderAPI {
   private static addId(element: HTMLElement, id: string) {
