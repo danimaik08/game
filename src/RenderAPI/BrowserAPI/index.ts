@@ -1,12 +1,12 @@
-import * as consts from '~/shared/consts';
+import * as consts from '~/RenderAPI/consts';
 import RenderAPI from '~/RenderAPI';
 import { GameObjectAPI } from '~/GameObject';
 
 import * as Helper from './helper';
-import { rootCSS, windowCSS } from './css';
+import BrowserAPIView from './BrowserAPIView';
 
 export default class BrowserAPI extends RenderAPI {
-  private elementsMap: Record<string, HTMLElement> = {};
+  private elementsMap: Record<string, BrowserAPIView> = {};
   private get window(): HTMLElement {
     const windowNode = document.getElementById(consts.GAME_WINDOW_ID);
 
@@ -20,41 +20,30 @@ export default class BrowserAPI extends RenderAPI {
   }
 
   renderGameWindow(): void {
-    const body = document.querySelector('body') as HTMLBodyElement;
-    const root = document.createElement('div');
-    const window = document.createElement('div');
-
-    Helper.addId(root, consts.ROOT_ID);
-    Helper.addId(window, consts.GAME_WINDOW_ID);
-
-    root.setAttribute('style', rootCSS);
-    window.setAttribute('style', windowCSS);
-
-    body.appendChild(root);
-    root.appendChild(window);
+    Helper.createRoot();
+    Helper.createWindow();
   }
   clearAll(): void {
     document.body.innerHTML = '';
   }
 
-  private mountGameObject(gameObjectAPI: GameObjectAPI, style: string = '') {
-    const id = gameObjectAPI.id;
-    const view = document.createElement('div');
+  private mountView(gameObjectAPI: GameObjectAPI): BrowserAPIView {
+    const view = new BrowserAPIView(gameObjectAPI);
 
-    Helper.addId(view, id);
-    Helper.setViewStyle(view, gameObjectAPI.point, gameObjectAPI.size, style);
+    this.window.appendChild(view.element);
+    this.elementsMap[view.id] = view;
 
-    this.window.appendChild(view);
-    this.elementsMap[id] = view;
+    return view;
   }
   renderView(gameObjectAPI: GameObjectAPI, style: string = ''): void {
-    const id = gameObjectAPI.id;
-    const view: HTMLElement | null = this.elementsMap[id] ?? null;
+    const view: BrowserAPIView | null =
+      this.elementsMap[gameObjectAPI.id] ?? null;
 
     if (view === null) {
-      this.mountGameObject(gameObjectAPI, style);
-    } else {
-      Helper.setViewStyle(view, gameObjectAPI.point, gameObjectAPI.size, style);
+      this.mountView(gameObjectAPI).addStyle(style);
+      return;
     }
+
+    view.addStyle(style);
   }
 }

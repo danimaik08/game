@@ -1,5 +1,6 @@
-import Point from '~/Point';
-import Size from '~/Size';
+import * as consts from '~/RenderAPI/consts';
+
+import * as css from './css';
 
 export function addId(element: HTMLElement, id: string): void {
   element.id = id;
@@ -9,21 +10,27 @@ export function addId(element: HTMLElement, id: string): void {
   }
 }
 
-function convertToCSS(point: Point, size: Size): string {
-  return `
-  position: absolute;
-  top: ${point.y};
-  left: ${point.x};
-  width: ${size.width};
-  height: ${size.height};
-  `;
+export function createRoot() {
+  const body = document.querySelector('body') as HTMLBodyElement;
+  const root = document.createElement('div');
+
+  addId(root, consts.ROOT_ID);
+  root.setAttribute('style', css.rootCSS);
+  body.appendChild(root);
 }
 
-export function setViewStyle(
-  view: HTMLElement,
-  point: Point,
-  size: Size,
-  style: string
-): void {
-  view.setAttribute('style', convertToCSS(point, size) + style);
+export function createWindow() {
+  const root = document.getElementById(consts.ROOT_ID);
+
+  if (!root) {
+    throw new Error(
+      `BrowserAPI Error: method "${createWindow.name}" - root not found`
+    );
+  }
+
+  const window = document.createElement('div');
+
+  addId(window, consts.GAME_WINDOW_ID);
+  window.setAttribute('style', css.windowCSS);
+  root.appendChild(window);
 }
