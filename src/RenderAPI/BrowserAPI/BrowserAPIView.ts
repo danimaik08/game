@@ -1,7 +1,5 @@
 import { GameObjectAPI } from '~/GameObject';
 
-import * as Helper from './helper';
-
 export default class BrowserAPIView {
   private gameObjectAPI: GameObjectAPI;
   private innerElement: HTMLElement;
