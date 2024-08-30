@@ -20,10 +20,10 @@ export default class BrowserAPIView {
 
     return `
     position: absolute;
-    top: ${point.y};
-    left: ${point.x};
-    width: ${size.width};
-    height: ${size.height};
+    top: ${point.y}px;
+    left: ${point.x}px;
+    width: ${size.width}px;
+    height: ${size.height}px;
     `;
   }
 
