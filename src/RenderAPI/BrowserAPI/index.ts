@@ -38,33 +38,23 @@ export default class BrowserAPI extends RenderAPI {
   }
 
   private mountGameObject(gameObjectAPI: GameObjectAPI, style: string = '') {
-    const id = gameObjectAPI.getId();
+    const id = gameObjectAPI.id;
     const view = document.createElement('div');
 
     Helper.addId(view, id);
-    Helper.setViewStyle(
-      view,
-      gameObjectAPI.getPoint(),
-      gameObjectAPI.getSize(),
-      style
-    );
+    Helper.setViewStyle(view, gameObjectAPI.point, gameObjectAPI.size, style);
 
     this.window.appendChild(view);
     this.elementsMap[id] = view;
   }
   renderView(gameObjectAPI: GameObjectAPI, style: string = ''): void {
-    const id = gameObjectAPI.getId();
+    const id = gameObjectAPI.id;
     const view: HTMLElement | null = this.elementsMap[id] ?? null;
 
     if (view === null) {
       this.mountGameObject(gameObjectAPI, style);
     } else {
-      Helper.setViewStyle(
-        view,
-        gameObjectAPI.getPoint(),
-        gameObjectAPI.getSize(),
-        style
-      );
+      Helper.setViewStyle(view, gameObjectAPI.point, gameObjectAPI.size, style);
     }
   }
 }

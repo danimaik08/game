@@ -3,31 +3,31 @@ import Size from '~/Size';
 import getUniqueId from '~/shared/getUniqueId';
 
 export interface GameObjectAPI {
-  getPoint(): Point;
-  getSize(): Size;
-  getId(): string;
+  id: string;
+  point: Point;
+  size: Size;
 }
 
 export default abstract class GameObject implements GameObjectAPI {
-  protected id: string;
-  protected point: Point;
-  protected size: Size;
+  protected innerId: string;
+  protected innerPoint: Point;
+  protected innerSize: Size;
 
   constructor(point: Point, size: Size) {
-    this.id = getUniqueId();
-    this.point = point;
-    this.size = size;
+    this.innerId = getUniqueId();
+    this.innerPoint = point;
+    this.innerSize = size;
   }
 
   public abstract render(): void;
 
-  public getPoint() {
-    return this.point.clone();
+  public get id() {
+    return this.innerId;
   }
-  public getSize() {
-    return this.size.clone();
+  public get point() {
+    return this.innerPoint.clone();
   }
-  public getId() {
-    return this.id;
+  public get size() {
+    return this.innerSize.clone();
   }
 }
