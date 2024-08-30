@@ -20,4 +20,5 @@ export const windowCSS = `
   height: 600px;
   background: #fff;
   border-radius: 2px;
+  position: relative;
 `;

@@ -1,3 +1,7 @@
+import { GameObjectAPI } from '~/GameObject';
+
+export type RenderAPIType = 'browser' | 'fake';
+
 export default abstract class RenderAPI {
   private static instance: RenderAPI | null = null;
 
@@ -10,6 +14,6 @@ export default abstract class RenderAPI {
   }
   abstract renderGameWindow(): void;
   abstract clearAll(): void;
-}
 
-export type RenderAPIType = 'browser' | 'fake';
+  abstract renderView(gameObject: GameObjectAPI, style?: string): void;
+}
