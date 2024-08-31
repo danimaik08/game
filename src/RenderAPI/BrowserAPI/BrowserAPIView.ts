@@ -1,4 +1,4 @@
-import { GameObjectAPI } from '~/GameObject';
+import GameObjectAPI from '~/GameObject/GameObjectAPI';
 
 export default class BrowserAPIView {
   private gameObjectAPI: GameObjectAPI;
@@ -15,19 +15,21 @@ export default class BrowserAPIView {
     this.innerElement = document.createElement('div');
   }
 
-  private get pointAndSizeCss(): string {
-    const { point, size } = this.gameObjectAPI;
+  private get css(): string {
+    const { point, size, background, zIndex } = this.gameObjectAPI;
 
     return `
     position: absolute;
     top: ${point.y}px;
     left: ${point.x}px;
+    z-index: ${zIndex};
     width: ${size.width}px;
     height: ${size.height}px;
+    background: ${background};
     `;
   }
 
-  addStyle(style: string): void {
-    this.element.setAttribute('style', this.pointAndSizeCss + style);
+  public setStyle(): void {
+    this.element.setAttribute('style', this.css);
   }
 }

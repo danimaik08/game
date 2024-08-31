@@ -1,4 +1,4 @@
-import { GameObjectAPI } from '~/GameObject';
+import GameObjectAPI from '~/GameObject/GameObjectAPI';
 
 export type RenderAPIType = 'browser' | 'fake';
 
@@ -15,5 +15,5 @@ export default abstract class RenderAPI {
   abstract renderGameWindow(): void;
   abstract clearAll(): void;
 
-  abstract renderView(gameObject: GameObjectAPI, style?: string): void;
+  abstract renderView(gameObject: GameObjectAPI): void;
 }

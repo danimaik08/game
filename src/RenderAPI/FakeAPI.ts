@@ -1,4 +1,5 @@
-import { GameObjectAPI } from '~/GameObject';
+import GameObjectAPI from '~/GameObject/GameObjectAPI';
+
 import RenderAPI from './index';
 
 export default class FakeAPI extends RenderAPI {
@@ -13,7 +14,7 @@ export default class FakeAPI extends RenderAPI {
     console.log('clearAll');
   }
 
-  renderView(gameObject: GameObjectAPI, style?: string): void {
+  renderView(gameObject: GameObjectAPI): void {
     console.log('renderView');
   }
 }

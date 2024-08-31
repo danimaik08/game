@@ -2,24 +2,27 @@ import Point from '~/Point';
 import Size from '~/Size';
 import getUniqueId from '~/shared/getUniqueId';
 
-export interface GameObjectAPI {
-  id: string;
-  point: Point;
-  size: Size;
-}
+import GameObjectAPI from './GameObjectAPI';
 
-export default abstract class GameObject implements GameObjectAPI {
+export default class GameObject implements GameObjectAPI {
   protected innerId: string;
   protected innerPoint: Point;
   protected innerSize: Size;
+  protected innerBackground: string;
+  protected innerZIndex: number;
 
-  constructor(point: Point, size: Size) {
+  constructor(
+    point: Point,
+    size: Size,
+    background: string = '',
+    zIndex: number = 1
+  ) {
     this.innerId = getUniqueId();
     this.innerPoint = point;
     this.innerSize = size;
+    this.innerBackground = background;
+    this.innerZIndex = zIndex;
   }
-
-  public abstract render(): void;
 
   public get id() {
     return this.innerId;
@@ -29,5 +32,11 @@ export default abstract class GameObject implements GameObjectAPI {
   }
   public get size() {
     return this.innerSize.clone();
+  }
+  public get background() {
+    return this.innerBackground;
+  }
+  public get zIndex() {
+    return this.innerZIndex;
   }
 }

@@ -1,6 +1,6 @@
 import * as consts from '~/RenderAPI/consts';
 import RenderAPI from '~/RenderAPI';
-import { GameObjectAPI } from '~/GameObject';
+import GameObjectAPI from '~/GameObject/GameObjectAPI';
 
 import * as Helper from './helper';
 import BrowserAPIView from './BrowserAPIView';
@@ -27,23 +27,21 @@ export default class BrowserAPI extends RenderAPI {
     document.body.innerHTML = '';
   }
 
-  private mountView(gameObjectAPI: GameObjectAPI): BrowserAPIView {
+  private mountView(gameObjectAPI: GameObjectAPI): void {
     const view = new BrowserAPIView(gameObjectAPI);
+
+    view.setStyle();
 
     this.window.appendChild(view.element);
     this.elementsMap[view.id] = view;
-
-    return view;
   }
-  renderView(gameObjectAPI: GameObjectAPI, style: string = ''): void {
+  renderView(gameObjectAPI: GameObjectAPI): void {
     const view: BrowserAPIView | null =
       this.elementsMap[gameObjectAPI.id] ?? null;
 
     if (view === null) {
-      this.mountView(gameObjectAPI).addStyle(style);
+      this.mountView(gameObjectAPI);
       return;
     }
-
-    view.addStyle(style);
   }
 }
