@@ -14,9 +14,19 @@ export default class App {
     return App.instance;
   }
 
+  private gameLoop() {
+    const loop = () => {
+      console.log('loop');
+      requestAnimationFrame(loop);
+    };
+
+    loop();
+  }
+
   public start() {
     const gameWindow = new GameWindow(this.renderAPI);
 
     gameWindow.render();
+    this.gameLoop();
   }
 }
