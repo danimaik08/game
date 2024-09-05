@@ -5,7 +5,7 @@ import * as css from './css';
 export function addId(element: HTMLElement, id: string): void {
   element.id = id;
 
-  if (process.env.WITH_TESTS) {
+  if (process.env.IS_TEST_MODE) {
     element.dataset.testid = id;
   }
 }

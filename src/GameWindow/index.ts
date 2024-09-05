@@ -14,7 +14,7 @@ export default class GameWindow {
   }
 
   private handleErrorsForDestroy() {
-    if (!process.env.WITH_TESTS) {
+    if (!process.env.IS_TEST_MODE) {
       throw new Error(
         'GameWindow Error: called method "destroy" (which for tests only!) not in tests'
       );

@@ -50,10 +50,7 @@ export default (env: Env) => {
       }),
       isDev && new webpack.ProgressPlugin(),
       new webpack.DefinePlugin({
-        'process.env.RENDER_API': process.env.RENDER_API
-          ? JSON.stringify(process.env.RENDER_API)
-          : undefined,
-        'process.env.WITH_TESTS': process.env.WITH_TESTS,
+        'process.env': JSON.stringify(process.env),
       }),
     ],
     devServer: {
