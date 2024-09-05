@@ -1,3 +1,5 @@
+import { GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT } from '~/consts';
+
 const fontCSS = `
   font-family: 'Roboto';
   font-weight: 400;
@@ -16,8 +18,8 @@ export const rootCSS = `
 `;
 
 export const windowCSS = `
-  width: 800px;
-  height: 600px;
+  width: ${GAME_WINDOW_WIDTH}px;
+  height: ${GAME_WINDOW_HEIGHT}px;
   background: #fff;
   border-radius: 2px;
   position: relative;
