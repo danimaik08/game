@@ -1,15 +1,16 @@
 import RenderAPI from '~/RenderAPI';
 import GameWindow from '~/GameWindow';
 import GameLoop from '~/GameLoop';
+import getRenderAPI from '~/RenderAPI/getRenderAPI';
 
 export default class App {
   private static instance: App;
   private renderAPI: RenderAPI;
   private gameLoop: GameLoop;
 
-  constructor(renderAPI: RenderAPI) {
+  constructor() {
     if (!App.instance) {
-      this.renderAPI = renderAPI;
+      this.renderAPI = getRenderAPI();
       this.gameLoop = new GameLoop();
       App.instance = this;
     }
