@@ -2,7 +2,7 @@ import GameObjectAPI from '~/GameObject/GameObjectAPI';
 
 export default class BrowserAPIView {
   private gameObjectAPI: GameObjectAPI;
-  private innerElement: HTMLElement;
+  private innerElement: HTMLElement | null;
   public get element(): HTMLElement {
     return this.innerElement;
   }
@@ -12,7 +12,15 @@ export default class BrowserAPIView {
 
   constructor(gameObjectAPI: GameObjectAPI) {
     this.gameObjectAPI = gameObjectAPI;
+    this.innerElement = null;
+  }
+
+  public createElement() {
     this.innerElement = document.createElement('div');
+  }
+
+  public setElement(html: HTMLElement) {
+    this.innerElement = html;
   }
 
   private get css(): string {

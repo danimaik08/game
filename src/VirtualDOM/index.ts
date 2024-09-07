@@ -47,9 +47,23 @@ export default class VirtualDOM {
         this.nextElementsMap[id] ?? null;
 
       if (!prevElement) {
-        changes.push({ ...nextElement, action: 'mount' });
+        changes.push({
+          id: nextElement.id,
+          point: nextElement.point,
+          size: nextElement.size,
+          background: nextElement.background,
+          zIndex: nextElement.zIndex,
+          action: 'mount',
+        });
       } else if (!nextElement) {
-        changes.push({ ...prevElement, action: 'unmount' });
+        changes.push({
+          id: prevElement.id,
+          point: prevElement.point,
+          size: prevElement.size,
+          background: prevElement.background,
+          zIndex: prevElement.zIndex,
+          action: 'unmount',
+        });
       } else {
         changes.push(nextElement);
       }

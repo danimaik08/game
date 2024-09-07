@@ -31,18 +31,27 @@ export default class BrowserAPI extends RenderAPI {
   private mount(gameObjectAPI: GameObjectAPI): void {
     const view = new BrowserAPIView(gameObjectAPI);
 
+    view.createElement();
     view.applyActualChange();
 
     this.window.appendChild(view.element);
-    this.elementsMap[view.id];
+    this.elementsMap[view.id] = view;
+  }
+  private update(gameObjectAPI: GameObjectAPI) {
+    const newView = new BrowserAPIView(gameObjectAPI);
+    const oldView = this.elementsMap[gameObjectAPI.id];
+
+    newView.setElement(oldView.element);
+    newView.applyActualChange();
+
+    this.window.appendChild(newView.element);
+    this.elementsMap[gameObjectAPI.id] = newView;
   }
   private unmount(gameObjectAPI: GameObjectAPI): void {
     this.elementsMap[gameObjectAPI.id].element.remove();
     delete this.elementsMap[gameObjectAPI.id];
   }
   render(changes: VirtualDOMChange[]): void {
-    console.log('changes', changes);
-
     changes.forEach((change) => {
       switch (change.action) {
         case 'mount': {
@@ -54,7 +63,7 @@ export default class BrowserAPI extends RenderAPI {
           break;
         }
         default: {
-          this.elementsMap[change.id].applyActualChange();
+          this.update(change);
         }
       }
     });
