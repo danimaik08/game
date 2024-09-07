@@ -1,4 +1,4 @@
-import GameObjectAPI from '~/GameObject/GameObjectAPI';
+import { VirtualDOMChange } from '~/VirtualDOM/types';
 
 export type RenderAPIType = 'browser' | 'fake';
 
@@ -15,5 +15,5 @@ export default abstract class RenderAPI {
   abstract renderGameWindow(): void;
   abstract clearAll(): void;
 
-  abstract renderView(gameObject: GameObjectAPI): void;
+  abstract render(changes: VirtualDOMChange[]): void;
 }

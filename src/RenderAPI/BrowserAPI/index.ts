@@ -1,12 +1,13 @@
 import * as consts from '~/RenderAPI/consts';
 import RenderAPI from '~/RenderAPI';
-import GameObjectAPI from '~/GameObject/GameObjectAPI';
+import GameObjectAPI, { GameObjectId } from '~/GameObject/GameObjectAPI';
+import { VirtualDOMChange } from '~/VirtualDOM/types';
 
 import * as Helper from './helper';
 import BrowserAPIView from './BrowserAPIView';
 
 export default class BrowserAPI extends RenderAPI {
-  private elementsMap: Record<string, BrowserAPIView> = {};
+  private elementsMap: Record<GameObjectId, BrowserAPIView> = {};
   private get window(): HTMLElement {
     const windowNode = document.getElementById(consts.GAME_WINDOW_ID);
 
@@ -27,21 +28,35 @@ export default class BrowserAPI extends RenderAPI {
     document.body.innerHTML = '';
   }
 
-  private mountView(gameObjectAPI: GameObjectAPI): void {
+  private mount(gameObjectAPI: GameObjectAPI): void {
     const view = new BrowserAPIView(gameObjectAPI);
 
-    view.setStyle();
+    view.applyActualChange();
 
     this.window.appendChild(view.element);
-    this.elementsMap[view.id] = view;
+    this.elementsMap[view.id];
   }
-  renderView(gameObjectAPI: GameObjectAPI): void {
-    const view: BrowserAPIView | null =
-      this.elementsMap[gameObjectAPI.id] ?? null;
+  private unmount(gameObjectAPI: GameObjectAPI): void {
+    this.elementsMap[gameObjectAPI.id].element.remove();
+    delete this.elementsMap[gameObjectAPI.id];
+  }
+  render(changes: VirtualDOMChange[]): void {
+    console.log('changes', changes);
 
-    if (view === null) {
-      this.mountView(gameObjectAPI);
-      return;
-    }
+    changes.forEach((change) => {
+      switch (change.action) {
+        case 'mount': {
+          this.mount(change);
+          break;
+        }
+        case 'unmount': {
+          this.unmount(change);
+          break;
+        }
+        default: {
+          this.elementsMap[change.id].applyActualChange();
+        }
+      }
+    });
   }
 }

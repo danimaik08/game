@@ -1,7 +1,6 @@
 import Point from '~/Point';
 import Size from '~/Size';
 import getUniqueId from '~/shared/getUniqueId';
-
 import GameObjectAPI from './GameObjectAPI';
 
 export default class GameObject implements GameObjectAPI {

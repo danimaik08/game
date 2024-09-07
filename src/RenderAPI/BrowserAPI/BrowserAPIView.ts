@@ -29,7 +29,7 @@ export default class BrowserAPIView {
     `;
   }
 
-  public setStyle(): void {
+  public applyActualChange(): void {
     this.element.setAttribute('style', this.css);
   }
 }

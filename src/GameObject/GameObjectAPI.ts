@@ -8,3 +8,5 @@ export default interface GameObjectAPI {
   background: string;
   zIndex: number;
 }
+
+export type GameObjectId = GameObjectAPI['id'];

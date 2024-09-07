@@ -1,6 +1,6 @@
-import GameObjectAPI from '~/GameObject/GameObjectAPI';
+import { VirtualDOMChange } from '~/VirtualDOM/types';
 
-import RenderAPI from './index';
+import RenderAPI from '.';
 
 export default class FakeAPI extends RenderAPI {
   constructor() {
@@ -14,7 +14,7 @@ export default class FakeAPI extends RenderAPI {
     console.log('clearAll');
   }
 
-  renderView(gameObject: GameObjectAPI): void {
-    console.log('renderView');
+  render(changes: VirtualDOMChange[]): void {
+    console.log('render');
   }
 }
