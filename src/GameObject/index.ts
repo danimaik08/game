@@ -28,10 +28,10 @@ export default class GameObject implements GameObjectAPI {
     return this.innerId;
   }
   public get point() {
-    return this.innerPoint.clone();
+    return this.innerPoint;
   }
   public get size() {
-    return this.innerSize.clone();
+    return this.innerSize;
   }
   public get background() {
     return this.innerBackground;
