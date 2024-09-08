@@ -8,7 +8,8 @@ export const GAME_WINDOW_HEIGHT = 600;
 
 export const PLAYER_STATE_INITIAL_POINT = new Point(380, 500);
 export const PLAYER_STATE_INITIAL_SIZE = new Size(34, 47);
-export const PLAYER_STATE_INITIAL_SPEED = new Speed(2, 2);
+export const PLAYER_STATE_INITIAL_SPEED = new Speed(0, 0);
+export const PLAYER_STATE_MOVING_SPEED = 2;
 export const PLAYER_STATE_MIN_TOP = 350;
 
 export const ENEMY_STATE_INITIAL_POINT = new Point(350, 50);

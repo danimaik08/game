@@ -1,16 +1,18 @@
 import KeyboardController from '~/KeyboardController';
 import VirtualDOM from '~/VirtualDOM';
 import MovableObject from '~/MovableObject';
-import { Direction } from '~/MovableObject/types';
+import { Direction } from '~/PlayerState/types';
 import {
   GAME_WINDOW_WIDTH,
   GAME_WINDOW_HEIGHT,
   PLAYER_STATE_MIN_TOP,
+  PLAYER_STATE_MOVING_SPEED,
 } from '~/consts';
 
 import errorOfSetState from './errorOfSetState';
 import createInitialSprite from './createInitialSprite';
 import { PlayerStateName } from './types';
+import Speed from '~/Speed';
 
 export default class PlayerState {
   private static instance: PlayerState;
@@ -82,9 +84,7 @@ export default class PlayerState {
     this.innerState = newState;
   }
 
-  private processKeyboardDirectionsKeys(): Direction[] {
-    const directions: Direction[] = [];
-
+  private getSpeedByKeyboardsKeys(): Speed {
     const needPreventTop = this.sprite.point.y <= PLAYER_STATE_MIN_TOP;
     const needPreventLeft = this.sprite.point.x <= 0;
     const needPreventBottom =
@@ -92,36 +92,40 @@ export default class PlayerState {
     const needPreventRight =
       this.sprite.point.x >= GAME_WINDOW_WIDTH - this.sprite.size.width;
 
+    let speedX = 0;
+    let speedY = 0;
+
     if (
       this.keyboardController.isActiveKey(process.env.KEY_TOP) &&
       !needPreventTop
     ) {
-      directions.push('top');
+      speedY = -PLAYER_STATE_MOVING_SPEED;
     }
     if (
       this.keyboardController.isActiveKey(process.env.KEY_LEFT) &&
       !needPreventLeft
     ) {
-      directions.push('left');
+      speedX = -PLAYER_STATE_MOVING_SPEED;
     }
     if (
       this.keyboardController.isActiveKey(process.env.KEY_BOTTOM) &&
       !needPreventBottom
     ) {
-      directions.push('bottom');
+      speedY = PLAYER_STATE_MOVING_SPEED;
     }
     if (
       this.keyboardController.isActiveKey(process.env.KEY_RIGHT) &&
       !needPreventRight
     ) {
-      directions.push('right');
+      speedX = PLAYER_STATE_MOVING_SPEED;
     }
 
-    return directions;
+    return new Speed(speedX, speedY);
   }
 
   private processMovement() {
-    this.sprite.moveTo(this.processKeyboardDirectionsKeys());
+    this.sprite.speed = this.getSpeedByKeyboardsKeys();
+    this.sprite.move();
   }
   private addToNextRender() {
     this.virtualDOM.addElement(this.sprite);

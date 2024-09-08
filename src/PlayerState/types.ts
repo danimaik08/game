@@ -5,3 +5,5 @@ export type PlayerStateName =
   | 'playing-after-damage'
   | 'before-dead'
   | 'dead';
+
+export type Direction = 'top' | 'left' | 'right' | 'bottom';

@@ -29,6 +29,9 @@ export default class GameObject implements GameObjectAPI {
   public get point() {
     return this.innerPoint;
   }
+  public set point(value: Point) {
+    this.innerPoint = value;
+  }
   public get size() {
     return this.innerSize;
   }

@@ -1,6 +1,5 @@
 import VirtualDOM from '~/VirtualDOM';
 import MovableObject from '~/MovableObject';
-import { Direction } from '~/MovableObject/types';
 import {
   GAME_WINDOW_WIDTH,
   ENEMY_LEFT_BORDER,
@@ -10,13 +9,13 @@ import {
 import errorOfSetState from './errorOfSetState';
 import createInitialSprite from './createInitialSprite';
 import { EnemyStateName } from './types';
+import Speed from '~/Speed';
 
 export default class EnemyState {
   private static instance: EnemyState;
   private innerState: EnemyStateName;
   private sprite: MovableObject | null;
   private virtualDOM: VirtualDOM;
-  private movementDirection: 'left' | 'right' | null;
   private frameBehavior: Array<'addToNextRender' | 'processMovement'>;
 
   constructor() {
@@ -24,7 +23,6 @@ export default class EnemyState {
       this.state = 'before-playing';
       this.virtualDOM = new VirtualDOM();
       this.sprite = null;
-      this.movementDirection = null;
       this.frameBehavior = [];
 
       EnemyState.instance = this;
@@ -41,13 +39,11 @@ export default class EnemyState {
       case 'before-playing': {
         this.sprite = null;
         this.frameBehavior = [];
-        this.movementDirection = null;
         break;
       }
       case 'playing-first': {
         this.sprite = createInitialSprite();
         this.frameBehavior = ['processMovement', 'addToNextRender'];
-        this.movementDirection = 'left';
         break;
       }
       case 'playing': {
@@ -82,28 +78,31 @@ export default class EnemyState {
     this.innerState = newState;
   }
 
-  private getDirections(): Direction[] {
+  private getSpeed(): Speed {
     const needPreventLeft = this.sprite.point.x <= ENEMY_LEFT_BORDER;
 
-    if (this.movementDirection === 'left') {
-      this.movementDirection = needPreventLeft ? 'right' : 'left';
-      return [this.movementDirection];
+    let speedX = this.sprite.speed.x;
+
+    if (needPreventLeft) {
+      speedX = Math.abs(speedX);
+      return new Speed(speedX, this.sprite.speed.y);
     }
 
     const needPreventRight =
       this.sprite.point.x >=
       GAME_WINDOW_WIDTH - ENEMY_RIGHT_BORDER - this.sprite.size.width;
 
-    if (this.movementDirection === 'right') {
-      this.movementDirection = needPreventRight ? 'left' : 'right';
-      return [this.movementDirection];
+    if (needPreventRight) {
+      speedX = -Math.abs(speedX);
+      return new Speed(speedX, this.sprite.speed.y);
     }
 
-    return [];
+    return this.sprite.speed;
   }
 
   private processMovement() {
-    this.sprite.moveTo(this.getDirections());
+    this.sprite.speed = this.getSpeed();
+    this.sprite.move();
   }
   private addToNextRender() {
     this.virtualDOM.addElement(this.sprite);
