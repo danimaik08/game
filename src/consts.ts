@@ -17,3 +17,5 @@ export const ENEMY_STATE_INITIAL_SIZE = new Size(100, 100);
 export const ENEMY_STATE_INITIAL_SPEED = new Speed(4, 0);
 export const ENEMY_LEFT_BORDER = 50;
 export const ENEMY_RIGHT_BORDER = 50;
+
+export const BULLET_SIZE = new Size(14, 14);
