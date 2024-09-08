@@ -5,7 +5,7 @@ import {
   GAME_WINDOW_WIDTH,
   GAME_WINDOW_HEIGHT,
   PLAYER_STATE_MIN_TOP,
-  PLAYER_STATE_MOVING_SPEED,
+  PLAYER_STATE_MOVEMENT_SPEED,
 } from '~/consts';
 
 import errorOfSetState from './errorOfSetState';
@@ -98,25 +98,25 @@ export default class PlayerState {
       this.keyboardController.isActiveKey(process.env.KEY_TOP) &&
       !needPreventTop
     ) {
-      speedY = -PLAYER_STATE_MOVING_SPEED;
+      speedY = -PLAYER_STATE_MOVEMENT_SPEED;
     }
     if (
       this.keyboardController.isActiveKey(process.env.KEY_LEFT) &&
       !needPreventLeft
     ) {
-      speedX = -PLAYER_STATE_MOVING_SPEED;
+      speedX = -PLAYER_STATE_MOVEMENT_SPEED;
     }
     if (
       this.keyboardController.isActiveKey(process.env.KEY_BOTTOM) &&
       !needPreventBottom
     ) {
-      speedY = PLAYER_STATE_MOVING_SPEED;
+      speedY = PLAYER_STATE_MOVEMENT_SPEED;
     }
     if (
       this.keyboardController.isActiveKey(process.env.KEY_RIGHT) &&
       !needPreventRight
     ) {
-      speedX = PLAYER_STATE_MOVING_SPEED;
+      speedX = PLAYER_STATE_MOVEMENT_SPEED;
     }
 
     return new Speed(speedX, speedY);
