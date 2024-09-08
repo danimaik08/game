@@ -1,12 +1,15 @@
 import KeyboardController from '~/KeyboardController';
-import Point from '~/Point';
-import Size from '~/Size';
-import Speed from '~/Speed';
 import VirtualDOM from '~/VirtualDOM';
 import MovableObject from '~/MovableObject';
 import { Direction } from '~/MovableObject/types';
+import {
+  GAME_WINDOW_WIDTH,
+  GAME_WINDOW_HEIGHT,
+  PLAYER_STATE_MIN_TOP,
+} from '~/consts';
 
 import errorOfSetState from './errorOfSetState';
+import createInitialSprite from './createInitialSprite';
 import { PlayerStateName } from './types';
 
 export default class PlayerState {
@@ -43,12 +46,7 @@ export default class PlayerState {
         break;
       }
       case 'playing-first': {
-        this.sprite = new MovableObject(
-          new Point(380, 500),
-          new Size(40, 40),
-          new Speed(2, 2),
-          'red'
-        );
+        this.sprite = createInitialSprite();
         this.frameBehavior = ['processMovement', 'addToNextRender'];
         break;
       }
@@ -84,23 +82,46 @@ export default class PlayerState {
     this.innerState = newState;
   }
 
-  private processMovement() {
+  private processKeyboardDirectionsKeys(): Direction[] {
     const directions: Direction[] = [];
 
-    if (this.keyboardController.isActiveKey(process.env.KEY_TOP)) {
+    const needPreventTop = this.sprite.point.y <= PLAYER_STATE_MIN_TOP;
+    const needPreventLeft = this.sprite.point.x <= 0;
+    const needPreventBottom =
+      this.sprite.point.y >= GAME_WINDOW_HEIGHT - this.sprite.size.height;
+    const needPreventRight =
+      this.sprite.point.x >= GAME_WINDOW_WIDTH - this.sprite.size.width;
+
+    if (
+      this.keyboardController.isActiveKey(process.env.KEY_TOP) &&
+      !needPreventTop
+    ) {
       directions.push('top');
     }
-    if (this.keyboardController.isActiveKey(process.env.KEY_LEFT)) {
+    if (
+      this.keyboardController.isActiveKey(process.env.KEY_LEFT) &&
+      !needPreventLeft
+    ) {
       directions.push('left');
     }
-    if (this.keyboardController.isActiveKey(process.env.KEY_BOTTOM)) {
+    if (
+      this.keyboardController.isActiveKey(process.env.KEY_BOTTOM) &&
+      !needPreventBottom
+    ) {
       directions.push('bottom');
     }
-    if (this.keyboardController.isActiveKey(process.env.KEY_RIGHT)) {
+    if (
+      this.keyboardController.isActiveKey(process.env.KEY_RIGHT) &&
+      !needPreventRight
+    ) {
       directions.push('right');
     }
 
-    this.sprite.moveTo(directions);
+    return directions;
+  }
+
+  private processMovement() {
+    this.sprite.moveTo(this.processKeyboardDirectionsKeys());
   }
   private addToNextRender() {
     this.virtualDOM.addElement(this.sprite);

@@ -36,6 +36,10 @@ export default class App {
 
     this.playerState.state = 'playing-first';
 
+    setTimeout(() => {
+      this.playerState.state = 'before-dead';
+    }, 5000);
+
     this.gameLoop.start(() => {
       this.playerState.doFrameBehavior();
 
