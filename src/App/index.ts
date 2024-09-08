@@ -4,6 +4,7 @@ import GameLoop from '~/GameLoop';
 import getRenderAPI from '~/RenderAPI/getRenderAPI';
 import VirtualDOM from '~/VirtualDOM';
 import PlayerState from '~/PlayerState';
+import EnemyState from '~/EnemyState';
 
 export default class App {
   private static instance: App;
@@ -11,6 +12,7 @@ export default class App {
   private gameLoop: GameLoop;
   private virtualDOM: VirtualDOM;
   private playerState: PlayerState;
+  private enemyState: EnemyState;
 
   constructor() {
     if (!App.instance) {
@@ -18,6 +20,7 @@ export default class App {
       this.gameLoop = new GameLoop();
       this.virtualDOM = new VirtualDOM();
       this.playerState = new PlayerState();
+      this.enemyState = new EnemyState();
       App.instance = this;
     }
 
@@ -35,13 +38,11 @@ export default class App {
     gameWindow.render();
 
     this.playerState.state = 'playing-first';
-
-    setTimeout(() => {
-      this.playerState.state = 'before-dead';
-    }, 5000);
+    this.enemyState.state = 'playing-first';
 
     this.gameLoop.start(() => {
       this.playerState.doFrameBehavior();
+      this.enemyState.doFrameBehavior();
 
       this.render();
     });
