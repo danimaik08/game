@@ -4,45 +4,11 @@ import GameLoop from '~/GameLoop';
 import getRenderAPI from '~/RenderAPI/getRenderAPI';
 import VirtualDOM from '~/VirtualDOM';
 import KeyboardController from '~/KeyboardController';
-import GameObject from '~/GameObject';
 import Point from '~/Point';
 import Size from '~/Size';
-
-class Speed {
-  constructor(public x: number, public y: number) {}
-}
-
-type Direction = 'top' | 'left' | 'right' | 'bottom';
-
-class MovingObject extends GameObject {
-  protected innerSpeed: Speed;
-
-  constructor(
-    point: Point,
-    size: Size,
-    speed: Speed,
-    background?: string,
-    zIndex?: number
-  ) {
-    super(point, size, background, zIndex);
-    this.innerSpeed = speed;
-  }
-
-  public moveTo(directions: Direction[]) {
-    if (directions.includes('top')) {
-      this.innerPoint.y -= this.innerSpeed.y;
-    }
-    if (directions.includes('bottom')) {
-      this.innerPoint.y += this.innerSpeed.y;
-    }
-    if (directions.includes('left')) {
-      this.innerPoint.x -= this.innerSpeed.x;
-    }
-    if (directions.includes('right')) {
-      this.innerPoint.x += this.innerSpeed.x;
-    }
-  }
-}
+import Speed from '~/Speed';
+import MovableObject from '~/MovableObject';
+import { Direction } from '~/MovableObject/types';
 
 export default class App {
   private static instance: App;
@@ -75,7 +41,7 @@ export default class App {
 
     this.keyboardController.addEventListeners();
 
-    const controlledObject = new MovingObject(
+    const controlledObject = new MovableObject(
       new Point(50, 50),
       new Size(50, 50),
       new Speed(1, 1),
@@ -83,6 +49,7 @@ export default class App {
     );
 
     this.gameLoop.start(() => {
+      // controlled object
       this.virtualDOM.addElement(controlledObject);
       const directions: Direction[] = [];
 
@@ -100,6 +67,7 @@ export default class App {
       }
 
       controlledObject.moveTo(directions);
+      // controlled object
 
       this.render();
     });
