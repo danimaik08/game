@@ -1,7 +1,6 @@
 import KeyboardController from '~/KeyboardController';
 import VirtualDOM from '~/VirtualDOM';
 import MovableObject from '~/MovableObject';
-import { Direction } from '~/PlayerState/types';
 import {
   GAME_WINDOW_WIDTH,
   GAME_WINDOW_HEIGHT,
