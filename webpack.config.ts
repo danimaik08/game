@@ -36,6 +36,11 @@ export default (env: Env) => {
           use: ['style-loader', 'css-loader'],
           exclude: /node_modules/,
         },
+        {
+          test: /\.png$/i,
+          type: 'asset/resource',
+          exclude: /node_modules/,
+        },
       ],
     },
     resolve: {
