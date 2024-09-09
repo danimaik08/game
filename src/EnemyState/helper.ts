@@ -5,11 +5,15 @@ import Speed from '~/Speed';
 import MovableObject from '~/MovableObject';
 import enemyPng from '~/img/spider.png';
 import {
-  ENEMY_STATE_INITIAL_POINT,
-  ENEMY_STATE_INITIAL_SIZE,
-  ENEMY_STATE_INITIAL_SPEED,
+  ENEMY_INITIAL_POINT,
+  ENEMY_INITIAL_SIZE,
+  ENEMY_INITIAL_SPEED,
+  ENEMY_LEFT_BORDER,
+  ENEMY_RIGHT_BORDER,
+  GAME_WINDOW_WIDTH,
 } from '~/consts';
 import zIndex from '~/zIndex';
+import GameObject from '~/GameObject';
 
 export const createBullet = (obj: PointSize) => {
   const point = new Point(
@@ -24,10 +28,32 @@ export const createBullet = (obj: PointSize) => {
 
 export const createInitialSprite = () => {
   return new MovableObject(
-    ENEMY_STATE_INITIAL_POINT.clone(),
-    ENEMY_STATE_INITIAL_SIZE.clone(),
-    ENEMY_STATE_INITIAL_SPEED.clone(),
+    ENEMY_INITIAL_POINT.clone(),
+    ENEMY_INITIAL_SIZE.clone(),
+    ENEMY_INITIAL_SPEED.clone(),
     `url(${enemyPng})`,
     zIndex.enemyState
   );
+};
+
+export const getSpeed = (movableObject: MovableObject) => {
+  const needPreventLeft = movableObject.point.x <= ENEMY_LEFT_BORDER;
+
+  let speedX = movableObject.speed.x;
+
+  if (needPreventLeft) {
+    speedX = Math.abs(speedX);
+    return new Speed(speedX, movableObject.speed.y);
+  }
+
+  const needPreventRight =
+    movableObject.point.x >=
+    GAME_WINDOW_WIDTH - ENEMY_RIGHT_BORDER - movableObject.size.width;
+
+  if (needPreventRight) {
+    speedX = -Math.abs(speedX);
+    return new Speed(speedX, movableObject.speed.y);
+  }
+
+  return movableObject.speed;
 };

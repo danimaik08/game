@@ -50,8 +50,8 @@ export default class App {
 
     gameWindow.render();
 
-    this.playerState.state = 'playing-first';
-    this.enemyState.state = 'playing-first';
+    this.playerState.state = 'playing';
+    this.enemyState.state = 'playing';
 
     this.gameLoop.start(() => {
       this.doBulletsFrameBehavior();
