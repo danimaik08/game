@@ -5,6 +5,7 @@ import PlayerState from './PlayerState';
 export default class PlayingAfterDamageState extends PlayerState {
   constructor(sprite: MovableObject) {
     super(sprite);
+    this.stateName = 'playing-after-damage';
   }
 
   public processMovement() {

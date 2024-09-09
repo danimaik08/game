@@ -15,11 +15,13 @@ export default class Player {
   private timer: NodeJS.Timeout;
   private state: PlayerState;
   private sprite: MovableObject;
+  private stateNameBefore: PlayerStateName;
 
   constructor() {
     if (!Player.instance) {
       this.timer = null;
       this.sprite = Helper.createInitialSprite();
+      this.stateNameBefore = 'before-playing';
       Player.instance = this;
     }
 
@@ -41,7 +43,6 @@ export default class Player {
       }
       case 'playing-after-damage': {
         clearTimeout(this.timer);
-
         this.timer = setTimeout(() => {
           this.stateName = 'playing';
         }, PLAYER_AFTER_DAMAGE_DURATION);
@@ -50,8 +51,12 @@ export default class Player {
         break;
       }
       case 'before-dead': {
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          this.stateName = 'dead';
+        }, 0);
+
         this.state = new BeforeDeadState(this.sprite);
-        this.stateName = 'dead';
         break;
       }
       case 'dead': {
@@ -59,12 +64,13 @@ export default class Player {
         break;
       }
     }
-
-    this.state.stateName = newState;
   }
 
   private applyNewState() {
-    this.stateName = this.state.stateName;
+    if (this.stateName !== this.stateNameBefore) {
+      this.stateNameBefore = this.state.stateName;
+      this.stateName = this.state.stateName;
+    }
   }
 
   public doFrameBehavior() {
