@@ -1,8 +1,11 @@
-import { ENEMY_ATTACK_DELAY, ENEMY_RECEIVING_DAMAGE } from '~/consts';
+import {
+  ENEMY_ATTACK_DELAY,
+  ENEMY_MAX_HEALTH,
+  ENEMY_RECEIVING_DAMAGE,
+} from '~/consts';
 import MovableObject from '~/MovableObject';
 import VirtualDOM from '~/VirtualDOM';
 import BulletsCollider from '~/BulletsCollider';
-import Lifebar from '~/Lifebar';
 import BulletsStore from '~/BulletsStore';
 
 import * as Helper from './helper';
@@ -13,19 +16,19 @@ export default abstract class EnemyState {
   protected virtualDOM: VirtualDOM;
   protected bulletsCollider: BulletsCollider;
   protected bulletsStore: BulletsStore;
-  protected lifebar: Lifebar;
   protected lastAttackTime: number;
 
+  public health: number;
   public stateName: EnemyStateName;
 
-  constructor(sprite: MovableObject) {
+  constructor(sprite: MovableObject, health: number) {
     this.sprite = sprite;
     this.virtualDOM = new VirtualDOM();
     this.bulletsCollider = new BulletsCollider(this.sprite, 'player');
     this.bulletsStore = new BulletsStore();
-    this.lifebar = new Lifebar();
     this.lastAttackTime = Date.now() - ENEMY_ATTACK_DELAY;
     this.stateName = 'before-playing';
+    this.health = health;
   }
 
   public processMovement() {
@@ -37,9 +40,9 @@ export default abstract class EnemyState {
   }
   public registerDamage() {
     this.bulletsCollider.tryToCollide(() => {
-      this.lifebar.enemyHealth -= ENEMY_RECEIVING_DAMAGE;
+      this.health -= ENEMY_RECEIVING_DAMAGE;
 
-      if (this.lifebar.enemyHealth) {
+      if (this.health) {
         this.stateName = 'playing-after-damage';
       } else {
         this.stateName = 'before-dead';

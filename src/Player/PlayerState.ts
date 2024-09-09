@@ -5,11 +5,10 @@ import KeyboardController from '~/KeyboardController';
 import MovableObject from '~/MovableObject';
 import VirtualDOM from '~/VirtualDOM';
 import BulletsCollider from '~/BulletsCollider';
-import Lifebar from '~/Lifebar';
+import BulletsStore from '~/BulletsStore';
 
 import * as Helper from './helper';
 import { PlayerStateName } from './types';
-import BulletsStore from '~/BulletsStore';
 
 export default abstract class PlayerState {
   protected keyboardController: KeyboardController;
@@ -17,21 +16,21 @@ export default abstract class PlayerState {
   protected virtualDOM: VirtualDOM;
   protected bulletsCollider: BulletsCollider;
   protected bulletsStore: BulletsStore;
-  protected lifebar: Lifebar;
   protected lastAttackTime: number;
 
+  public health: number;
   public stateName: PlayerStateName;
 
-  constructor(sprite: MovableObject) {
+  constructor(sprite: MovableObject, health: number) {
     this.keyboardController = new KeyboardController();
     this.keyboardController.addEventListeners();
     this.sprite = sprite;
     this.virtualDOM = new VirtualDOM();
     this.bulletsCollider = new BulletsCollider(this.sprite, 'enemy');
     this.bulletsStore = new BulletsStore();
-    this.lifebar = new Lifebar();
     this.lastAttackTime = Date.now() - PLAYER_ATTACK_DELAY;
     this.stateName = 'before-playing';
+    this.health = health;
   }
 
   public processMovement() {
@@ -46,9 +45,9 @@ export default abstract class PlayerState {
   }
   public registerDamage() {
     this.bulletsCollider.tryToCollide(() => {
-      this.lifebar.playerHealth -= 1;
+      this.health -= 1;
 
-      if (this.lifebar.playerHealth) {
+      if (this.health) {
         this.stateName = 'playing-after-damage';
       } else {
         this.stateName = 'before-dead';

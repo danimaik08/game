@@ -2,6 +2,8 @@ import GameObject from '~/GameObject';
 import Point from '~/Point';
 import Size from '~/Size';
 import VirtualDOM from '~/VirtualDOM';
+import Enemy from '~/Enemy';
+import Player from '~/Player';
 import {
   GAME_WINDOW_WIDTH,
   PLAYER_MAX_HEALTH,
@@ -18,14 +20,14 @@ import noLifeIcon from '~/img/nolife.png';
 
 export default class Lifebar {
   private static instance: Lifebar;
-  private innerPlayerHealth: number;
-  private innerEnemyHealth: number;
+  private enemy: Enemy;
+  private player: Player;
   private virtualDOM: VirtualDOM;
 
   constructor() {
     if (!Lifebar.instance) {
-      this.innerPlayerHealth = PLAYER_MAX_HEALTH;
-      this.innerEnemyHealth = ENEMY_MAX_HEALTH;
+      this.enemy = new Enemy();
+      this.player = new Player();
       this.virtualDOM = new VirtualDOM();
       Lifebar.instance = this;
     }
@@ -59,7 +61,7 @@ export default class Lifebar {
     this.virtualDOM.addElement(
       new GameObject(
         new Point(0, 0),
-        new Size(this.innerEnemyHealth, LIFEBAR_HEIGHT),
+        new Size(this.enemy.health, LIFEBAR_HEIGHT),
         LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
         zIndex.lifebar.enemyHealth
       )
@@ -70,7 +72,7 @@ export default class Lifebar {
     const OFFSET = { x: 1, y: 1 };
 
     for (let i = 1; i <= PLAYER_MAX_HEALTH; i++) {
-      const isLife = this.innerPlayerHealth >= i;
+      const isLife = this.player.health >= i;
       const point = new Point(
         GAME_WINDOW_WIDTH - (OFFSET.x + PLAYER_HEALTH_ICON_SIZE.width) * i,
         OFFSET.y
@@ -85,19 +87,6 @@ export default class Lifebar {
         )
       );
     }
-  }
-
-  get playerHealth() {
-    return this.innerPlayerHealth;
-  }
-  get enemyHealth() {
-    return this.innerEnemyHealth;
-  }
-  set playerHealth(value) {
-    this.innerPlayerHealth = value >= 0 ? value : 0;
-  }
-  set enemyHealth(value) {
-    this.innerEnemyHealth = value >= 0 ? value : 0;
   }
 
   public doFrameBehavior() {

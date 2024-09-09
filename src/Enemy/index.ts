@@ -1,5 +1,5 @@
 import MovableObject from '~/MovableObject';
-import { ENEMY_AFTER_DAMAGE_DURATION } from '~/consts';
+import { ENEMY_AFTER_DAMAGE_DURATION, ENEMY_MAX_HEALTH } from '~/consts';
 
 import * as Helper from './helper';
 import { EnemyStateName } from './types';
@@ -16,11 +16,13 @@ export default class Enemy {
   private timer: NodeJS.Timeout;
   private state: EnemyState;
   private stateNameBefore: EnemyStateName;
+  private innerHealth: number;
 
   constructor() {
     if (!Enemy.instance) {
       this.sprite = Helper.createInitialSprite();
-      this.state = new BeforePlayingState(this.sprite);
+      this.innerHealth = ENEMY_MAX_HEALTH;
+      this.state = new BeforePlayingState(this.sprite, this.innerHealth);
       this.stateNameBefore = this.state.stateName;
       this.timer = null;
 
@@ -30,6 +32,9 @@ export default class Enemy {
     return Enemy.instance;
   }
 
+  get health() {
+    return this.innerHealth;
+  }
   get stateName(): EnemyStateName {
     return this.state.stateName;
   }
@@ -39,7 +44,7 @@ export default class Enemy {
         break;
       }
       case 'playing': {
-        this.state = new PlayingState(this.sprite);
+        this.state = new PlayingState(this.sprite, this.innerHealth);
         break;
       }
       case 'playing-after-damage': {
@@ -49,11 +54,11 @@ export default class Enemy {
           this.stateName = 'playing';
         }, ENEMY_AFTER_DAMAGE_DURATION);
 
-        this.state = new PlayingAfterDamageState(this.sprite);
+        this.state = new PlayingAfterDamageState(this.sprite, this.innerHealth);
         break;
       }
       case 'before-dead': {
-        this.state = new BeforeDeadState(this.sprite);
+        this.state = new BeforeDeadState(this.sprite, this.innerHealth);
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
           this.stateName = 'dead';
@@ -61,7 +66,7 @@ export default class Enemy {
         break;
       }
       case 'dead': {
-        this.state = new DeadState(this.sprite);
+        this.state = new DeadState(this.sprite, this.innerHealth);
         break;
       }
     }
@@ -74,11 +79,16 @@ export default class Enemy {
     }
   }
 
+  private applyNewHealth() {
+    this.innerHealth = this.state.health;
+  }
+
   public doFrameBehavior() {
     this.state.processMovement();
     this.state.addToNextRender();
     this.state.registerDamage();
     this.state.attack();
+    this.applyNewHealth();
     this.applyNewState();
   }
 }
