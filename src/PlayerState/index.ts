@@ -1,7 +1,11 @@
 import KeyboardController from '~/KeyboardController';
 import VirtualDOM from '~/VirtualDOM';
 import MovableObject from '~/MovableObject';
-import { PLAYER_ATTACK_DELAY, PLAYER_AFTER_DAMAGE_DURATION } from '~/consts';
+import {
+  PLAYER_ATTACK_DELAY,
+  PLAYER_AFTER_DAMAGE_DURATION,
+  KEY_ATTACK,
+} from '~/consts';
 import Speed from '~/Speed';
 import BulletsCollider from '~/BulletsCollider';
 import BulletsStore from '~/BulletsStore';
@@ -115,10 +119,7 @@ export default class PlayerState {
     const readyToAttack =
       currentTime > this.lastAttackTime + PLAYER_ATTACK_DELAY;
 
-    if (
-      readyToAttack &&
-      this.keyboardController.isActiveKey(process.env.KEY_ATTACK)
-    ) {
+    if (readyToAttack && this.keyboardController.isActiveKey(KEY_ATTACK)) {
       this.lastAttackTime = currentTime;
       this.bulletsStore.addElement(
         new Bullet('player', this.sprite.point.clone(), new Speed(0, -4))

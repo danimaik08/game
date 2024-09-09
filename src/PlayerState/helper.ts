@@ -11,6 +11,10 @@ import {
   GAME_WINDOW_HEIGHT,
   GAME_WINDOW_WIDTH,
   PLAYER_MOVEMENT_SPEED,
+  KEY_TOP,
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_BOTTOM,
 } from '~/consts';
 import zIndex from '~/zIndex';
 
@@ -36,16 +40,16 @@ export const getSpeedByKeyboardsKeys = (
   let speedX = 0;
   let speedY = 0;
 
-  if (keyboard.isActiveKey(process.env.KEY_TOP) && !needPreventTop) {
+  if (keyboard.isActiveKey(KEY_TOP) && !needPreventTop) {
     speedY = -PLAYER_MOVEMENT_SPEED;
   }
-  if (keyboard.isActiveKey(process.env.KEY_LEFT) && !needPreventLeft) {
+  if (keyboard.isActiveKey(KEY_LEFT) && !needPreventLeft) {
     speedX = -PLAYER_MOVEMENT_SPEED;
   }
-  if (keyboard.isActiveKey(process.env.KEY_BOTTOM) && !needPreventBottom) {
+  if (keyboard.isActiveKey(KEY_BOTTOM) && !needPreventBottom) {
     speedY = PLAYER_MOVEMENT_SPEED;
   }
-  if (keyboard.isActiveKey(process.env.KEY_RIGHT) && !needPreventRight) {
+  if (keyboard.isActiveKey(KEY_RIGHT) && !needPreventRight) {
     speedX = PLAYER_MOVEMENT_SPEED;
   }
 
