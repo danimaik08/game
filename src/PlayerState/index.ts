@@ -6,12 +6,18 @@ import {
   GAME_WINDOW_HEIGHT,
   PLAYER_STATE_MIN_TOP,
   PLAYER_STATE_MOVEMENT_SPEED,
+  PLAYER_STATE_ATTACK_DELAY,
+  PLAYER_STATE_AFTER_DAMAGE_DURATION,
 } from '~/consts';
+import Speed from '~/Speed';
+import BulletsCollider from '~/BulletsCollider';
+import BulletsStore from '~/BulletsStore';
+import Bullet from '~/Bullet';
+import Lifebar from '~/Lifebar';
 
 import errorOfSetState from './errorOfSetState';
 import createInitialSprite from './createInitialSprite';
 import { PlayerStateName } from './types';
-import Speed from '~/Speed';
 
 export default class PlayerState {
   private static instance: PlayerState;
@@ -19,7 +25,12 @@ export default class PlayerState {
   private keyboardController: KeyboardController;
   private sprite: MovableObject | null;
   private virtualDOM: VirtualDOM;
-  private frameBehavior: Array<'addToNextRender' | 'processMovement'>;
+  private frameBehavior: () => void;
+  private bulletsCollider: BulletsCollider | null;
+  private bulletsStore: BulletsStore;
+  private lastAttackTime: number;
+  private timer: NodeJS.Timeout;
+  private lifebar: Lifebar;
 
   constructor() {
     if (!PlayerState.instance) {
@@ -28,7 +39,12 @@ export default class PlayerState {
       this.keyboardController = new KeyboardController();
       this.keyboardController.addEventListeners();
       this.sprite = null;
-      this.frameBehavior = [];
+      this.bulletsCollider = null;
+      this.bulletsStore = new BulletsStore();
+      this.frameBehavior = () => {};
+      this.lastAttackTime = Date.now() - PLAYER_STATE_ATTACK_DELAY;
+      this.timer = null;
+      this.lifebar = new Lifebar();
 
       PlayerState.instance = this;
     }
@@ -43,39 +59,61 @@ export default class PlayerState {
     switch (newState) {
       case 'before-playing': {
         this.sprite = null;
-        this.frameBehavior = [];
+        this.bulletsCollider = null;
+        this.frameBehavior = () => {};
         break;
       }
       case 'playing-first': {
         this.sprite = createInitialSprite();
-        this.frameBehavior = ['processMovement', 'addToNextRender'];
+        this.bulletsCollider = new BulletsCollider(this.sprite, 'enemy');
+        this.frameBehavior = () => {
+          this.processMovement();
+          this.addToNextRender();
+          this.registerDamage();
+          this.attack();
+        };
         break;
       }
       case 'playing': {
-        errorOfSetState(['playing-first'], this.innerState);
-
-        this.frameBehavior = ['processMovement', 'addToNextRender'];
+        errorOfSetState(['playing-after-damage', 'playing'], this.innerState);
+        this.frameBehavior = () => {
+          this.processMovement();
+          this.addToNextRender();
+          this.registerDamage();
+          this.attack();
+        };
         break;
       }
       case 'playing-after-damage': {
-        errorOfSetState(['playing-first', 'playing'], this.innerState);
-
-        this.frameBehavior = ['processMovement', 'addToNextRender'];
-        break;
-      }
-      case 'before-dead': {
         errorOfSetState(
           ['playing-first', 'playing', 'playing-after-damage'],
           this.innerState
         );
 
-        this.frameBehavior = ['processMovement', 'addToNextRender'];
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => {
+          this.state = 'playing';
+        }, PLAYER_STATE_AFTER_DAMAGE_DURATION);
+
+        this.frameBehavior = () => {
+          this.processMovement();
+          this.addToNextRender();
+        };
+        break;
+      }
+      case 'before-dead': {
+        errorOfSetState(
+          ['playing-first', 'playing', 'playing-after-damage', 'before-dead'],
+          this.innerState
+        );
+
+        this.frameBehavior = () => {};
+        this.state = 'dead';
         break;
       }
       case 'dead': {
-        errorOfSetState(['before-dead'], this.innerState);
-
         this.sprite = null;
+        this.frameBehavior = () => {};
         break;
       }
     }
@@ -129,10 +167,34 @@ export default class PlayerState {
   private addToNextRender() {
     this.virtualDOM.addElement(this.sprite);
   }
+  private registerDamage() {
+    this.bulletsCollider.tryToCollide(() => {
+      this.lifebar.playerHealth -= 1;
+
+      if (this.lifebar.playerHealth) {
+        this.state = 'playing-after-damage';
+      } else {
+        this.state = 'before-dead';
+      }
+    });
+  }
+  private attack() {
+    const currentTime = Date.now();
+    const readyToAttack =
+      currentTime > this.lastAttackTime + PLAYER_STATE_ATTACK_DELAY;
+
+    if (
+      readyToAttack &&
+      this.keyboardController.isActiveKey(process.env.KEY_ATTACK)
+    ) {
+      this.lastAttackTime = currentTime;
+      this.bulletsStore.addElement(
+        new Bullet('player', this.sprite.point.clone(), new Speed(0, -4))
+      );
+    }
+  }
 
   public doFrameBehavior() {
-    this.frameBehavior.forEach((funcName) => {
-      this[funcName]();
-    });
+    this.frameBehavior();
   }
 }

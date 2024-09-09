@@ -27,9 +27,22 @@ export default class Bullet {
     );
   }
 
-  constructor(type: BulletType, point: Point, speed: Speed) {
+  constructor(private innerType: BulletType, point: Point, speed: Speed) {
     this.virtualDOM = new VirtualDOM();
-    this.sprite = Bullet.createInitialSprite(type, point, speed);
+    this.sprite = Bullet.createInitialSprite(this.innerType, point, speed);
+  }
+
+  get point() {
+    return this.sprite.point;
+  }
+  get size() {
+    return this.sprite.size;
+  }
+  get id() {
+    return this.sprite.id;
+  }
+  get type() {
+    return this.innerType;
   }
 
   private processMovement() {

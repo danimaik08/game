@@ -20,7 +20,8 @@ export const rootCSS = `
 export const windowCSS = `
   width: ${GAME_WINDOW_WIDTH}px;
   height: ${GAME_WINDOW_HEIGHT}px;
-  background: #fff;
+  background: #bbf;
   border-radius: 2px;
   position: relative;
+  overflow: hidden;
 `;

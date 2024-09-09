@@ -60,6 +60,7 @@ export default (env: Env) => {
           KEY_LEFT: 'A',
           KEY_BOTTOM: 'S',
           KEY_RIGHT: 'D',
+          KEY_ATTACK: 'K',
           ...process.env,
         }),
       }),

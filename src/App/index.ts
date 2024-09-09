@@ -5,6 +5,8 @@ import getRenderAPI from '~/RenderAPI/getRenderAPI';
 import VirtualDOM from '~/VirtualDOM';
 import PlayerState from '~/PlayerState';
 import EnemyState from '~/EnemyState';
+import BulletsStore from '~/BulletsStore';
+import Lifebar from '~/Lifebar';
 
 export default class App {
   private static instance: App;
@@ -13,6 +15,8 @@ export default class App {
   private virtualDOM: VirtualDOM;
   private playerState: PlayerState;
   private enemyState: EnemyState;
+  private bulletsStore: BulletsStore;
+  private lifebar: Lifebar;
 
   constructor() {
     if (!App.instance) {
@@ -21,6 +25,8 @@ export default class App {
       this.virtualDOM = new VirtualDOM();
       this.playerState = new PlayerState();
       this.enemyState = new EnemyState();
+      this.bulletsStore = new BulletsStore();
+      this.lifebar = new Lifebar();
       App.instance = this;
     }
 
@@ -32,6 +38,13 @@ export default class App {
     this.virtualDOM.prepareForNewFrame();
   }
 
+  private doBulletsFrameBehavior() {
+    this.bulletsStore.removeBulletsOutsideScreen();
+    this.bulletsStore.bullets.forEach((bullet) => {
+      bullet.doFrameBehavior();
+    });
+  }
+
   public start() {
     const gameWindow = new GameWindow(this.renderAPI);
 
@@ -41,8 +54,10 @@ export default class App {
     this.enemyState.state = 'playing-first';
 
     this.gameLoop.start(() => {
+      this.doBulletsFrameBehavior();
       this.playerState.doFrameBehavior();
       this.enemyState.doFrameBehavior();
+      this.lifebar.doFrameBehavior();
 
       this.render();
     });
