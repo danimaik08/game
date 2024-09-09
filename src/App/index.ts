@@ -4,7 +4,7 @@ import GameLoop from '~/GameLoop';
 import getRenderAPI from '~/RenderAPI/getRenderAPI';
 import VirtualDOM from '~/VirtualDOM';
 import Player from '~/Player';
-import EnemyState from '~/EnemyState';
+import Enemy from '~/Enemy';
 import BulletsStore from '~/BulletsStore';
 import Lifebar from '~/Lifebar';
 
@@ -14,7 +14,7 @@ export default class App {
   private gameLoop: GameLoop;
   private virtualDOM: VirtualDOM;
   private player: Player;
-  private enemyState: EnemyState;
+  private enemy: Enemy;
   private bulletsStore: BulletsStore;
   private lifebar: Lifebar;
 
@@ -24,7 +24,7 @@ export default class App {
       this.gameLoop = new GameLoop();
       this.virtualDOM = new VirtualDOM();
       this.player = new Player();
-      this.enemyState = new EnemyState();
+      this.enemy = new Enemy();
       this.bulletsStore = new BulletsStore();
       this.lifebar = new Lifebar();
       App.instance = this;
@@ -51,12 +51,12 @@ export default class App {
     gameWindow.render();
 
     this.player.stateName = 'playing';
-    this.enemyState.state = 'playing';
+    this.enemy.stateName = 'playing';
 
     this.gameLoop.start(() => {
       this.doBulletsFrameBehavior();
       this.player.doFrameBehavior();
-      this.enemyState.doFrameBehavior();
+      this.enemy.doFrameBehavior();
       this.lifebar.doFrameBehavior();
 
       this.render();
