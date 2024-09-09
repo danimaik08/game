@@ -24,7 +24,7 @@ export const ENEMY_ATTACK_DELAY = 200;
 export const ENEMY_AFTER_DAMAGE_DURATION = 500;
 
 export const PLAYER_MAX_HEALTH = 3;
-export const ENEMY_STATE_MAX_HEALTH = 400;
+export const ENEMY_MAX_HEALTH = 400;
 
 export const LIFEBAR_HEIGHT = 29;
 export const LIFEBAR_COLOR = '#009';

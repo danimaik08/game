@@ -5,7 +5,7 @@ import VirtualDOM from '~/VirtualDOM';
 import {
   GAME_WINDOW_WIDTH,
   PLAYER_MAX_HEALTH,
-  ENEMY_STATE_MAX_HEALTH,
+  ENEMY_MAX_HEALTH,
   PLAYER_HEALTH_ICON_SIZE,
   LIFEBAR_HEIGHT,
   LIFEBAR_COLOR,
@@ -25,7 +25,7 @@ export default class Lifebar {
   constructor() {
     if (!Lifebar.instance) {
       this.innerPlayerHealth = PLAYER_MAX_HEALTH;
-      this.innerEnemyHealth = ENEMY_STATE_MAX_HEALTH;
+      this.innerEnemyHealth = ENEMY_MAX_HEALTH;
       this.virtualDOM = new VirtualDOM();
       Lifebar.instance = this;
     }
@@ -48,7 +48,7 @@ export default class Lifebar {
     this.virtualDOM.addElement(
       new GameObject(
         new Point(0, 0),
-        new Size(ENEMY_STATE_MAX_HEALTH, LIFEBAR_HEIGHT),
+        new Size(ENEMY_MAX_HEALTH, LIFEBAR_HEIGHT),
         LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR,
         zIndex.lifebar.enemyEmptyHealth
       )
