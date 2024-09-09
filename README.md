@@ -1,3 +1,13 @@
+# Это MVP моей игры
+
+- Управление WASD, Атака - K, остальное интуитивно
+- настройки управления можно поменять на localhost в env переменных
+  `KEY_TOP: 'W'`
+  `KEY_LEFT: 'A'`
+  `KEY_BOTTOM: 'S'`
+  `KEY_RIGHT: 'D'`
+  `KEY_ATTACK: 'K'`
+
 # game
 
 - Production: https://danimaik08.github.io/game/
