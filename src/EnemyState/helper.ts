@@ -13,7 +13,6 @@ import {
   GAME_WINDOW_WIDTH,
 } from '~/consts';
 import zIndex from '~/zIndex';
-import GameObject from '~/GameObject';
 
 export const createBullet = (obj: PointSize) => {
   const point = new Point(
