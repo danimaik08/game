@@ -26,6 +26,11 @@ export const ENEMY_AFTER_DAMAGE_DURATION = 500;
 export const PLAYER_MAX_HEALTH = 3;
 export const ENEMY_STATE_MAX_HEALTH = 400;
 
+export const LIFEBAR_HEIGHT = 29;
+export const LIFEBAR_COLOR = '#009';
+export const LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR = '#000';
+export const LIFEBAR_ENEMY_FULL_HEALTH_COLOR = '#f00';
+
 export const PLAYER_HEALTH_ICON_SIZE = new Size(30, 27);
 
 export const BULLET_SIZE = new Size(14, 14);

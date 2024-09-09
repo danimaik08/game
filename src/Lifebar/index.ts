@@ -7,6 +7,10 @@ import {
   PLAYER_MAX_HEALTH,
   ENEMY_STATE_MAX_HEALTH,
   PLAYER_HEALTH_ICON_SIZE,
+  LIFEBAR_HEIGHT,
+  LIFEBAR_COLOR,
+  LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR,
+  LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
 } from '~/consts';
 import zIndex from '~/zIndex';
 import lifeIcon from '~/img/life.png';
@@ -33,8 +37,8 @@ export default class Lifebar {
     this.virtualDOM.addElement(
       new GameObject(
         new Point(0, 0),
-        new Size(800, 29),
-        '#009',
+        new Size(GAME_WINDOW_WIDTH, LIFEBAR_HEIGHT),
+        LIFEBAR_COLOR,
         zIndex.lifebar.emptyLifebar
       )
     );
@@ -44,8 +48,8 @@ export default class Lifebar {
     this.virtualDOM.addElement(
       new GameObject(
         new Point(0, 0),
-        new Size(ENEMY_STATE_MAX_HEALTH, 29),
-        '#000',
+        new Size(ENEMY_STATE_MAX_HEALTH, LIFEBAR_HEIGHT),
+        LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR,
         zIndex.lifebar.enemyEmptyHealth
       )
     );
@@ -55,8 +59,8 @@ export default class Lifebar {
     this.virtualDOM.addElement(
       new GameObject(
         new Point(0, 0),
-        new Size(this.enemyHealth, 29),
-        '#f00',
+        new Size(this.innerEnemyHealth, LIFEBAR_HEIGHT),
+        LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
         zIndex.lifebar.enemyHealth
       )
     );
@@ -66,7 +70,7 @@ export default class Lifebar {
     const OFFSET = { x: 1, y: 1 };
 
     for (let i = 1; i <= PLAYER_MAX_HEALTH; i++) {
-      const isLife = this.playerHealth >= i;
+      const isLife = this.innerPlayerHealth >= i;
       const point = new Point(
         GAME_WINDOW_WIDTH - (OFFSET.x + PLAYER_HEALTH_ICON_SIZE.width) * i,
         OFFSET.y
@@ -90,18 +94,10 @@ export default class Lifebar {
     return this.innerEnemyHealth;
   }
   set playerHealth(value) {
-    if (value >= 0) {
-      this.innerPlayerHealth = value;
-    } else {
-      this.innerPlayerHealth = 0;
-    }
+    this.innerPlayerHealth = value >= 0 ? value : 0;
   }
   set enemyHealth(value) {
-    if (value >= 0) {
-      this.innerEnemyHealth = value;
-    } else {
-      this.innerEnemyHealth = 0;
-    }
+    this.innerEnemyHealth = value >= 0 ? value : 0;
   }
 
   public doFrameBehavior() {
