@@ -1,6 +1,8 @@
 import * as consts from '~/RenderAPI/consts';
 import RenderAPI from '~/RenderAPI';
-import GameObjectAPI, { GameObjectId } from '~/GameObject/GameObjectAPI';
+import GameObjectAPI, {
+  GameObjectId,
+} from '~/components/GameObject/GameObjectAPI';
 import { VirtualDOMChange } from '~/VirtualDOM/types';
 
 import * as Helper from './helper';

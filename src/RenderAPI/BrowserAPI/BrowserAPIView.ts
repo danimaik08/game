@@ -1,4 +1,4 @@
-import GameObjectAPI from '~/GameObject/GameObjectAPI';
+import GameObjectAPI from '~/components/GameObject/GameObjectAPI';
 
 export default class BrowserAPIView {
   private gameObjectAPI: GameObjectAPI;
