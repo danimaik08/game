@@ -1,5 +1,5 @@
-import Point from '~/components/Point';
-import Size from '~/components/Size';
+import Point from '~/structs/Point';
+import Size from '~/structs/Size';
 
 import * as Helper from './helper';
 

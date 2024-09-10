@@ -1,8 +1,8 @@
 import Bullet from '~/components/Bullet';
 import { PointSize } from '~/components/GameObject/GameObjectAPI';
-import Point from '~/components/Point';
-import Speed from '~/components/Speed';
 import MovableObject from '~/components/MovableObject';
+import Speed from '~/structs/Speed';
+import Point from '~/structs/Point';
 import enemyPng from '~/assets/img/spider.png';
 import {
   ENEMY_INITIAL_POINT,

@@ -1,11 +1,11 @@
 import { PLAYER_ATTACK_DELAY, KEY_ATTACK } from '~/consts';
 import VirtualDOM from '~/VirtualDOM';
 import Bullet from '~/components/Bullet';
-import Speed from '~/components/Speed';
 import KeyboardController from '~/components/KeyboardController';
 import MovableObject from '~/components/MovableObject';
 import BulletsCollider from '~/components/BulletsCollider';
 import BulletsStore from '~/components/BulletsStore';
+import Speed from '~/structs/Speed';
 
 import * as Helper from './helper';
 import { PlayerStateName } from './types';

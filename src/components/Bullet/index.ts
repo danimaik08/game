@@ -1,11 +1,11 @@
 import VirtualDOM from '~/VirtualDOM';
 import MovableObject from '~/components/MovableObject';
-import Point from '~/components/Point';
-import Speed from '~/components/Speed';
 import { BULLET_SIZE } from '~/consts';
 import zIndex from '~/zIndex';
 import enemyBulletPng from '~/assets/img/web.png';
 import playerBulletPng from '~/assets/img/fireball.png';
+import Point from '~/structs/Point';
+import Speed from '~/structs/Speed';
 
 import { BulletType } from './types';
 

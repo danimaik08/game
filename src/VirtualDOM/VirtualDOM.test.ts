@@ -1,6 +1,6 @@
 import GameObject from '~/components/GameObject';
-import Point from '~/components/Point';
-import Size from '~/components/Size';
+import Point from '~/structs/Point';
+import Size from '~/structs/Size';
 
 import VirtualDOM from '.';
 

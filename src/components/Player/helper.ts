@@ -1,7 +1,7 @@
 import MovableObject from '~/components/MovableObject';
 import GameObject from '~/components/GameObject';
 import KeyboardController from '~/components/KeyboardController';
-import Speed from '~/components/Speed';
+import Speed from '~/structs/Speed';
 import playerPng from '~/assets/img/wizard.png';
 import {
   PLAYER_INITIAL_POINT,

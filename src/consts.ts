@@ -1,6 +1,6 @@
-import Point from '~/components/Point';
-import Size from '~/components/Size';
-import Speed from '~/components/Speed';
+import Point from '~/structs/Point';
+import Size from '~/structs/Size';
+import Speed from '~/structs/Speed';
 
 export const DEFAULT_FRAME_DURATION = 33;
 export const GAME_WINDOW_WIDTH = 800;

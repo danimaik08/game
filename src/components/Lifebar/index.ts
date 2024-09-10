@@ -1,8 +1,8 @@
 import GameObject from '~/components/GameObject';
-import Point from '~/components/Point';
-import Size from '~/components/Size';
 import Enemy from '~/components/Enemy';
 import Player from '~/components/Player';
+import Point from '~/structs/Point';
+import Size from '~/structs/Size';
 import VirtualDOM from '~/VirtualDOM';
 import {
   GAME_WINDOW_WIDTH,

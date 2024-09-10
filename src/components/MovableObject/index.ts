@@ -1,7 +1,7 @@
 import GameObject from '~/components/GameObject';
-import Point from '~/components/Point';
-import Size from '~/components/Size';
-import Speed from '~/components/Speed';
+import Point from '~/structs/Point';
+import Size from '~/structs/Size';
+import Speed from '~/structs/Speed';
 
 export default class MovableObject extends GameObject {
   protected innerSpeed: Speed;
