@@ -3,8 +3,8 @@ import GameObject from '~/structs/GameObject';
 import EnemyState from './EnemyState';
 
 export default class PlayingAfterDamageState extends EnemyState {
-  constructor(sprite: GameObject, health: number) {
-    super(sprite, health);
+  constructor(gameObject: GameObject, health: number) {
+    super(gameObject, health);
     this.stateName = 'playing-after-damage';
   }
 

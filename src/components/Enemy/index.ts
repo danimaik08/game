@@ -12,7 +12,7 @@ import DeadState from './DeadState';
 
 export default class Enemy {
   private static instance: Enemy;
-  private sprite: GameObject;
+  private gameObject: GameObject;
   private timer: NodeJS.Timeout;
   private state: EnemyState;
   private stateNameBefore: EnemyStateName;
@@ -20,9 +20,9 @@ export default class Enemy {
 
   constructor() {
     if (!Enemy.instance) {
-      this.sprite = Helper.createInitialSprite();
+      this.gameObject = Helper.createInitialSprite();
       this.innerHealth = ENEMY_MAX_HEALTH;
-      this.state = new BeforePlayingState(this.sprite, this.innerHealth);
+      this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
       this.stateNameBefore = this.state.stateName;
       this.timer = null;
 
@@ -44,7 +44,7 @@ export default class Enemy {
         break;
       }
       case 'playing': {
-        this.state = new PlayingState(this.sprite, this.innerHealth);
+        this.state = new PlayingState(this.gameObject, this.innerHealth);
         break;
       }
       case 'playing-after-damage': {
@@ -54,11 +54,14 @@ export default class Enemy {
           this.stateName = 'playing';
         }, ENEMY_AFTER_DAMAGE_DURATION);
 
-        this.state = new PlayingAfterDamageState(this.sprite, this.innerHealth);
+        this.state = new PlayingAfterDamageState(
+          this.gameObject,
+          this.innerHealth
+        );
         break;
       }
       case 'before-dead': {
-        this.state = new BeforeDeadState(this.sprite, this.innerHealth);
+        this.state = new BeforeDeadState(this.gameObject, this.innerHealth);
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
           this.stateName = 'dead';
@@ -66,7 +69,7 @@ export default class Enemy {
         break;
       }
       case 'dead': {
-        this.state = new DeadState(this.sprite, this.innerHealth);
+        this.state = new DeadState(this.gameObject, this.innerHealth);
         break;
       }
     }
