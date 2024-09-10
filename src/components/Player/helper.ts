@@ -1,5 +1,5 @@
 import GameObject from '~/structs/GameObject';
-import KeyboardController from '~/components/KeyboardController';
+import Keyboard from '~/controllers/Keyboard';
 import Speed from '~/structs/Speed';
 import playerPng from '~/assets/img/wizard.png';
 import {
@@ -29,7 +29,7 @@ export const createInitialGameObject = () => {
 
 export const getSpeedByKeyboardsKeys = (
   obj: GameObject,
-  keyboard: KeyboardController
+  keyboard: Keyboard
 ) => {
   const needPreventTop = obj.point.y <= PLAYER_MIN_TOP;
   const needPreventLeft = obj.point.x <= 0;

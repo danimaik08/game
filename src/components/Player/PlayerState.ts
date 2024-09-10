@@ -1,7 +1,7 @@
 import { PLAYER_ATTACK_DELAY, KEY_ATTACK } from '~/consts';
 import VirtualDOM from '~/VirtualDOM';
 import Bullet from '~/components/Bullet';
-import KeyboardController from '~/components/KeyboardController';
+import Keyboard from '~/controllers/Keyboard';
 import GameObject from '~/structs/GameObject';
 import BulletsCollider from '~/components/BulletsCollider';
 import BulletsStore from '~/components/BulletsStore';
@@ -11,7 +11,7 @@ import * as Helper from './helper';
 import { PlayerStateName } from './types';
 
 export default abstract class PlayerState {
-  protected keyboardController: KeyboardController;
+  protected keyboardController: Keyboard;
   protected gameObject: GameObject;
   protected virtualDOM: VirtualDOM;
   protected bulletsCollider: BulletsCollider;
@@ -22,8 +22,7 @@ export default abstract class PlayerState {
   public stateName: PlayerStateName;
 
   constructor(gameObject: GameObject, health: number) {
-    this.keyboardController = new KeyboardController();
-    this.keyboardController.addEventListeners();
+    this.keyboardController = new Keyboard();
     this.gameObject = gameObject;
     this.virtualDOM = new VirtualDOM();
     this.bulletsCollider = new BulletsCollider(this.gameObject, 'enemy');
