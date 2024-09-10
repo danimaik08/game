@@ -2,7 +2,7 @@ import MovableObject from '~/MovableObject';
 import GameObject from '~/GameObject';
 import KeyboardController from '~/KeyboardController';
 import Speed from '~/Speed';
-import playerPng from '~/img/wizard.png';
+import playerPng from '~/assets/img/wizard.png';
 import {
   PLAYER_INITIAL_POINT,
   PLAYER_INITIAL_SIZE,

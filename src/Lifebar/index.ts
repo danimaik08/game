@@ -15,8 +15,8 @@ import {
   LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
 } from '~/consts';
 import zIndex from '~/zIndex';
-import lifeIcon from '~/img/life.png';
-import noLifeIcon from '~/img/nolife.png';
+import lifeIcon from '~/assets/img/life.png';
+import noLifeIcon from '~/assets/img/nolife.png';
 
 export default class Lifebar {
   private static instance: Lifebar;

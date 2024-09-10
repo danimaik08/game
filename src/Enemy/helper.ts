@@ -3,7 +3,7 @@ import { PointSize } from '~/GameObject/GameObjectAPI';
 import Point from '~/Point';
 import Speed from '~/Speed';
 import MovableObject from '~/MovableObject';
-import enemyPng from '~/img/spider.png';
+import enemyPng from '~/assets/img/spider.png';
 import {
   ENEMY_INITIAL_POINT,
   ENEMY_INITIAL_SIZE,

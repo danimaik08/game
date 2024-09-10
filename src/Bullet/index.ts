@@ -4,8 +4,8 @@ import Point from '~/Point';
 import Speed from '~/Speed';
 import { BULLET_SIZE } from '~/consts';
 import zIndex from '~/zIndex';
-import enemyBulletPng from '~/img/web.png';
-import playerBulletPng from '~/img/fireball.png';
+import enemyBulletPng from '~/assets/img/web.png';
+import playerBulletPng from '~/assets/img/fireball.png';
 
 import { BulletType } from './types';
 
