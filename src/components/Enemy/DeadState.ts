@@ -1,10 +1,10 @@
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 
 import EnemyState from './EnemyState';
 
 export default class DeadState extends EnemyState {
-  constructor(sprite: MovableObject, health: number) {
-    super(sprite, health);
+  constructor(gameObject: GameObject, health: number) {
+    super(gameObject, health);
     this.stateName = 'dead';
   }
 

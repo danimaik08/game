@@ -1,4 +1,4 @@
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 import { ENEMY_AFTER_DAMAGE_DURATION, ENEMY_MAX_HEALTH } from '~/consts';
 
 import * as Helper from './helper';
@@ -12,7 +12,7 @@ import DeadState from './DeadState';
 
 export default class Enemy {
   private static instance: Enemy;
-  private sprite: MovableObject;
+  private sprite: GameObject;
   private timer: NodeJS.Timeout;
   private state: EnemyState;
   private stateNameBefore: EnemyStateName;

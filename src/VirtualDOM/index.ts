@@ -1,6 +1,5 @@
-import GameObjectAPI, {
-  GameObjectId,
-} from '~/components/GameObject/GameObjectAPI';
+import GameObject from '~/structs/GameObject';
+import { GameObjectStructure } from '~/structs/GameObject/types';
 
 import { VirtualDOMChange, VirtualDOMGameObjectsMap } from './types';
 
@@ -19,12 +18,12 @@ export default class VirtualDOM {
     return VirtualDOM.instance;
   }
 
-  public addElement(element: GameObjectAPI): void {
+  public addElement(element: GameObject): void {
     this.nextElementsMap[element.id] = element;
   }
 
-  private getAllIdsFromMaps(): Set<GameObjectId> {
-    const allIdsSet = new Set<GameObjectId>();
+  private getAllIdsFromMaps(): Set<GameObject['id']> {
+    const allIdsSet = new Set<GameObject['id']>();
 
     for (const id in this.prevElementsMap) {
       allIdsSet.add(id);
@@ -41,11 +40,11 @@ export default class VirtualDOM {
     const allIds = this.getAllIdsFromMaps();
     const changes: VirtualDOMChange[] = [];
 
-    allIds.forEach((id: GameObjectId) => {
-      const prevElement: GameObjectAPI | null =
+    allIds.forEach((id: GameObject['id']) => {
+      const prevElement: GameObjectStructure | null =
         this.prevElementsMap[id] ?? null;
 
-      const nextElement: GameObjectAPI | null =
+      const nextElement: GameObjectStructure | null =
         this.nextElementsMap[id] ?? null;
 
       if (!prevElement) {
@@ -53,6 +52,7 @@ export default class VirtualDOM {
           id: nextElement.id,
           point: nextElement.point,
           size: nextElement.size,
+          speed: nextElement.speed,
           background: nextElement.background,
           zIndex: nextElement.zIndex,
           action: 'mount',
@@ -62,6 +62,7 @@ export default class VirtualDOM {
           id: prevElement.id,
           point: prevElement.point,
           size: prevElement.size,
+          speed: prevElement.speed,
           background: prevElement.background,
           zIndex: prevElement.zIndex,
           action: 'unmount',

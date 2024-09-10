@@ -1,10 +1,10 @@
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 
 import PlayerState from './PlayerState';
 
 export default class BeforePlayingState extends PlayerState {
-  constructor(sprite: MovableObject, health: number) {
-    super(sprite, health);
+  constructor(gameObject: GameObject, health: number) {
+    super(gameObject, health);
     this.stateName = 'before-playing';
   }
 

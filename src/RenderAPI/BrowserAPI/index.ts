@@ -1,15 +1,13 @@
 import * as consts from '~/RenderAPI/consts';
 import RenderAPI from '~/RenderAPI';
-import GameObjectAPI, {
-  GameObjectId,
-} from '~/components/GameObject/GameObjectAPI';
+import { GameObjectStructure } from '~/structs/GameObject/types';
 import { VirtualDOMChange } from '~/VirtualDOM/types';
 
 import * as Helper from './helper';
 import BrowserAPIView from './BrowserAPIView';
 
 export default class BrowserAPI extends RenderAPI {
-  private elementsMap: Record<GameObjectId, BrowserAPIView> = {};
+  private elementsMap: Record<GameObjectStructure['id'], BrowserAPIView> = {};
   private get window(): HTMLElement {
     const windowNode = document.getElementById(consts.GAME_WINDOW_ID);
 
@@ -30,8 +28,8 @@ export default class BrowserAPI extends RenderAPI {
     document.body.innerHTML = '';
   }
 
-  private mount(gameObjectAPI: GameObjectAPI): void {
-    const view = new BrowserAPIView(gameObjectAPI);
+  private mount(gameObject: GameObjectStructure): void {
+    const view = new BrowserAPIView(gameObject);
 
     view.createElement();
     view.applyActualChange();
@@ -39,19 +37,19 @@ export default class BrowserAPI extends RenderAPI {
     this.window.appendChild(view.element);
     this.elementsMap[view.id] = view;
   }
-  private update(gameObjectAPI: GameObjectAPI) {
-    const newView = new BrowserAPIView(gameObjectAPI);
-    const oldView = this.elementsMap[gameObjectAPI.id];
+  private update(gameObject: GameObjectStructure) {
+    const newView = new BrowserAPIView(gameObject);
+    const oldView = this.elementsMap[gameObject.id];
 
     newView.setElement(oldView.element);
     newView.applyActualChange();
 
     this.window.appendChild(newView.element);
-    this.elementsMap[gameObjectAPI.id] = newView;
+    this.elementsMap[gameObject.id] = newView;
   }
-  private unmount(gameObjectAPI: GameObjectAPI): void {
-    this.elementsMap[gameObjectAPI.id].element.remove();
-    delete this.elementsMap[gameObjectAPI.id];
+  private unmount(gameObject: GameObjectStructure): void {
+    this.elementsMap[gameObject.id].element.remove();
+    delete this.elementsMap[gameObject.id];
   }
   render(changes: VirtualDOMChange[]): void {
     changes.forEach((change) => {

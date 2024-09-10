@@ -2,7 +2,7 @@ import { PLAYER_ATTACK_DELAY, KEY_ATTACK } from '~/consts';
 import VirtualDOM from '~/VirtualDOM';
 import Bullet from '~/components/Bullet';
 import KeyboardController from '~/components/KeyboardController';
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 import BulletsCollider from '~/components/BulletsCollider';
 import BulletsStore from '~/components/BulletsStore';
 import Speed from '~/structs/Speed';
@@ -12,7 +12,7 @@ import { PlayerStateName } from './types';
 
 export default abstract class PlayerState {
   protected keyboardController: KeyboardController;
-  protected sprite: MovableObject;
+  protected gameObject: GameObject;
   protected virtualDOM: VirtualDOM;
   protected bulletsCollider: BulletsCollider;
   protected bulletsStore: BulletsStore;
@@ -21,12 +21,12 @@ export default abstract class PlayerState {
   public health: number;
   public stateName: PlayerStateName;
 
-  constructor(sprite: MovableObject, health: number) {
+  constructor(gameObject: GameObject, health: number) {
     this.keyboardController = new KeyboardController();
     this.keyboardController.addEventListeners();
-    this.sprite = sprite;
+    this.gameObject = gameObject;
     this.virtualDOM = new VirtualDOM();
-    this.bulletsCollider = new BulletsCollider(this.sprite, 'enemy');
+    this.bulletsCollider = new BulletsCollider(this.gameObject, 'enemy');
     this.bulletsStore = new BulletsStore();
     this.lastAttackTime = Date.now() - PLAYER_ATTACK_DELAY;
     this.stateName = 'before-playing';
@@ -34,14 +34,14 @@ export default abstract class PlayerState {
   }
 
   public processMovement() {
-    this.sprite.speed = Helper.getSpeedByKeyboardsKeys(
-      this.sprite,
+    this.gameObject.speed = Helper.getSpeedByKeyboardsKeys(
+      this.gameObject,
       this.keyboardController
     );
-    this.sprite.move();
+    this.gameObject.move();
   }
   public addToNextRender() {
-    this.virtualDOM.addElement(this.sprite);
+    this.virtualDOM.addElement(this.gameObject);
   }
   public registerDamage() {
     this.bulletsCollider.tryToCollide(() => {
@@ -62,7 +62,7 @@ export default abstract class PlayerState {
     if (readyToAttack && this.keyboardController.isActiveKey(KEY_ATTACK)) {
       this.lastAttackTime = currentTime;
       this.bulletsStore.addElement(
-        new Bullet('player', this.sprite.point.clone(), new Speed(0, -4))
+        new Bullet('player', this.gameObject.point.clone(), new Speed(0, -4))
       );
     }
   }

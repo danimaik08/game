@@ -1,5 +1,4 @@
-import MovableObject from '~/components/MovableObject';
-import GameObject from '~/components/GameObject';
+import GameObject from '~/structs/GameObject';
 import KeyboardController from '~/components/KeyboardController';
 import Speed from '~/structs/Speed';
 import playerPng from '~/assets/img/wizard.png';
@@ -18,13 +17,13 @@ import {
 } from '~/consts';
 import zIndex from '~/zIndex';
 
-export const createInitialSprite = () => {
-  return new MovableObject(
+export const createInitialGameObject = () => {
+  return new GameObject(
     PLAYER_INITIAL_POINT.clone(),
     PLAYER_INITIAL_SIZE.clone(),
-    PLAYER_INITIAL_SPEED.clone(),
     `url(${playerPng})`,
-    zIndex.playerState
+    zIndex.playerState,
+    PLAYER_INITIAL_SPEED.clone()
   );
 };
 

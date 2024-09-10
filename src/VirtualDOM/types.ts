@@ -1,9 +1,10 @@
-import GameObjectAPI, {
-  GameObjectId,
-} from '~/components/GameObject/GameObjectAPI';
+import { GameObjectStructure } from '~/structs/GameObject/types';
 
-export interface VirtualDOMChange extends GameObjectAPI {
+export interface VirtualDOMChange extends GameObjectStructure {
   action?: 'mount' | 'unmount';
 }
 
-export type VirtualDOMGameObjectsMap = Record<GameObjectId, GameObjectAPI>;
+export type VirtualDOMGameObjectsMap = Record<
+  GameObjectStructure['id'],
+  GameObjectStructure
+>;

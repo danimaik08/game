@@ -1,6 +1,6 @@
 import { BulletType } from '~/components/Bullet/types';
 import BulletsStore from '~/components/BulletsStore';
-import GameObject from '~/components/GameObject';
+import GameObject from '~/structs/GameObject';
 
 import * as Helper from './helper';
 

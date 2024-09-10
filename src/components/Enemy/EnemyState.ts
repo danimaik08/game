@@ -1,5 +1,5 @@
 import { ENEMY_ATTACK_DELAY, ENEMY_RECEIVING_DAMAGE } from '~/consts';
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 import VirtualDOM from '~/VirtualDOM';
 import BulletsCollider from '~/components/BulletsCollider';
 import BulletsStore from '~/components/BulletsStore';
@@ -8,7 +8,7 @@ import * as Helper from './helper';
 import { EnemyStateName } from './types';
 
 export default abstract class EnemyState {
-  protected sprite: MovableObject;
+  protected gameObject: GameObject;
   protected virtualDOM: VirtualDOM;
   protected bulletsCollider: BulletsCollider;
   protected bulletsStore: BulletsStore;
@@ -17,10 +17,10 @@ export default abstract class EnemyState {
   public health: number;
   public stateName: EnemyStateName;
 
-  constructor(sprite: MovableObject, health: number) {
-    this.sprite = sprite;
+  constructor(gameObject: GameObject, health: number) {
+    this.gameObject = gameObject;
     this.virtualDOM = new VirtualDOM();
-    this.bulletsCollider = new BulletsCollider(this.sprite, 'player');
+    this.bulletsCollider = new BulletsCollider(this.gameObject, 'player');
     this.bulletsStore = new BulletsStore();
     this.lastAttackTime = Date.now() - ENEMY_ATTACK_DELAY;
     this.stateName = 'before-playing';
@@ -28,11 +28,11 @@ export default abstract class EnemyState {
   }
 
   public processMovement() {
-    this.sprite.speed = Helper.getSpeed(this.sprite);
-    this.sprite.move();
+    this.gameObject.speed = Helper.getSpeed(this.gameObject);
+    this.gameObject.move();
   }
   public addToNextRender() {
-    this.virtualDOM.addElement(this.sprite);
+    this.virtualDOM.addElement(this.gameObject);
   }
   public registerDamage() {
     this.bulletsCollider.tryToCollide(() => {
@@ -52,7 +52,9 @@ export default abstract class EnemyState {
 
     if (readyToAttack) {
       this.lastAttackTime = currentTime;
-      this.bulletsStore.addElement(Helper.createBullet(this.sprite));
+      this.bulletsStore.addElement(
+        Helper.createBullet(this.gameObject.point, this.gameObject.size)
+      );
     }
   }
 }

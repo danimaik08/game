@@ -1,5 +1,5 @@
 import VirtualDOM from '~/VirtualDOM';
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 import { BULLET_SIZE } from '~/consts';
 import zIndex from '~/zIndex';
 import enemyBulletPng from '~/assets/img/web.png';
@@ -10,7 +10,7 @@ import Speed from '~/structs/Speed';
 import { BulletType } from './types';
 
 export default class Bullet {
-  private sprite: MovableObject | null;
+  private gameObject: GameObject;
   private virtualDOM: VirtualDOM;
 
   private static createInitialSprite(
@@ -18,38 +18,38 @@ export default class Bullet {
     point: Point,
     speed: Speed
   ) {
-    return new MovableObject(
+    return new GameObject(
       point.clone(),
       BULLET_SIZE.clone(),
-      speed.clone(),
       `url(${type === 'enemy' ? enemyBulletPng : playerBulletPng})`,
-      zIndex.bulletState
+      zIndex.bulletState,
+      speed.clone()
     );
   }
 
   constructor(private innerType: BulletType, point: Point, speed: Speed) {
     this.virtualDOM = new VirtualDOM();
-    this.sprite = Bullet.createInitialSprite(this.innerType, point, speed);
+    this.gameObject = Bullet.createInitialSprite(this.innerType, point, speed);
   }
 
   get point() {
-    return this.sprite.point;
+    return this.gameObject.point;
   }
   get size() {
-    return this.sprite.size;
+    return this.gameObject.size;
   }
   get id() {
-    return this.sprite.id;
+    return this.gameObject.id;
   }
   get type() {
     return this.innerType;
   }
 
   private processMovement() {
-    this.sprite.move();
+    this.gameObject.move();
   }
   private addToNextRender() {
-    this.virtualDOM.addElement(this.sprite);
+    this.virtualDOM.addElement(this.gameObject);
   }
 
   public doFrameBehavior() {

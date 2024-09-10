@@ -1,17 +1,17 @@
-import GameObjectAPI from '~/components/GameObject/GameObjectAPI';
+import { GameObjectStructure } from '~/structs/GameObject/types';
 
 export default class BrowserAPIView {
-  private gameObjectAPI: GameObjectAPI;
+  private gameObject: GameObjectStructure;
   private innerElement: HTMLElement | null;
   public get element(): HTMLElement {
     return this.innerElement;
   }
   public get id(): string {
-    return this.gameObjectAPI.id;
+    return this.gameObject.id;
   }
 
-  constructor(gameObjectAPI: GameObjectAPI) {
-    this.gameObjectAPI = gameObjectAPI;
+  constructor(gameObject: GameObjectStructure) {
+    this.gameObject = gameObject;
     this.innerElement = null;
   }
 
@@ -24,7 +24,7 @@ export default class BrowserAPIView {
   }
 
   private get css(): string {
-    const { point, size, background, zIndex } = this.gameObjectAPI;
+    const { point, size, background, zIndex } = this.gameObject;
 
     return `
     position: absolute;

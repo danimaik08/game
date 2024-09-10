@@ -1,5 +1,5 @@
 import { PLAYER_AFTER_DAMAGE_DURATION, PLAYER_MAX_HEALTH } from '~/consts';
-import MovableObject from '~/components/MovableObject';
+import GameObject from '~/structs/GameObject';
 
 import { PlayerStateName } from './types';
 import * as Helper from './helper';
@@ -14,7 +14,7 @@ export default class Player {
   private static instance: Player;
   private timer: NodeJS.Timeout;
   private state: PlayerState;
-  private sprite: MovableObject;
+  private gameObject: GameObject;
   private stateNameBefore: PlayerStateName;
   private innerHealth: number;
 
@@ -22,7 +22,7 @@ export default class Player {
     if (!Player.instance) {
       this.timer = null;
       this.innerHealth = PLAYER_MAX_HEALTH;
-      this.sprite = Helper.createInitialSprite();
+      this.gameObject = Helper.createInitialGameObject();
       this.stateNameBefore = 'before-playing';
       Player.instance = this;
     }
@@ -39,11 +39,11 @@ export default class Player {
   set stateName(newState: PlayerStateName) {
     switch (newState) {
       case 'before-playing': {
-        this.state = new BeforePlayingState(this.sprite, this.innerHealth);
+        this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
         break;
       }
       case 'playing': {
-        this.state = new PlayingState(this.sprite, this.innerHealth);
+        this.state = new PlayingState(this.gameObject, this.innerHealth);
         break;
       }
       case 'playing-after-damage': {
@@ -52,7 +52,10 @@ export default class Player {
           this.stateName = 'playing';
         }, PLAYER_AFTER_DAMAGE_DURATION);
 
-        this.state = new PlayingAfterDamageState(this.sprite, this.innerHealth);
+        this.state = new PlayingAfterDamageState(
+          this.gameObject,
+          this.innerHealth
+        );
         break;
       }
       case 'before-dead': {
@@ -61,11 +64,11 @@ export default class Player {
           this.stateName = 'dead';
         }, 0);
 
-        this.state = new BeforeDeadState(this.sprite, this.innerHealth);
+        this.state = new BeforeDeadState(this.gameObject, this.innerHealth);
         break;
       }
       case 'dead': {
-        this.state = new DeadState(this.sprite, this.innerHealth);
+        this.state = new DeadState(this.gameObject, this.innerHealth);
         break;
       }
     }

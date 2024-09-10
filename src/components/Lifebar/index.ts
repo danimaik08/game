@@ -1,4 +1,4 @@
-import GameObject from '~/components/GameObject';
+import GameObject from '~/structs/GameObject';
 import Enemy from '~/components/Enemy';
 import Player from '~/components/Player';
 import Point from '~/structs/Point';
