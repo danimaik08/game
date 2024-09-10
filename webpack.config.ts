@@ -55,14 +55,7 @@ export default (env: Env) => {
       }),
       isDev && new webpack.ProgressPlugin(),
       new webpack.DefinePlugin({
-        'process.env': JSON.stringify({
-          KEY_TOP: 'W',
-          KEY_LEFT: 'A',
-          KEY_BOTTOM: 'S',
-          KEY_RIGHT: 'D',
-          KEY_ATTACK: 'K',
-          ...process.env,
-        }),
+        'process.env': JSON.stringify({ ...process.env }),
       }),
     ],
     devServer: {
