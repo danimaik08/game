@@ -1,7 +1,8 @@
 import { screen } from '@testing-library/dom';
 
-import GameWindow from '~/GameWindow';
 import BrowserAPI from '~/RenderAPI/BrowserAPI';
+
+import GameWindow from '.';
 
 describe('GameWindow tests', () => {
   test('root is in layout', () => {

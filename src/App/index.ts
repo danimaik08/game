@@ -5,8 +5,9 @@ import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
 import BulletsStore from '~/stores/BulletsStore';
 import VirtualDOM from '~/VirtualDOM';
-import GameLoop from '~/GameLoop';
-import GameWindow from '~/GameWindow';
+
+import GameLoop from './GameLoop';
+import GameWindow from './GameWindow';
 
 export default class App {
   private static instance: App;
