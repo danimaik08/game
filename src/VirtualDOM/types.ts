@@ -1,4 +1,6 @@
-import GameObjectAPI, { GameObjectId } from '~/GameObject/GameObjectAPI';
+import GameObjectAPI, {
+  GameObjectId,
+} from '~/components/GameObject/GameObjectAPI';
 
 export interface VirtualDOMChange extends GameObjectAPI {
   action?: 'mount' | 'unmount';

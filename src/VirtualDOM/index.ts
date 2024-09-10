@@ -1,4 +1,6 @@
-import GameObjectAPI, { GameObjectId } from '~/GameObject/GameObjectAPI';
+import GameObjectAPI, {
+  GameObjectId,
+} from '~/components/GameObject/GameObjectAPI';
 
 import { VirtualDOMChange, VirtualDOMGameObjectsMap } from './types';
 
