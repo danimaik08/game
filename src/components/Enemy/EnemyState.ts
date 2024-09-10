@@ -1,8 +1,8 @@
 import { ENEMY_ATTACK_DELAY, ENEMY_RECEIVING_DAMAGE } from '~/consts';
 import GameObject from '~/structs/GameObject';
 import VirtualDOM from '~/VirtualDOM';
-import BulletsCollider from '~/components/BulletsCollider';
-import BulletsStore from '~/components/BulletsStore';
+import BulletsCollider from '~/colliders/BulletsCollider';
+import BulletsStore from '~/stores/BulletsStore';
 
 import * as Helper from './helper';
 import { EnemyStateName } from './types';

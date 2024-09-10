@@ -3,8 +3,8 @@ import VirtualDOM from '~/VirtualDOM';
 import Bullet from '~/components/Bullet';
 import Keyboard from '~/controllers/Keyboard';
 import GameObject from '~/structs/GameObject';
-import BulletsCollider from '~/components/BulletsCollider';
-import BulletsStore from '~/components/BulletsStore';
+import BulletsCollider from '~/colliders/BulletsCollider';
+import BulletsStore from '~/stores/BulletsStore';
 import Speed from '~/structs/Speed';
 
 import * as Helper from './helper';

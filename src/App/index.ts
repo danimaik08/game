@@ -1,12 +1,12 @@
 import RenderAPI from '~/RenderAPI';
 import getRenderAPI from '~/RenderAPI/getRenderAPI';
-import VirtualDOM from '~/VirtualDOM';
-import GameWindow from '~/components/GameWindow';
-import GameLoop from '~/components/GameLoop';
 import Player from '~/components/Player';
 import Enemy from '~/components/Enemy';
-import BulletsStore from '~/components/BulletsStore';
 import Lifebar from '~/components/Lifebar';
+import BulletsStore from '~/stores/BulletsStore';
+import VirtualDOM from '~/VirtualDOM';
+import GameLoop from '~/GameLoop';
+import GameWindow from '~/GameWindow';
 
 export default class App {
   private static instance: App;
