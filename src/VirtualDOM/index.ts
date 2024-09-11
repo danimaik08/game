@@ -57,7 +57,9 @@ export default class VirtualDOM {
         for (const key in prevElement) {
           const propKey = key as keyof typeof prevElement;
 
-          if (prevElement[propKey] !== nextElement[propKey]) {
+          if (
+            prevElement[propKey].valueOf() !== nextElement[propKey].valueOf()
+          ) {
             isUpdated = true;
             break;
           }

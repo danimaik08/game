@@ -4,4 +4,8 @@ export default class Speed {
   public clone(): Speed {
     return new Speed(this.x, this.y);
   }
+
+  public valueOf() {
+    return this.x + ' ' + this.y;
+  }
 }

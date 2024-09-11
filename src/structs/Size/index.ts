@@ -4,4 +4,8 @@ export default class Size {
   public clone(): Size {
     return new Size(this.width, this.height);
   }
+
+  public valueOf() {
+    return this.width + ' ' + this.height;
+  }
 }
