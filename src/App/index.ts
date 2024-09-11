@@ -45,7 +45,7 @@ export default class App {
     this.gameLoop.start(() => {
       this.doBulletsFrameBehavior();
       this.player.doFrameBehavior();
-      // this.enemy.doFrameBehavior();
+      this.enemy.doFrameBehavior();
       this.lifebar.doFrameBehavior();
 
       this.render();
