@@ -42,11 +42,6 @@ export default class BrowserAPI extends RenderAPI {
           this.update(change.gameObject);
           break;
         }
-        case 'not-a-change': {
-          // bug
-          this.update(change.gameObject);
-          break;
-        }
       }
     });
   }

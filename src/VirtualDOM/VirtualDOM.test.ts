@@ -104,5 +104,14 @@ describe('VirtualDOM', () => {
     expect(changes2.filter((change) => change.action === 'update').length).toBe(
       0
     );
+
+    gameObject.move();
+    virtualDOM.addElement(gameObject);
+
+    const changes3 = virtualDOM.getChanges();
+
+    expect(changes3.filter((change) => change.action === 'update').length).toBe(
+      1
+    );
   });
 });

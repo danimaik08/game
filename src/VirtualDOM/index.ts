@@ -22,7 +22,12 @@ export default class VirtualDOM {
     this.nextElementsMap[element.id] = element;
   }
   public prepareForNewFrame(): void {
-    this.prevElementsMap = this.nextElementsMap;
+    this.prevElementsMap = {};
+
+    for (const id in this.nextElementsMap) {
+      this.prevElementsMap[id] = this.nextElementsMap[id].clone();
+    }
+
     this.nextElementsMap = {};
   }
   public getChanges(): VirtualDOMChange[] {
