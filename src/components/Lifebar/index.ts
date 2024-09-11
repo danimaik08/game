@@ -94,6 +94,8 @@ export default class Lifebar {
   }
 
   private addToRenderEnemyHealth() {
+    this.enemyHealth.size = new Size(this.enemy.health, LIFEBAR_HEIGHT);
+
     this.virtualDOM.addElement(this.enemyHealth);
   }
 
