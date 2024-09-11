@@ -38,7 +38,7 @@ export default class BrowserAPI extends RenderAPI {
           this.unmount(change.gameObject);
           break;
         }
-        default: {
+        case 'update': {
           this.update(change.gameObject);
         }
       }

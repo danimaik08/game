@@ -3,18 +3,17 @@ import Point from '~/structs/Point';
 import Size from '~/structs/Size';
 
 import VirtualDOM from '.';
+import Speed from '~/structs/Speed';
 
 describe('VirtualDOM', () => {
-  it('clear', () => {
-    const virtualDOM = new VirtualDOM();
+  const virtualDOM = new VirtualDOM();
 
+  it('clear', () => {
     const changes = virtualDOM.getChanges();
 
     expect(changes.length).toBe(0);
   });
   it('add 1 element', () => {
-    const virtualDOM = new VirtualDOM();
-
     const gameObject = new GameObject(new Point(0, 0), new Size(1, 1));
 
     virtualDOM.addElement(gameObject);
@@ -24,8 +23,6 @@ describe('VirtualDOM', () => {
     expect(changes.length).toBe(1);
   });
   it('add 3 elements', () => {
-    const virtualDOM = new VirtualDOM();
-
     const gameObject1 = new GameObject(new Point(0, 0), new Size(1, 1));
     const gameObject2 = new GameObject(new Point(0, 0), new Size(1, 1));
     const gameObject3 = new GameObject(new Point(0, 0), new Size(1, 1));
@@ -39,8 +36,6 @@ describe('VirtualDOM', () => {
     expect(changes.length).toBe(4);
   });
   it('mount', () => {
-    const virtualDOM = new VirtualDOM();
-
     const changes = virtualDOM.getChanges();
 
     expect(changes.filter((change) => change.action === 'mount').length).toBe(
@@ -48,8 +43,6 @@ describe('VirtualDOM', () => {
     );
   });
   it('prepareForNewFrame', () => {
-    const virtualDOM = new VirtualDOM();
-
     virtualDOM.prepareForNewFrame();
 
     const changes = virtualDOM.getChanges();
@@ -57,8 +50,6 @@ describe('VirtualDOM', () => {
     expect(changes.length).toBe(4);
   });
   it('zero mount', () => {
-    const virtualDOM = new VirtualDOM();
-
     const changes = virtualDOM.getChanges();
 
     expect(changes.filter((change) => change.action === 'mount').length).toBe(
@@ -66,8 +57,6 @@ describe('VirtualDOM', () => {
     );
   });
   it('4 unmount, 1 mount', () => {
-    const virtualDOM = new VirtualDOM();
-
     virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
 
     const changes = virtualDOM.getChanges();
@@ -80,12 +69,40 @@ describe('VirtualDOM', () => {
     );
   });
   it('1 mount and zero unmounts', () => {
-    const virtualDOM = new VirtualDOM();
-
     virtualDOM.prepareForNewFrame();
 
     const changes = virtualDOM.getChanges();
 
     expect(changes.length).toBe(1);
+  });
+  it('update', () => {
+    const gameObject = new GameObject(
+      new Point(0, 0),
+      new Size(1, 1),
+      '',
+      1,
+      new Speed(1, 1)
+    );
+
+    virtualDOM.addElement(gameObject);
+    virtualDOM.prepareForNewFrame();
+
+    gameObject.move();
+
+    virtualDOM.addElement(gameObject);
+
+    const changes1 = virtualDOM.getChanges();
+
+    expect(changes1.filter((change) => change.action === 'update').length).toBe(
+      1
+    );
+
+    virtualDOM.prepareForNewFrame();
+
+    const changes2 = virtualDOM.getChanges();
+
+    expect(changes2.filter((change) => change.action === 'update').length).toBe(
+      0
+    );
   });
 });

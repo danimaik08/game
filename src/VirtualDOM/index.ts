@@ -18,7 +18,7 @@ export default class VirtualDOM {
     return VirtualDOM.instance;
   }
 
-  public addElement(element: GameObject): void {
+  public addElement(element: GameObjectStruct): void {
     this.nextElementsMap[element.id] = element;
   }
   public prepareForNewFrame(): void {
@@ -29,7 +29,7 @@ export default class VirtualDOM {
     const allIds = this.getAllIdsFromMaps();
     const changes: VirtualDOMChange[] = [];
 
-    allIds.forEach((id: GameObject['id']) => {
+    allIds.forEach((id: GameObjectStruct['id']) => {
       const prevElement: GameObjectStruct | null =
         this.prevElementsMap[id] ?? null;
 
@@ -47,7 +47,18 @@ export default class VirtualDOM {
           action: 'unmount',
         });
       } else {
-        changes.push({ gameObject: nextElement });
+        let isUpdated = false;
+
+        for (const key in prevElement) {
+          const propKey = key as keyof typeof prevElement;
+
+          if (prevElement[propKey] !== nextElement[propKey]) {
+            isUpdated = true;
+            break;
+          }
+        }
+
+        changes.push({ gameObject: nextElement, action: 'update' });
       }
     });
 
