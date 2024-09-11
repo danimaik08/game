@@ -34,18 +34,6 @@ export default class App {
     return App.instance;
   }
 
-  private render() {
-    this.renderAPI.render(this.virtualDOM.getChanges());
-    this.virtualDOM.prepareForNewFrame();
-  }
-
-  private doBulletsFrameBehavior() {
-    this.bulletsStore.removeBulletsOutsideScreen();
-    this.bulletsStore.bullets.forEach((bullet) => {
-      bullet.doFrameBehavior();
-    });
-  }
-
   public start() {
     const gameWindow = new GameWindow(this.renderAPI);
 
@@ -61,6 +49,18 @@ export default class App {
       this.lifebar.doFrameBehavior();
 
       this.render();
+    });
+  }
+
+  private render() {
+    this.renderAPI.render(this.virtualDOM.getChanges());
+    this.virtualDOM.prepareForNewFrame();
+  }
+
+  private doBulletsFrameBehavior() {
+    this.bulletsStore.removeBulletsOutsideScreen();
+    this.bulletsStore.bullets.forEach((bullet) => {
+      bullet.doFrameBehavior();
     });
   }
 }

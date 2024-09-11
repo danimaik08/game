@@ -30,6 +30,25 @@ export default class Player {
     return Player.instance;
   }
 
+  public doFrameBehavior() {
+    this.state.processMovement();
+    this.state.addToNextRender();
+    this.state.registerDamage();
+    this.state.attack();
+    this.applyNewHealth();
+    this.applyNewState();
+  }
+
+  private applyNewState() {
+    if (this.stateName !== this.stateNameBefore) {
+      this.stateNameBefore = this.state.stateName;
+      this.stateName = this.state.stateName;
+    }
+  }
+  private applyNewHealth() {
+    this.innerHealth = this.state.health;
+  }
+
   get health() {
     return this.innerHealth;
   }
@@ -72,24 +91,5 @@ export default class Player {
         break;
       }
     }
-  }
-
-  private applyNewState() {
-    if (this.stateName !== this.stateNameBefore) {
-      this.stateNameBefore = this.state.stateName;
-      this.stateName = this.state.stateName;
-    }
-  }
-  private applyNewHealth() {
-    this.innerHealth = this.state.health;
-  }
-
-  public doFrameBehavior() {
-    this.state.processMovement();
-    this.state.addToNextRender();
-    this.state.registerDamage();
-    this.state.attack();
-    this.applyNewHealth();
-    this.applyNewState();
   }
 }

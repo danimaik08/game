@@ -7,14 +7,13 @@ export default class FakeAPI extends RenderAPI {
     super();
   }
 
-  renderGameWindow() {
+  public renderGameWindow() {
     console.log('renderGameWindow');
   }
-  clearAll() {
+  public clearAll() {
     console.log('clearAll');
   }
-
-  render(changes: VirtualDOMChange[]): void {
+  public render(changes: VirtualDOMChange[]): void {
     console.log('render');
   }
 }

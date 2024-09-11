@@ -12,8 +12,7 @@ export default abstract class RenderAPI {
 
     return RenderAPI.instance;
   }
-  abstract renderGameWindow(): void;
-  abstract clearAll(): void;
-
-  abstract render(changes: VirtualDOMChange[]): void;
+  public abstract renderGameWindow(): void;
+  public abstract clearAll(): void;
+  public abstract render(changes: VirtualDOMChange[]): void;
 }

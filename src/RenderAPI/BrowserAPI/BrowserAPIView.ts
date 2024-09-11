@@ -2,7 +2,7 @@ import { GameObjectStructure } from '~/structs/GameObject/types';
 
 export default class BrowserAPIView {
   private gameObject: GameObjectStructure;
-  private innerElement: HTMLElement | null;
+  private innerElement: HTMLElement;
   public get element(): HTMLElement {
     return this.innerElement;
   }
@@ -23,6 +23,10 @@ export default class BrowserAPIView {
     this.innerElement = html;
   }
 
+  public applyActualChange(): void {
+    this.element.setAttribute('style', this.css);
+  }
+
   private get css(): string {
     const { point, size, background, zIndex } = this.gameObject;
 
@@ -35,9 +39,5 @@ export default class BrowserAPIView {
     height: ${size.height}px;
     background: ${background};
     `;
-  }
-
-  public applyActualChange(): void {
-    this.element.setAttribute('style', this.css);
   }
 }

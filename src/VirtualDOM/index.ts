@@ -21,21 +21,10 @@ export default class VirtualDOM {
   public addElement(element: GameObject): void {
     this.nextElementsMap[element.id] = element;
   }
-
-  private getAllIdsFromMaps(): Set<GameObject['id']> {
-    const allIdsSet = new Set<GameObject['id']>();
-
-    for (const id in this.prevElementsMap) {
-      allIdsSet.add(id);
-    }
-
-    for (const id in this.nextElementsMap) {
-      allIdsSet.add(id);
-    }
-
-    return allIdsSet;
+  public prepareForNewFrame(): void {
+    this.prevElementsMap = this.nextElementsMap;
+    this.nextElementsMap = {};
   }
-
   public getChanges(): VirtualDOMChange[] {
     const allIds = this.getAllIdsFromMaps();
     const changes: VirtualDOMChange[] = [];
@@ -75,8 +64,17 @@ export default class VirtualDOM {
     return changes;
   }
 
-  public prepareForNewFrame(): void {
-    this.prevElementsMap = this.nextElementsMap;
-    this.nextElementsMap = {};
+  private getAllIdsFromMaps(): Set<GameObject['id']> {
+    const allIdsSet = new Set<GameObject['id']>();
+
+    for (const id in this.prevElementsMap) {
+      allIdsSet.add(id);
+    }
+
+    for (const id in this.nextElementsMap) {
+      allIdsSet.add(id);
+    }
+
+    return allIdsSet;
   }
 }

@@ -20,12 +20,29 @@ export default class BrowserAPI extends RenderAPI {
     return windowNode;
   }
 
-  renderGameWindow(): void {
+  public renderGameWindow(): void {
     Helper.createRoot();
     Helper.createWindow();
   }
-  clearAll(): void {
+  public clearAll(): void {
     document.body.innerHTML = '';
+  }
+  public render(changes: VirtualDOMChange[]): void {
+    changes.forEach((change) => {
+      switch (change.action) {
+        case 'mount': {
+          this.mount(change);
+          break;
+        }
+        case 'unmount': {
+          this.unmount(change);
+          break;
+        }
+        default: {
+          this.update(change);
+        }
+      }
+    });
   }
 
   private mount(gameObject: GameObjectStructure): void {
@@ -50,22 +67,5 @@ export default class BrowserAPI extends RenderAPI {
   private unmount(gameObject: GameObjectStructure): void {
     this.elementsMap[gameObject.id].element.remove();
     delete this.elementsMap[gameObject.id];
-  }
-  render(changes: VirtualDOMChange[]): void {
-    changes.forEach((change) => {
-      switch (change.action) {
-        case 'mount': {
-          this.mount(change);
-          break;
-        }
-        case 'unmount': {
-          this.unmount(change);
-          break;
-        }
-        default: {
-          this.update(change);
-        }
-      }
-    });
   }
 }

@@ -35,11 +35,19 @@ export default class Lifebar {
     return Lifebar.instance;
   }
 
+  public doFrameBehavior() {
+    this.addToRenderEmptyBar();
+    this.addToRenderEnemyEmptyHealth();
+    this.addToRenderEnemyHealth();
+    this.addToRenderPlayerHealth();
+  }
+
   private addToRenderEmptyBar() {
     this.virtualDOM.addElement(
       new GameObject(
         new Point(0, 0),
         new Size(GAME_WINDOW_WIDTH, LIFEBAR_HEIGHT),
+
         LIFEBAR_COLOR,
         zIndex.lifebar.emptyLifebar
       )
@@ -87,12 +95,5 @@ export default class Lifebar {
         )
       );
     }
-  }
-
-  public doFrameBehavior() {
-    this.addToRenderEmptyBar();
-    this.addToRenderEnemyEmptyHealth();
-    this.addToRenderEnemyHealth();
-    this.addToRenderPlayerHealth();
   }
 }

@@ -13,6 +13,17 @@ export default class GameWindow {
     return GameWindow.instance;
   }
 
+  public render() {
+    this.renderAPI.renderGameWindow();
+  }
+
+  public destroy() {
+    this.handleErrorsForDestroy();
+    this.renderAPI.clearAll();
+    this.renderAPI = null;
+    GameWindow.instance = null;
+  }
+
   private handleErrorsForDestroy() {
     if (!process.env.IS_TEST_MODE) {
       throw new Error(
@@ -25,16 +36,5 @@ export default class GameWindow {
         'GameWindow Error: called method "destroy" without adding of renderAPI'
       );
     }
-  }
-
-  public render() {
-    this.renderAPI.renderGameWindow();
-  }
-
-  public destroy() {
-    this.handleErrorsForDestroy();
-    this.renderAPI.clearAll();
-    this.renderAPI = null;
-    GameWindow.instance = null;
   }
 }

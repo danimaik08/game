@@ -13,6 +13,26 @@ export default class Bullet {
   private gameObject: GameObject;
   private virtualDOM: VirtualDOM;
 
+  get point() {
+    return this.gameObject.point;
+  }
+  get size() {
+    return this.gameObject.size;
+  }
+  get id() {
+    return this.gameObject.id;
+  }
+
+  constructor(public readonly type: BulletType, point: Point, speed: Speed) {
+    this.virtualDOM = new VirtualDOM();
+    this.gameObject = Bullet.createInitialSprite(this.type, point, speed);
+  }
+
+  public doFrameBehavior() {
+    this.processMovement();
+    this.addToNextRender();
+  }
+
   private static createInitialSprite(
     type: BulletType,
     point: Point,
@@ -27,33 +47,10 @@ export default class Bullet {
     );
   }
 
-  constructor(private innerType: BulletType, point: Point, speed: Speed) {
-    this.virtualDOM = new VirtualDOM();
-    this.gameObject = Bullet.createInitialSprite(this.innerType, point, speed);
-  }
-
-  get point() {
-    return this.gameObject.point;
-  }
-  get size() {
-    return this.gameObject.size;
-  }
-  get id() {
-    return this.gameObject.id;
-  }
-  get type() {
-    return this.innerType;
-  }
-
   private processMovement() {
     this.gameObject.move();
   }
   private addToNextRender() {
     this.virtualDOM.addElement(this.gameObject);
-  }
-
-  public doFrameBehavior() {
-    this.processMovement();
-    this.addToNextRender();
   }
 }
