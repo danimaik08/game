@@ -12,7 +12,7 @@ export const PLAYER_INITIAL_SPEED = new Speed(0, 0);
 export const PLAYER_MOVEMENT_SPEED = 4;
 export const PLAYER_MIN_TOP = 350;
 export const PLAYER_ATTACK_DELAY = 500;
-export const PLAYER_AFTER_DAMAGE_DURATION = 1000;
+export const PLAYER_AFTER_DAMAGE_DURATION = 3000;
 
 export const ENEMY_INITIAL_POINT = new Point(350, 50);
 export const ENEMY_INITIAL_SIZE = new Size(100, 100);
