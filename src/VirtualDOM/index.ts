@@ -1,5 +1,5 @@
 import GameObject from '~/structs/GameObject';
-import { GameObjectStructure } from '~/structs/GameObject/types';
+import { GameObjectStruct } from '~/structs/GameObject/types';
 
 import { VirtualDOMChange, VirtualDOMGameObjectsMap } from './types';
 
@@ -30,10 +30,10 @@ export default class VirtualDOM {
     const changes: VirtualDOMChange[] = [];
 
     allIds.forEach((id: GameObject['id']) => {
-      const prevElement: GameObjectStructure | null =
+      const prevElement: GameObjectStruct | null =
         this.prevElementsMap[id] ?? null;
 
-      const nextElement: GameObjectStructure | null =
+      const nextElement: GameObjectStruct | null =
         this.nextElementsMap[id] ?? null;
 
       if (!prevElement) {

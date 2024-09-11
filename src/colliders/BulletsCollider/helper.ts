@@ -1,8 +1,8 @@
-import { GameObjectStructure } from '~/structs/GameObject/types';
+import { GameObjectStruct } from '~/structs/GameObject/types';
 
 export const hasCollusion = (
-  obj1: Pick<GameObjectStructure, 'point' | 'size'>,
-  obj2: Pick<GameObjectStructure, 'point' | 'size'>
+  obj1: Pick<GameObjectStruct, 'point' | 'size'>,
+  obj2: Pick<GameObjectStruct, 'point' | 'size'>
 ) => {
   const left1 = obj1.point.x;
   const right1 = obj1.point.x + obj1.size.width;

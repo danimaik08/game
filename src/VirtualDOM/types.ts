@@ -1,10 +1,10 @@
-import { GameObjectStructure } from '~/structs/GameObject/types';
+import { GameObjectStruct } from '~/structs/GameObject/types';
 
-export interface VirtualDOMChange extends GameObjectStructure {
+export interface VirtualDOMChange extends GameObjectStruct {
   action?: 'mount' | 'unmount';
 }
 
 export type VirtualDOMGameObjectsMap = Record<
-  GameObjectStructure['id'],
-  GameObjectStructure
+  GameObjectStruct['id'],
+  GameObjectStruct
 >;

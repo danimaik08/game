@@ -1,7 +1,7 @@
-import { GameObjectStructure } from '~/structs/GameObject/types';
+import { GameObjectStruct } from '~/structs/GameObject/types';
 
 export default class BrowserAPIView {
-  private gameObject: GameObjectStructure;
+  private gameObject: GameObjectStruct;
   private innerElement: HTMLElement;
   public get element(): HTMLElement {
     return this.innerElement;
@@ -10,7 +10,7 @@ export default class BrowserAPIView {
     return this.gameObject.id;
   }
 
-  constructor(gameObject: GameObjectStructure) {
+  constructor(gameObject: GameObjectStruct) {
     this.gameObject = gameObject;
     this.innerElement = null;
   }

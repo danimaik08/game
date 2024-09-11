@@ -1,13 +1,13 @@
 import * as consts from '~/RenderAPI/consts';
 import RenderAPI from '~/RenderAPI';
-import { GameObjectStructure } from '~/structs/GameObject/types';
+import { GameObjectStruct } from '~/structs/GameObject/types';
 import { VirtualDOMChange } from '~/VirtualDOM/types';
 
 import * as Helper from './helper';
 import BrowserAPIView from './BrowserAPIView';
 
 export default class BrowserAPI extends RenderAPI {
-  private elementsMap: Record<GameObjectStructure['id'], BrowserAPIView> = {};
+  private elementsMap: Record<GameObjectStruct['id'], BrowserAPIView> = {};
   private get window(): HTMLElement {
     const windowNode = document.getElementById(consts.GAME_WINDOW_ID);
 
@@ -45,7 +45,7 @@ export default class BrowserAPI extends RenderAPI {
     });
   }
 
-  private mount(gameObject: GameObjectStructure): void {
+  private mount(gameObject: GameObjectStruct): void {
     const view = new BrowserAPIView(gameObject);
 
     view.createElement();
@@ -54,7 +54,7 @@ export default class BrowserAPI extends RenderAPI {
     this.window.appendChild(view.element);
     this.elementsMap[view.id] = view;
   }
-  private update(gameObject: GameObjectStructure) {
+  private update(gameObject: GameObjectStruct) {
     const newView = new BrowserAPIView(gameObject);
     const oldView = this.elementsMap[gameObject.id];
 
@@ -64,7 +64,7 @@ export default class BrowserAPI extends RenderAPI {
     this.window.appendChild(newView.element);
     this.elementsMap[gameObject.id] = newView;
   }
-  private unmount(gameObject: GameObjectStructure): void {
+  private unmount(gameObject: GameObjectStruct): void {
     this.elementsMap[gameObject.id].element.remove();
     delete this.elementsMap[gameObject.id];
   }
