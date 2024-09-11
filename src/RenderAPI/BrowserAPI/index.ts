@@ -40,6 +40,12 @@ export default class BrowserAPI extends RenderAPI {
         }
         case 'update': {
           this.update(change.gameObject);
+          break;
+        }
+        case 'not-a-change': {
+          // bug
+          this.update(change.gameObject);
+          break;
         }
       }
     });
