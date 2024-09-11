@@ -58,7 +58,10 @@ export default class VirtualDOM {
           }
         }
 
-        changes.push({ gameObject: nextElement, action: 'update' });
+        changes.push({
+          gameObject: nextElement,
+          action: isUpdated ? 'update' : 'not-a-change',
+        });
       }
     });
 
