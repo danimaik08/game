@@ -38,26 +38,16 @@ export default class VirtualDOM {
 
       if (!prevElement) {
         changes.push({
-          id: nextElement.id,
-          point: nextElement.point,
-          size: nextElement.size,
-          speed: nextElement.speed,
-          background: nextElement.background,
-          zIndex: nextElement.zIndex,
+          gameObject: nextElement,
           action: 'mount',
         });
       } else if (!nextElement) {
         changes.push({
-          id: prevElement.id,
-          point: prevElement.point,
-          size: prevElement.size,
-          speed: prevElement.speed,
-          background: prevElement.background,
-          zIndex: prevElement.zIndex,
+          gameObject: prevElement,
           action: 'unmount',
         });
       } else {
-        changes.push(nextElement);
+        changes.push({ gameObject: nextElement });
       }
     });
 

@@ -1,6 +1,7 @@
 import { GameObjectStruct } from '~/structs/GameObject/types';
 
-export interface VirtualDOMChange extends GameObjectStruct {
+export interface VirtualDOMChange {
+  gameObject: GameObjectStruct;
   action?: 'mount' | 'unmount';
 }
 

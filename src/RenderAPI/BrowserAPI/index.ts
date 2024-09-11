@@ -31,15 +31,15 @@ export default class BrowserAPI extends RenderAPI {
     changes.forEach((change) => {
       switch (change.action) {
         case 'mount': {
-          this.mount(change);
+          this.mount(change.gameObject);
           break;
         }
         case 'unmount': {
-          this.unmount(change);
+          this.unmount(change.gameObject);
           break;
         }
         default: {
-          this.update(change);
+          this.update(change.gameObject);
         }
       }
     });

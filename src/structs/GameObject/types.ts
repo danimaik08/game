@@ -1,3 +1,3 @@
 import GameObject from '.';
 
-export type GameObjectStruct = Omit<GameObject, 'move'>;
+export type GameObjectStruct = Readonly<Omit<GameObject, 'move'>>;
