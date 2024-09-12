@@ -5,13 +5,13 @@ import { VirtualDOMChange, VirtualDOMGameObjectsMap } from './types';
 
 export default class VirtualDOM {
   private static instance: VirtualDOM;
-  private prevElementsMap: VirtualDOMGameObjectsMap;
-  private nextElementsMap: VirtualDOMGameObjectsMap;
+  private prevElements: VirtualDOMGameObjectsMap;
+  private nextElements: VirtualDOMGameObjectsMap;
 
   constructor() {
     if (!VirtualDOM.instance) {
-      this.prevElementsMap = {};
-      this.nextElementsMap = {};
+      this.prevElements = {};
+      this.nextElements = {};
       VirtualDOM.instance = this;
     }
 
@@ -19,73 +19,86 @@ export default class VirtualDOM {
   }
 
   public addElement(element: GameObjectStruct): void {
-    this.nextElementsMap[element.id] = element;
+    this.nextElements[element.id] = element;
   }
   public prepareForNewFrame(): void {
-    this.prevElementsMap = {};
+    this.prevElements = {};
 
-    for (const id in this.nextElementsMap) {
-      this.prevElementsMap[id] = this.nextElementsMap[id].clone();
+    for (const id in this.nextElements) {
+      this.prevElements[id] = this.nextElements[id].clone();
     }
 
-    this.nextElementsMap = {};
+    this.nextElements = {};
   }
   public getChanges(): VirtualDOMChange[] {
     const allIds = this.getAllIdsFromMaps();
     const changes: VirtualDOMChange[] = [];
 
     allIds.forEach((id: GameObjectStruct['id']) => {
-      const prevElement: GameObjectStruct | null =
-        this.prevElementsMap[id] ?? null;
-
-      const nextElement: GameObjectStruct | null =
-        this.nextElementsMap[id] ?? null;
-
-      if (!prevElement) {
-        changes.push({
-          gameObject: nextElement,
-          action: 'mount',
-        });
-      } else if (!nextElement) {
-        changes.push({
-          gameObject: prevElement,
-          action: 'unmount',
-        });
-      } else {
-        let isUpdated = false;
-
-        for (const key in prevElement) {
-          const propKey = key as keyof typeof prevElement;
-
-          if (
-            prevElement[propKey].valueOf() !== nextElement[propKey].valueOf()
-          ) {
-            isUpdated = true;
-            break;
-          }
-        }
-
-        changes.push({
-          gameObject: nextElement,
-          action: isUpdated ? 'update' : 'not-a-change',
-        });
-      }
+      changes.push(this.getChangeForElementById(id));
     });
 
     return changes;
   }
+  public destroy() {
+    this.handleErrorsForDestroy();
+    this.prevElements = {};
+    this.nextElements = {};
+    VirtualDOM.instance = null;
+  }
 
+  private handleErrorsForDestroy() {
+    if (!process.env.IS_TEST_MODE) {
+      throw new Error('VirtualDOM Error: called method "destroy" (which for tests only!) not in tests');
+    }
+  }
   private getAllIdsFromMaps(): Set<GameObject['id']> {
     const allIdsSet = new Set<GameObject['id']>();
 
-    for (const id in this.prevElementsMap) {
+    for (const id in this.prevElements) {
       allIdsSet.add(id);
     }
 
-    for (const id in this.nextElementsMap) {
+    for (const id in this.nextElements) {
       allIdsSet.add(id);
     }
 
     return allIdsSet;
+  }
+  private getChangeForElementById(id: GameObjectStruct['id']): VirtualDOMChange {
+    const prevElement: GameObjectStruct | null = this.prevElements[id] ?? null;
+    const nextElement: GameObjectStruct | null = this.nextElements[id] ?? null;
+
+    if (!prevElement) {
+      return {
+        gameObject: nextElement,
+        action: 'mount',
+      };
+    }
+    if (!nextElement) {
+      return {
+        gameObject: prevElement,
+        action: 'unmount',
+      };
+    }
+
+    return {
+      gameObject: nextElement,
+      action: this.isElementUpdated(id) ? 'update' : 'not-a-change',
+    };
+  }
+  private isElementUpdated(id: GameObjectStruct['id']): boolean {
+    const prevElement: GameObjectStruct = this.prevElements[id];
+    const nextElement: GameObjectStruct = this.nextElements[id];
+
+    for (const key in prevElement) {
+      const propKey = key as keyof typeof prevElement;
+
+      if (prevElement[propKey].valueOf() !== nextElement[propKey].valueOf()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
