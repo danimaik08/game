@@ -28,7 +28,6 @@ export default class BrowserAPI extends RenderAPI {
     document.body.innerHTML = '';
   }
   public render(changes: VirtualDOMChange[]): void {
-    console.log(changes);
     changes.forEach((change) => {
       switch (change.action) {
         case 'mount': {
