@@ -35,8 +35,8 @@ export const PLAYER_HEALTH_ICON_SIZE = new Size(30, 27);
 
 export const BULLET_SIZE = new Size(14, 14);
 
-export const KEY_TOP = process.env.KEY_TOP ?? 'W';
-export const KEY_LEFT = process.env.KEY_LEFT ?? 'A';
-export const KEY_BOTTOM = process.env.KEY_BOTTOM ?? 'S';
-export const KEY_RIGHT = process.env.KEY_RIGHT ?? 'D';
-export const KEY_ATTACK = process.env.KEY_ATTACK ?? 'K';
+export const KEY_TOP = localStorage.getItem('KEY_TOP') ?? 'W';
+export const KEY_LEFT = localStorage.getItem('KEY_LEFT') ?? 'A';
+export const KEY_BOTTOM = localStorage.getItem('KEY_BOTTOM') ?? 'S';
+export const KEY_RIGHT = localStorage.getItem('KEY_RIGHT') ?? 'D';
+export const KEY_ATTACK = localStorage.getItem('KEY_ATTACK') ?? 'K';
