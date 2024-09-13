@@ -42,8 +42,8 @@ export default class VirtualDOM {
   }
   public destroy() {
     this.handleErrorsForDestroy();
-    this.prevElements = {};
-    this.nextElements = {};
+    this.prevElements = null;
+    this.nextElements = null;
     VirtualDOM.instance = null;
   }
 
