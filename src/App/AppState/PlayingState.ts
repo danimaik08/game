@@ -3,7 +3,7 @@ import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
 import Keyboard from '~/controllers/Keyboard';
 import BulletsStore from '~/stores/BulletsStore';
-import { KEY_PAUSE } from '~/consts';
+import { KEY_PAUSE, DEFAULT_DEBOUNCE } from '~/consts';
 
 import AppState from '.';
 
@@ -15,6 +15,8 @@ export default class PlayingState extends AppState {
   private keyboard: Keyboard;
 
   private isPause: boolean;
+  private isReadyToChangeIsPause: boolean;
+  private timerOfIsPause: NodeJS.Timeout;
 
   constructor() {
     super();
@@ -25,15 +27,15 @@ export default class PlayingState extends AppState {
 
     this.keyboard = new Keyboard();
     this.isPause = false;
+    this.isReadyToChangeIsPause = true;
+    this.timerOfIsPause = null;
 
     this.player.init();
     this.enemy.init();
   }
 
   public doFrameBehavior() {
-    if (this.keyboard.isActiveKey(KEY_PAUSE)) {
-      this.isPause = !this.isPause;
-    }
+    this.processPauseController();
 
     if (this.isPause) {
       return;
@@ -47,6 +49,20 @@ export default class PlayingState extends AppState {
     super.render();
   }
 
+  private processPauseController() {
+    if (this.keyboard.isActiveKey(KEY_PAUSE)) {
+      if (this.isReadyToChangeIsPause) {
+        this.isPause = !this.isPause;
+      }
+
+      this.isReadyToChangeIsPause = false;
+
+      clearTimeout(this.timerOfIsPause);
+      this.timerOfIsPause = setTimeout(() => {
+        this.isReadyToChangeIsPause = true;
+      }, DEFAULT_DEBOUNCE);
+    }
+  }
   private doBulletsFrameBehavior() {
     this.bulletsStore.removeBulletsOutsideScreen();
     this.bulletsStore.bullets.forEach((bullet) => {
