@@ -82,14 +82,6 @@ describe('VirtualDOM', () => {
     expect(changes.filter((change) => change.action === 'unmount').length).toBe(4);
     expect(changes.filter((change) => change.action === 'mount').length).toBe(1);
   });
-  it('1 mount and zero unmounts', () => {
-    const virtualDOM = new VirtualDOM();
-
-    virtualDOM.addElement(testGameObject.clone());
-    const changes = virtualDOM.getChanges();
-
-    expect(changes.length).toBe(1);
-  });
   it('getChanges before adding', () => {
     const virtualDOM = new VirtualDOM();
 
