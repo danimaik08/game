@@ -1,37 +1,54 @@
 import RenderAPI from '~/RenderAPI';
 import getRenderAPI from '~/RenderAPI/getRenderAPI';
-import Player from '~/components/Player';
-import Enemy from '~/components/Enemy';
-import Lifebar from '~/components/Lifebar';
-import BulletsStore from '~/stores/BulletsStore';
-import VirtualDOM from '~/VirtualDOM';
 
 import GameLoop from './GameLoop';
 import GameWindow from './GameWindow';
+import AppState from './AppState';
+import { AppStateName } from './AppState/types';
+import PlayingState from './AppState/PlayingState';
+import MenuState from './AppState/MenuState';
+import SettingsState from './AppState/SettingsState';
 
 export default class App {
   private static instance: App;
   private renderAPI: RenderAPI;
   private gameLoop: GameLoop;
-  private virtualDOM: VirtualDOM;
-  private player: Player;
-  private enemy: Enemy;
-  private bulletsStore: BulletsStore;
-  private lifebar: Lifebar;
+
+  private state: AppState;
+  private stateNameBefore: AppStateName;
 
   constructor() {
     if (!App.instance) {
       this.renderAPI = getRenderAPI();
       this.gameLoop = new GameLoop();
-      this.virtualDOM = new VirtualDOM();
-      this.player = new Player();
-      this.enemy = new Enemy();
-      this.bulletsStore = new BulletsStore();
-      this.lifebar = new Lifebar();
+
+      this.stateName = 'playing';
+      this.stateNameBefore = this.state.stateName;
+
       App.instance = this;
     }
 
     return App.instance;
+  }
+
+  get stateName(): AppStateName {
+    return this.state.stateName;
+  }
+  set stateName(newState: AppStateName) {
+    switch (newState) {
+      case 'playing': {
+        this.state = new PlayingState();
+        break;
+      }
+      case 'settings': {
+        this.state = new MenuState();
+        break;
+      }
+      case 'menu': {
+        this.state = new SettingsState();
+        break;
+      }
+    }
   }
 
   public start() {
@@ -39,28 +56,16 @@ export default class App {
 
     gameWindow.render();
 
-    this.player.stateName = 'playing';
-    this.enemy.stateName = 'playing';
-
     this.gameLoop.start(() => {
-      this.doBulletsFrameBehavior();
-      this.player.doFrameBehavior();
-      this.enemy.doFrameBehavior();
-      this.lifebar.doFrameBehavior();
-
-      this.render();
+      this.state.doFrameBehavior();
+      this.applyNewState();
     });
   }
 
-  private render() {
-    this.renderAPI.render(this.virtualDOM.getChanges());
-    this.virtualDOM.prepareForNewFrame();
-  }
-
-  private doBulletsFrameBehavior() {
-    this.bulletsStore.removeBulletsOutsideScreen();
-    this.bulletsStore.bullets.forEach((bullet) => {
-      bullet.doFrameBehavior();
-    });
+  private applyNewState() {
+    if (this.stateName !== this.stateNameBefore) {
+      this.stateNameBefore = this.state.stateName;
+      this.stateName = this.state.stateName;
+    }
   }
 }
