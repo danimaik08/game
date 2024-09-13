@@ -40,5 +40,6 @@ export const KEY_LEFT = localStorage.getItem('KEY_LEFT') ?? 'A';
 export const KEY_BOTTOM = localStorage.getItem('KEY_BOTTOM') ?? 'S';
 export const KEY_RIGHT = localStorage.getItem('KEY_RIGHT') ?? 'D';
 export const KEY_ATTACK = localStorage.getItem('KEY_ATTACK') ?? 'K';
+export const KEY_PAUSE = localStorage.getItem('KEY_PAUSE') ?? 'P';
 
-console.log('keys', KEY_TOP, KEY_LEFT, KEY_BOTTOM, KEY_RIGHT, KEY_ATTACK);
+console.log('keys', KEY_TOP, KEY_LEFT, KEY_BOTTOM, KEY_RIGHT, KEY_ATTACK, KEY_PAUSE);

@@ -1,7 +1,9 @@
 import Player from '~/components/Player';
 import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
+import Keyboard from '~/controllers/Keyboard';
 import BulletsStore from '~/stores/BulletsStore';
+import { KEY_PAUSE } from '~/consts';
 
 import AppState from '.';
 
@@ -10,6 +12,9 @@ export default class PlayingState extends AppState {
   private enemy: Enemy;
   private bulletsStore: BulletsStore;
   private lifebar: Lifebar;
+  private keyboard: Keyboard;
+
+  private isPause: boolean;
 
   constructor() {
     super();
@@ -18,11 +23,22 @@ export default class PlayingState extends AppState {
     this.bulletsStore = new BulletsStore();
     this.lifebar = new Lifebar();
 
+    this.keyboard = new Keyboard();
+    this.isPause = false;
+
     this.player.init();
     this.enemy.init();
   }
 
   public doFrameBehavior() {
+    if (this.keyboard.isActiveKey(KEY_PAUSE)) {
+      this.isPause = !this.isPause;
+    }
+
+    if (this.isPause) {
+      return;
+    }
+
     this.doBulletsFrameBehavior();
     this.player.doFrameBehavior();
     this.enemy.doFrameBehavior();
