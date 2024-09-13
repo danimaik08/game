@@ -3,7 +3,7 @@ import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
 import Keyboard from '~/controllers/Keyboard';
 import BulletsStore from '~/stores/BulletsStore';
-import { KEY_PAUSE, DEFAULT_DEBOUNCE } from '~/consts';
+import { KEY_PAUSE, PAUSE_DELAY } from '~/consts';
 
 import AppState from '.';
 
@@ -60,7 +60,7 @@ export default class PlayingState extends AppState {
       clearTimeout(this.timerOfIsPause);
       this.timerOfIsPause = setTimeout(() => {
         this.isReadyToChangeIsPause = true;
-      }, DEFAULT_DEBOUNCE);
+      }, PAUSE_DELAY);
     }
   }
   private doBulletsFrameBehavior() {

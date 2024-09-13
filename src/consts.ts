@@ -3,6 +3,7 @@ import Size from '~/structs/Size';
 import Speed from '~/structs/Speed';
 
 export const DEFAULT_DEBOUNCE = 300;
+export const PAUSE_DELAY = 50;
 export const DEFAULT_FRAME_DURATION = 33;
 export const GAME_WINDOW_WIDTH = 800;
 export const GAME_WINDOW_HEIGHT = 600;
