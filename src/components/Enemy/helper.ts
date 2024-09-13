@@ -15,17 +15,14 @@ import {
 import zIndex from '~/zIndex';
 
 export const createBullet = (enemyPoint: Point, enemySize: Size) => {
-  const point = new Point(
-    enemyPoint.x + enemySize.width / 2,
-    enemyPoint.y + enemySize.height
-  );
+  const point = new Point(enemyPoint.x + enemySize.width / 2, enemyPoint.y + enemySize.height);
 
   const speed = new Speed(Math.floor(Math.random() * 10) - 5, 3);
 
   return new Bullet('enemy', point, speed);
 };
 
-export const createInitialSprite = () => {
+export const createInitialGameObject = () => {
   return new GameObject(
     ENEMY_INITIAL_POINT.clone(),
     ENEMY_INITIAL_SIZE.clone(),
@@ -45,9 +42,7 @@ export const getSpeed = (gameObject: GameObject) => {
     return new Speed(speedX, gameObject.speed.y);
   }
 
-  const needPreventRight =
-    gameObject.point.x >=
-    GAME_WINDOW_WIDTH - ENEMY_RIGHT_BORDER - gameObject.size.width;
+  const needPreventRight = gameObject.point.x >= GAME_WINDOW_WIDTH - ENEMY_RIGHT_BORDER - gameObject.size.width;
 
   if (needPreventRight) {
     speedX = -Math.abs(speedX);

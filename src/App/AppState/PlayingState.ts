@@ -18,8 +18,8 @@ export default class PlayingState extends AppState {
     this.bulletsStore = new BulletsStore();
     this.lifebar = new Lifebar();
 
-    this.player.stateName = 'playing';
-    this.enemy.stateName = 'playing';
+    this.player.init();
+    this.enemy.init();
   }
 
   public doFrameBehavior() {

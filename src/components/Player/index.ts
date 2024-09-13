@@ -30,6 +30,11 @@ export default class Player {
     return Player.instance;
   }
 
+  public init() {
+    this.innerHealth = PLAYER_MAX_HEALTH;
+    this.gameObject = Helper.createInitialGameObject();
+    this.stateName = 'playing';
+  }
   public doFrameBehavior() {
     this.state.processMovement();
     this.state.addToNextRender();
@@ -52,10 +57,10 @@ export default class Player {
   get health() {
     return this.innerHealth;
   }
-  get stateName(): PlayerStateName {
+  private get stateName(): PlayerStateName {
     return this.state.stateName ?? 'before-playing';
   }
-  set stateName(newState: PlayerStateName) {
+  private set stateName(newState: PlayerStateName) {
     switch (newState) {
       case 'before-playing': {
         this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
@@ -71,10 +76,7 @@ export default class Player {
           this.stateName = 'playing';
         }, PLAYER_AFTER_DAMAGE_DURATION);
 
-        this.state = new PlayingAfterDamageState(
-          this.gameObject,
-          this.innerHealth
-        );
+        this.state = new PlayingAfterDamageState(this.gameObject, this.innerHealth);
         break;
       }
       case 'before-dead': {

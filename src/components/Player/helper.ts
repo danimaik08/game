@@ -27,10 +27,7 @@ export const createInitialGameObject = () => {
   );
 };
 
-export const getSpeedByKeyboardsKeys = (
-  obj: GameObject,
-  keyboard: Keyboard
-) => {
+export const getSpeedByKeyboardsKeys = (obj: GameObject, keyboard: Keyboard) => {
   const needPreventTop = obj.point.y <= PLAYER_MIN_TOP;
   const needPreventLeft = obj.point.x <= 0;
   const needPreventBottom = obj.point.y >= GAME_WINDOW_HEIGHT - obj.size.height;

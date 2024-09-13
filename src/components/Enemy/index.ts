@@ -20,7 +20,7 @@ export default class Enemy {
 
   constructor() {
     if (!Enemy.instance) {
-      this.gameObject = Helper.createInitialSprite();
+      this.gameObject = Helper.createInitialGameObject();
       this.innerHealth = ENEMY_MAX_HEALTH;
       this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
       this.stateNameBefore = this.state.stateName;
@@ -32,6 +32,11 @@ export default class Enemy {
     return Enemy.instance;
   }
 
+  public init() {
+    this.innerHealth = ENEMY_MAX_HEALTH;
+    this.gameObject = Helper.createInitialGameObject();
+    this.stateName = 'playing';
+  }
   public doFrameBehavior() {
     this.state.processMovement();
     this.state.addToNextRender();
@@ -55,10 +60,10 @@ export default class Enemy {
   get health() {
     return this.innerHealth;
   }
-  get stateName(): EnemyStateName {
+  private get stateName(): EnemyStateName {
     return this.state.stateName;
   }
-  set stateName(newState: EnemyStateName) {
+  private set stateName(newState: EnemyStateName) {
     switch (newState) {
       case 'before-playing': {
         break;
@@ -74,10 +79,7 @@ export default class Enemy {
           this.stateName = 'playing';
         }, ENEMY_AFTER_DAMAGE_DURATION);
 
-        this.state = new PlayingAfterDamageState(
-          this.gameObject,
-          this.innerHealth
-        );
+        this.state = new PlayingAfterDamageState(this.gameObject, this.innerHealth);
         break;
       }
       case 'before-dead': {
