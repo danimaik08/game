@@ -16,9 +16,7 @@ export default abstract class AppState {
     this.stateName = 'menu';
   }
 
-  public doFrameBehavior() {
-    this.render();
-  }
+  public abstract doFrameBehavior(): void;
 
   protected render() {
     this.renderAPI.render(this.virtualDOM.getChanges());
