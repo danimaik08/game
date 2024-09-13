@@ -31,10 +31,10 @@ export default class App {
     return App.instance;
   }
 
-  get stateName(): AppStateName {
+  private get stateName(): AppStateName {
     return this.state.stateName;
   }
-  set stateName(newState: AppStateName) {
+  private set stateName(newState: AppStateName) {
     switch (newState) {
       case 'playing': {
         this.state = new PlayingState();
