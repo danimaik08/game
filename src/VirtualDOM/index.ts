@@ -21,13 +21,9 @@ export default class VirtualDOM {
   public addElement(element: GameObjectStruct): void {
     this.nextElements[element.id] = element;
   }
-  public prepareForNewFrame(): void {
+  public prepareForNewFrame() {
     this.prevElements = {};
-
-    for (const id in this.nextElements) {
-      this.prevElements[id] = this.nextElements[id].clone();
-    }
-
+    this.cloneNextElementsIntoPrevElements();
     this.nextElements = {};
   }
   public getChanges(): VirtualDOMChange[] {
@@ -47,6 +43,11 @@ export default class VirtualDOM {
     VirtualDOM.instance = null;
   }
 
+  private cloneNextElementsIntoPrevElements(): void {
+    for (const id in this.nextElements) {
+      this.prevElements[id] = this.nextElements[id].clone();
+    }
+  }
   private handleErrorsForDestroy() {
     if (!process.env.IS_TEST_MODE) {
       throw new Error('VirtualDOM Error: called method "destroy" (which for tests only!) not in tests');
