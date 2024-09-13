@@ -6,11 +6,10 @@ import Speed from '~/structs/Speed';
 import VirtualDOM from '.';
 
 describe('VirtualDOM', () => {
-  const virtualDOM = new VirtualDOM();
   const testGameObject = new GameObject(new Point(0, 0), new Size(1, 1));
 
   afterEach(() => {
-    virtualDOM.destroy();
+    new VirtualDOM().destroy();
   });
 
   it('clear', () => {
