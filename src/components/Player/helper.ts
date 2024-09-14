@@ -23,7 +23,7 @@ export const createInitialGameObject = () => {
     size: PLAYER_INITIAL_SIZE.clone(),
     speed: PLAYER_INITIAL_SPEED.clone(),
     background: `url(${playerPng})`,
-    zIndex: zIndex.playerState,
+    zIndex: zIndex.playingState.player,
   });
 };
 

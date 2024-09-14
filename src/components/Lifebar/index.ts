@@ -37,20 +37,20 @@ export default class Lifebar {
         point: new Point(0, 0),
         size: new Size(GAME_WINDOW_WIDTH, LIFEBAR_HEIGHT),
         background: LIFEBAR_COLOR,
-        zIndex: zIndex.lifebar.emptyLifebar,
+        zIndex: zIndex.playingState.lifebar.emptyLifebar,
       });
       this.enemyEmptyHealth = new GameObject({
         point: new Point(0, 0),
         size: new Size(ENEMY_MAX_HEALTH, LIFEBAR_HEIGHT),
         background: LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR,
-        zIndex: zIndex.lifebar.enemyEmptyHealth,
+        zIndex: zIndex.playingState.lifebar.enemyEmptyHealth,
       });
 
       this.enemyHealth = new GameObject({
         point: new Point(0, 0),
         size: new Size(this.enemy.health, LIFEBAR_HEIGHT),
         background: LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
-        zIndex: zIndex.lifebar.enemyHealth,
+        zIndex: zIndex.playingState.lifebar.enemyHealth,
       });
 
       const OFFSET = { x: 1, y: 1 };
@@ -65,7 +65,7 @@ export default class Lifebar {
             point,
             size: PLAYER_HEALTH_ICON_SIZE.clone(),
             background: `url(${isLife ? lifeIcon : noLifeIcon})`,
-            zIndex: zIndex.lifebar.playerHealth,
+            zIndex: zIndex.playingState.lifebar.playerHealth,
           })
         );
       }

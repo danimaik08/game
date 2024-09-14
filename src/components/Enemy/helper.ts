@@ -27,7 +27,7 @@ export const createInitialGameObject = () => {
     point: ENEMY_INITIAL_POINT.clone(),
     size: ENEMY_INITIAL_SIZE.clone(),
     speed: ENEMY_INITIAL_SPEED.clone(),
-    zIndex: zIndex.enemyState,
+    zIndex: zIndex.playingState.enemy,
     background: `url(${enemyPng})`,
   });
 };

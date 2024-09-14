@@ -38,7 +38,7 @@ export default class Bullet {
       point: point.clone(),
       size: BULLET_SIZE.clone(),
       speed: speed.clone(),
-      zIndex: zIndex.bulletState,
+      zIndex: zIndex.playingState.bullet,
       background: `url(${type === 'enemy' ? enemyBulletPng : playerBulletPng})`,
     });
   }
