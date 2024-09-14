@@ -4,7 +4,7 @@ import Lifebar from '~/components/Lifebar';
 import BulletsStore from '~/stores/BulletsStore';
 import { KEY_PAUSE, PAUSE_DELAY } from '~/consts';
 
-import AppState from '.';
+import AppState from '../.';
 
 export default class PlayingState extends AppState {
   private player: Player;
