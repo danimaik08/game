@@ -7,17 +7,26 @@ import * as Helper from './helper';
 import BrowserAPIView from './BrowserAPIView';
 
 export default class BrowserAPI extends RenderAPI {
+  private static instance: BrowserAPI | null = null;
   private elementsMap: Record<GameObjectStruct['id'], BrowserAPIView> = {};
   private get window(): HTMLElement {
     const windowNode = document.getElementById(consts.GAME_WINDOW_ID);
 
     if (!windowNode) {
-      throw new Error(
-        'BrowserAPI Error: you can\'t use property "window" before call of method "renderGameWindow"'
-      );
+      throw new Error('BrowserAPI Error: you can\'t use property "window" before call of method "renderGameWindow"');
     }
 
     return windowNode;
+  }
+
+  constructor() {
+    super();
+
+    if (!BrowserAPI.instance) {
+      BrowserAPI.instance = this;
+    }
+
+    return BrowserAPI.instance;
   }
 
   public renderGameWindow(): void {
