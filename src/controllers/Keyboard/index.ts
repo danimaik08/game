@@ -20,6 +20,6 @@ export default class Keyboard {
   }
 
   public isActiveKey(key: string): boolean {
-    return this.keys.has(key);
+    return this.keys.has(key.toUpperCase());
   }
 }
