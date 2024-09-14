@@ -2,7 +2,7 @@ import GameObject from '~/structs/GameObject';
 import { KEY_ENTER, KEY_TOP, KEY_BOTTOM, KEY_ARROW_UP, KEY_ARROW_DOWN } from '~/consts';
 
 import AppState from '../.';
-import { MENU_OPTIONS } from './consts';
+import { COLOR_CHOSEN, COLOR_DEFAULT, MENU_OPTIONS } from './consts';
 import { HEADER, HINT, NEW_GAME_BUTTON, SETTINGS_BUTTON } from './layout';
 
 export default class MenuState extends AppState {
@@ -56,7 +56,7 @@ export default class MenuState extends AppState {
     }
   }
   private processCurrentChange() {
-    this.newGameButton.textColor = this.chosenOption === 'new-game' ? '#f00' : '#000';
-    this.settingsButton.textColor = this.chosenOption === 'settings' ? '#f00' : '#000';
+    this.newGameButton.textColor = this.chosenOption === 'new-game' ? COLOR_CHOSEN : COLOR_DEFAULT;
+    this.settingsButton.textColor = this.chosenOption === 'settings' ? COLOR_CHOSEN : COLOR_DEFAULT;
   }
 }
