@@ -28,7 +28,7 @@ export default class MenuState extends AppState {
 
   public doFrameBehavior() {
     this.processKeyboard();
-    this.processCurrentChange();
+    this.changeColorOfButtonsByChosenOption();
     this.addToRenderElements();
     super.render();
   }
@@ -40,22 +40,36 @@ export default class MenuState extends AppState {
     this.virtualDOM.addElement(this.settingsButton);
   }
   private processKeyboard() {
-    if (this.keyboard.isActiveKey(KEY_ENTER) && this.chosenOption === 'new-game') {
-      this.stateName = 'playing';
+    this.processPressingEnter();
+    this.processKeysForChoiceOfOption();
+  }
+  private processPressingEnter() {
+    if (this.keyboard.isActiveKey(KEY_ENTER)) {
+      if (this.chosenOption === 'new-game') {
+        this.stateName = 'playing';
+      }
+      if (this.chosenOption === 'settings') {
+        this.stateName = 'settings';
+      }
     }
-    if (this.keyboard.isActiveKey(KEY_ENTER) && this.chosenOption === 'settings') {
-      this.stateName = 'settings';
-    }
+  }
+  private processKeysForChoiceOfOption() {
+    this.processKeysForMovementToTop();
+    this.processKeysForMovementToBottom();
+  }
+  private processKeysForMovementToTop() {
     if (this.keyboard.isActiveKey(KEY_ARROW_UP) || this.keyboard.isActiveKey(KEY_TOP)) {
       this.chosenOptionIdx = this.chosenOptionIdx <= 0 ? 0 : this.chosenOptionIdx - 1;
     }
+  }
+  private processKeysForMovementToBottom() {
     if (this.keyboard.isActiveKey(KEY_ARROW_DOWN) || this.keyboard.isActiveKey(KEY_BOTTOM)) {
       const lastIdx = MENU_OPTIONS.length - 1;
 
       this.chosenOptionIdx = this.chosenOptionIdx >= lastIdx ? lastIdx : this.chosenOptionIdx + 1;
     }
   }
-  private processCurrentChange() {
+  private changeColorOfButtonsByChosenOption() {
     this.newGameButton.textColor = this.chosenOption === 'new-game' ? COLOR_CHOSEN : COLOR_DEFAULT;
     this.settingsButton.textColor = this.chosenOption === 'settings' ? COLOR_CHOSEN : COLOR_DEFAULT;
   }
