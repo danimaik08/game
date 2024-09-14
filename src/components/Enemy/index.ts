@@ -65,6 +65,7 @@ export default class Enemy {
   private set stateName(newState: EnemyStateName) {
     switch (newState) {
       case 'before-playing': {
+        this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
         break;
       }
       case 'playing': {
@@ -90,6 +91,7 @@ export default class Enemy {
         break;
       }
       case 'dead': {
+        clearTimeout(this.timer);
         this.state = new DeadState(this.gameObject, this.innerHealth);
         break;
       }
