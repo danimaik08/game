@@ -44,6 +44,7 @@ export const KEY_RIGHT = localStorage.getItem('KEY_RIGHT') ?? 'D';
 export const KEY_ATTACK = localStorage.getItem('KEY_ATTACK') ?? 'K';
 export const KEY_PAUSE = localStorage.getItem('KEY_PAUSE') ?? 'P';
 export const KEY_ENTER = 'Enter';
+export const KEY_ESCAPE = 'Escape';
 export const KEY_ARROW_UP = 'ArrowUp';
 export const KEY_ARROW_DOWN = 'ArrowDown';
 

@@ -14,14 +14,12 @@ export default class MenuState extends AppState {
   private settingsButton: GameObject;
   private hint: GameObject;
   private header: GameObject;
-  private keyboard: Keyboard;
   private currentMenuOptionIdx: number;
 
   constructor() {
     super();
     this.stateName = 'menu';
     this.currentMenuOptionIdx = 0;
-    this.keyboard = new Keyboard();
     this.hint = new GameObject({
       text: 'Нажмите Enter, чтобы продолжить',
       point: new Point(20, 560),
@@ -43,11 +41,11 @@ export default class MenuState extends AppState {
   public doFrameBehavior() {
     this.processKeyboard();
     this.processCurrentChange();
-    this.addToRenderButtons();
+    this.addToRenderElements();
     super.render();
   }
 
-  private addToRenderButtons() {
+  private addToRenderElements() {
     this.virtualDOM.addElement(this.hint);
     this.virtualDOM.addElement(this.header);
     this.virtualDOM.addElement(this.newGameButton);

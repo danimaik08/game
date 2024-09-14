@@ -12,7 +12,6 @@ export default class PlayingState extends AppState {
   private enemy: Enemy;
   private bulletsStore: BulletsStore;
   private lifebar: Lifebar;
-  private keyboard: Keyboard;
 
   private isPause: boolean;
   private isReadyToChangeIsPause: boolean;
@@ -26,7 +25,6 @@ export default class PlayingState extends AppState {
     this.bulletsStore = new BulletsStore();
     this.lifebar = new Lifebar();
 
-    this.keyboard = new Keyboard();
     this.isPause = false;
     this.isReadyToChangeIsPause = true;
     this.timerOfIsPause = null;
