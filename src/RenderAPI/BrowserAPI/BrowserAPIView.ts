@@ -25,10 +25,11 @@ export default class BrowserAPIView {
 
   public applyActualChange(): void {
     this.element.setAttribute('style', this.css);
+    this.element.innerHTML = this.gameObject.text;
   }
 
   private get css(): string {
-    const { point, size, background, zIndex } = this.gameObject;
+    const { point, size, background, textColor, zIndex } = this.gameObject;
 
     return `
     position: absolute;
@@ -38,6 +39,7 @@ export default class BrowserAPIView {
     width: ${size.width}px;
     height: ${size.height}px;
     background: ${background};
+    color: ${textColor};
     `;
   }
 }
