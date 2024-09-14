@@ -1,9 +1,8 @@
 import GameObject from '~/structs/GameObject';
-import Point from '~/structs/Point';
-import Size from '~/structs/Size';
 import { KEY_ESCAPE } from '~/consts';
 
-import AppState from '.';
+import AppState from '../.';
+import { HINT } from './layout';
 
 export default class SettingsState extends AppState {
   private hint: GameObject;
@@ -11,11 +10,7 @@ export default class SettingsState extends AppState {
   constructor() {
     super();
     this.stateName = 'settings';
-    this.hint = new GameObject({
-      text: 'Нажмите Escape, чтобы выйти назад в меню',
-      point: new Point(20, 560),
-      size: new Size(350, 30),
-    });
+    this.hint = HINT.clone();
   }
 
   public doFrameBehavior() {

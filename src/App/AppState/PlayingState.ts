@@ -1,7 +1,6 @@
 import Player from '~/components/Player';
 import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
-import Keyboard from '~/controllers/Keyboard';
 import BulletsStore from '~/stores/BulletsStore';
 import { KEY_PAUSE, PAUSE_DELAY } from '~/consts';
 
