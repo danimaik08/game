@@ -24,4 +24,5 @@ export const windowCSS = `
   border-radius: 2px;
   position: relative;
   overflow: hidden;
+  cursor: default;
 `;
