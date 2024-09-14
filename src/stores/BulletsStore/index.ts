@@ -14,6 +14,9 @@ export default class BulletsStore {
     return BulletsStore.instance;
   }
 
+  public init() {
+    this.innerBullets = [];
+  }
   public removeBulletsOutsideScreen(): void {
     this.innerBullets = this.innerBullets.filter((bullet) => {
       if (bullet.point.x + bullet.size.width < 0) {
@@ -37,9 +40,7 @@ export default class BulletsStore {
     this.innerBullets.push(bullet);
   }
   public removeElement(bullet: Bullet): void {
-    this.innerBullets = this.innerBullets.filter(
-      (innerBullet) => innerBullet.id !== bullet.id
-    );
+    this.innerBullets = this.innerBullets.filter((innerBullet) => innerBullet.id !== bullet.id);
   }
 
   get bullets(): Readonly<Bullet[]> {

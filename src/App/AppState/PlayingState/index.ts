@@ -2,7 +2,7 @@ import Player from '~/components/Player';
 import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
 import BulletsStore from '~/stores/BulletsStore';
-import { KEY_PAUSE, PAUSE_DELAY } from '~/consts';
+import { KEY_ESCAPE, KEY_PAUSE, PAUSE_DELAY } from '~/consts';
 
 import AppState from '../.';
 import { PAUSE_HINT } from './layout';
@@ -33,10 +33,12 @@ export default class PlayingState extends AppState {
 
     this.player.init();
     this.enemy.init();
+    this.bulletsStore.init();
   }
 
   public doFrameBehavior() {
     this.processPauseController();
+    this.processExitToMenuController();
 
     if (this.isPausePreventsRender()) {
       return;
@@ -66,6 +68,11 @@ export default class PlayingState extends AppState {
           this.isReadyToChangeIsPause = true;
         }
       }, PAUSE_DELAY);
+    }
+  }
+  private processExitToMenuController() {
+    if (this.keyboard.isActiveKey(KEY_ESCAPE)) {
+      this.stateName = 'menu';
     }
   }
   private doBulletsFrameBehavior() {
