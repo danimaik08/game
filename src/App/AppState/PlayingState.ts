@@ -20,6 +20,7 @@ export default class PlayingState extends AppState {
 
   constructor() {
     super();
+    this.stateName = 'playing';
     this.player = new Player();
     this.enemy = new Enemy();
     this.bulletsStore = new BulletsStore();

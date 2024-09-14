@@ -22,7 +22,7 @@ export default class App {
       this.renderAPI = getRenderAPI();
       this.gameLoop = new GameLoop();
 
-      this.stateName = 'playing';
+      this.stateName = 'menu';
       this.stateNameBefore = this.state.stateName;
 
       App.instance = this;
@@ -41,11 +41,11 @@ export default class App {
         break;
       }
       case 'settings': {
-        this.state = new MenuState();
+        this.state = new SettingsState();
         break;
       }
       case 'menu': {
-        this.state = new SettingsState();
+        this.state = new MenuState();
         break;
       }
     }

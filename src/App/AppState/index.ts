@@ -6,14 +6,13 @@ import { AppStateName } from './types';
 
 export default abstract class AppState {
   private renderAPI: RenderAPI;
-  private virtualDOM: VirtualDOM;
+  protected virtualDOM: VirtualDOM;
 
   public stateName: AppStateName;
 
   constructor() {
     this.renderAPI = getRenderAPI();
     this.virtualDOM = new VirtualDOM();
-    this.stateName = 'menu';
   }
 
   public abstract doFrameBehavior(): void;
