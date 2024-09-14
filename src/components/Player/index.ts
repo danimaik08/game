@@ -61,6 +61,8 @@ export default class Player {
     return this.state.stateName ?? 'before-playing';
   }
   private set stateName(newState: PlayerStateName) {
+    clearTimeout(this.timer);
+
     switch (newState) {
       case 'before-playing': {
         this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
@@ -71,7 +73,6 @@ export default class Player {
         break;
       }
       case 'playing-after-damage': {
-        clearTimeout(this.timer);
         this.timer = setTimeout(() => {
           this.stateName = 'playing';
         }, PLAYER_AFTER_DAMAGE_DURATION);
@@ -80,7 +81,6 @@ export default class Player {
         break;
       }
       case 'before-dead': {
-        clearTimeout(this.timer);
         this.timer = setTimeout(() => {
           this.stateName = 'dead';
         }, 0);

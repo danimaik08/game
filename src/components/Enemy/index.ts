@@ -63,6 +63,8 @@ export default class Enemy {
     return this.state.stateName;
   }
   private set stateName(newState: EnemyStateName) {
+    clearTimeout(this.timer);
+
     switch (newState) {
       case 'before-playing': {
         this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
@@ -73,7 +75,6 @@ export default class Enemy {
         break;
       }
       case 'playing-after-damage': {
-        clearTimeout(this.timer);
         this.timer = setTimeout(() => {
           console.log('some action after damage');
           this.stateName = 'playing';
@@ -84,14 +85,12 @@ export default class Enemy {
       }
       case 'before-dead': {
         this.state = new BeforeDeadState(this.gameObject, this.innerHealth);
-        clearTimeout(this.timer);
         this.timer = setTimeout(() => {
           this.stateName = 'dead';
         }, ENEMY_AFTER_DAMAGE_DURATION);
         break;
       }
       case 'dead': {
-        clearTimeout(this.timer);
         this.state = new DeadState(this.gameObject, this.innerHealth);
         break;
       }
