@@ -57,7 +57,9 @@ export default class PlayingState extends AppState {
 
       clearTimeout(this.timerOfIsPause);
       this.timerOfIsPause = setTimeout(() => {
-        this.isReadyToChangeIsPause = true;
+        if (this) {
+          this.isReadyToChangeIsPause = true;
+        }
       }, PAUSE_DELAY);
     }
   }
