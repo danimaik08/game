@@ -18,13 +18,13 @@ import {
 import zIndex from '~/zIndex';
 
 export const createInitialGameObject = () => {
-  return new GameObject(
-    PLAYER_INITIAL_POINT.clone(),
-    PLAYER_INITIAL_SIZE.clone(),
-    `url(${playerPng})`,
-    zIndex.playerState,
-    PLAYER_INITIAL_SPEED.clone()
-  );
+  return new GameObject({
+    point: PLAYER_INITIAL_POINT.clone(),
+    size: PLAYER_INITIAL_SIZE.clone(),
+    speed: PLAYER_INITIAL_SPEED.clone(),
+    background: `url(${playerPng})`,
+    zIndex: zIndex.playerState,
+  });
 };
 
 export const getSpeedByKeyboardsKeys = (obj: GameObject, keyboard: Keyboard) => {

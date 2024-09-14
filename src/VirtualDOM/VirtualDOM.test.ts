@@ -6,8 +6,6 @@ import Speed from '~/structs/Speed';
 import VirtualDOM from '.';
 
 describe('VirtualDOM', () => {
-  const testGameObject = new GameObject(new Point(0, 0), new Size(1, 1));
-
   afterEach(() => {
     new VirtualDOM().destroy();
   });
@@ -22,7 +20,7 @@ describe('VirtualDOM', () => {
   it('add 1 element', () => {
     const virtualDOM = new VirtualDOM();
 
-    virtualDOM.addElement(testGameObject.clone());
+    virtualDOM.addElement(new GameObject());
 
     const changes = virtualDOM.getChanges();
 
@@ -30,6 +28,8 @@ describe('VirtualDOM', () => {
   });
   it('add 1 element (twice)', () => {
     const virtualDOM = new VirtualDOM();
+
+    const testGameObject = new GameObject();
 
     virtualDOM.addElement(testGameObject.clone());
     virtualDOM.addElement(testGameObject.clone());
@@ -41,9 +41,9 @@ describe('VirtualDOM', () => {
   it('add 3 elements', () => {
     const virtualDOM = new VirtualDOM();
 
-    virtualDOM.addElement(testGameObject.clone());
-    virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
-    virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
+    virtualDOM.addElement(new GameObject());
+    virtualDOM.addElement(new GameObject());
+    virtualDOM.addElement(new GameObject());
 
     const changes = virtualDOM.getChanges();
 
@@ -52,7 +52,7 @@ describe('VirtualDOM', () => {
   it('mount', () => {
     const virtualDOM = new VirtualDOM();
 
-    virtualDOM.addElement(testGameObject.clone());
+    virtualDOM.addElement(new GameObject());
 
     const changes = virtualDOM.getChanges();
 
@@ -68,14 +68,14 @@ describe('VirtualDOM', () => {
   it('4 unmount, 1 mount', () => {
     const virtualDOM = new VirtualDOM();
 
-    virtualDOM.addElement(testGameObject.clone());
-    virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
-    virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
-    virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
+    virtualDOM.addElement(new GameObject());
+    virtualDOM.addElement(new GameObject());
+    virtualDOM.addElement(new GameObject());
+    virtualDOM.addElement(new GameObject());
 
     virtualDOM.prepareForNewFrame();
 
-    virtualDOM.addElement(new GameObject(new Point(0, 0), new Size(1, 1)));
+    virtualDOM.addElement(new GameObject());
 
     const changes = virtualDOM.getChanges();
 
@@ -86,14 +86,14 @@ describe('VirtualDOM', () => {
     const virtualDOM = new VirtualDOM();
 
     const changes = virtualDOM.getChanges();
-    virtualDOM.addElement(testGameObject.clone());
+    virtualDOM.addElement(new GameObject());
 
     expect(changes.length).toBe(0);
   });
   it('update', () => {
     const virtualDOM = new VirtualDOM();
 
-    const gameObject = new GameObject(new Point(0, 0), new Size(1, 1), '', 1, new Speed(1, 1));
+    const gameObject = new GameObject({ speed: new Speed(1, 1) });
 
     virtualDOM.addElement(gameObject);
 
@@ -118,7 +118,7 @@ describe('VirtualDOM', () => {
   it('try to update with zero speed', () => {
     const virtualDOM = new VirtualDOM();
 
-    const gameObject = new GameObject(new Point(0, 0), new Size(1, 1));
+    const gameObject = new GameObject();
 
     virtualDOM.addElement(gameObject);
     virtualDOM.prepareForNewFrame();

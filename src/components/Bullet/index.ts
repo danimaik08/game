@@ -33,18 +33,14 @@ export default class Bullet {
     this.addToNextRender();
   }
 
-  private static createInitialSprite(
-    type: BulletType,
-    point: Point,
-    speed: Speed
-  ) {
-    return new GameObject(
-      point.clone(),
-      BULLET_SIZE.clone(),
-      `url(${type === 'enemy' ? enemyBulletPng : playerBulletPng})`,
-      zIndex.bulletState,
-      speed.clone()
-    );
+  private static createInitialSprite(type: BulletType, point: Point, speed: Speed) {
+    return new GameObject({
+      point: point.clone(),
+      size: BULLET_SIZE.clone(),
+      speed: speed.clone(),
+      zIndex: zIndex.bulletState,
+      background: `url(${type === 'enemy' ? enemyBulletPng : playerBulletPng})`,
+    });
   }
 
   private processMovement() {

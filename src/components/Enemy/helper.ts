@@ -23,13 +23,13 @@ export const createBullet = (enemyPoint: Point, enemySize: Size) => {
 };
 
 export const createInitialGameObject = () => {
-  return new GameObject(
-    ENEMY_INITIAL_POINT.clone(),
-    ENEMY_INITIAL_SIZE.clone(),
-    `url(${enemyPng})`,
-    zIndex.enemyState,
-    ENEMY_INITIAL_SPEED.clone()
-  );
+  return new GameObject({
+    point: ENEMY_INITIAL_POINT.clone(),
+    size: ENEMY_INITIAL_SIZE.clone(),
+    speed: ENEMY_INITIAL_SPEED.clone(),
+    zIndex: zIndex.enemyState,
+    background: `url(${enemyPng})`,
+  });
 };
 
 export const getSpeed = (gameObject: GameObject) => {

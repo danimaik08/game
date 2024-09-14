@@ -33,42 +33,40 @@ export default class Lifebar {
       this.enemy = new Enemy();
       this.player = new Player();
       this.virtualDOM = new VirtualDOM();
-      this.emptyBar = new GameObject(
-        new Point(0, 0),
-        new Size(GAME_WINDOW_WIDTH, LIFEBAR_HEIGHT),
-        LIFEBAR_COLOR,
-        zIndex.lifebar.emptyLifebar
-      );
-      this.enemyEmptyHealth = new GameObject(
-        new Point(0, 0),
-        new Size(ENEMY_MAX_HEALTH, LIFEBAR_HEIGHT),
-        LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR,
-        zIndex.lifebar.enemyEmptyHealth
-      );
-      this.enemyHealth = new GameObject(
-        new Point(0, 0),
-        new Size(this.enemy.health, LIFEBAR_HEIGHT),
-        LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
-        zIndex.lifebar.enemyHealth
-      );
+      this.emptyBar = new GameObject({
+        point: new Point(0, 0),
+        size: new Size(GAME_WINDOW_WIDTH, LIFEBAR_HEIGHT),
+        background: LIFEBAR_COLOR,
+        zIndex: zIndex.lifebar.emptyLifebar,
+      });
+      this.enemyEmptyHealth = new GameObject({
+        point: new Point(0, 0),
+        size: new Size(ENEMY_MAX_HEALTH, LIFEBAR_HEIGHT),
+        background: LIFEBAR_ENEMY_EMPTY_HEALTH_COLOR,
+        zIndex: zIndex.lifebar.enemyEmptyHealth,
+      });
+
+      this.enemyHealth = new GameObject({
+        point: new Point(0, 0),
+        size: new Size(this.enemy.health, LIFEBAR_HEIGHT),
+        background: LIFEBAR_ENEMY_FULL_HEALTH_COLOR,
+        zIndex: zIndex.lifebar.enemyHealth,
+      });
 
       const OFFSET = { x: 1, y: 1 };
       this.healths = [];
 
       for (let i = 1; i <= PLAYER_MAX_HEALTH; i++) {
         const isLife = this.player.health >= i;
-        const point = new Point(
-          GAME_WINDOW_WIDTH - (OFFSET.x + PLAYER_HEALTH_ICON_SIZE.width) * i,
-          OFFSET.y
-        );
+        const point = new Point(GAME_WINDOW_WIDTH - (OFFSET.x + PLAYER_HEALTH_ICON_SIZE.width) * i, OFFSET.y);
 
         this.healths.push(
-          new GameObject(
+          new GameObject({
             point,
-            PLAYER_HEALTH_ICON_SIZE,
-            `url(${isLife ? lifeIcon : noLifeIcon})`,
-            zIndex.lifebar.playerHealth
-          )
+            size: PLAYER_HEALTH_ICON_SIZE.clone(),
+            background: `url(${isLife ? lifeIcon : noLifeIcon})`,
+            zIndex: zIndex.lifebar.playerHealth,
+          })
         );
       }
 
