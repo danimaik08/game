@@ -9,5 +9,6 @@ export default {
       enemyHealth: 6,
       playerHealth: 7,
     },
+    pauseHint: 4,
   },
 };
