@@ -20,10 +20,8 @@ export default class Player {
 
   constructor() {
     if (!Player.instance) {
-      this.timer = null;
-      this.innerHealth = PLAYER_MAX_HEALTH;
-      this.gameObject = Helper.createInitialGameObject();
       this.stateNameBefore = 'before-playing';
+      this.stateName = 'before-playing';
       Player.instance = this;
     }
 
@@ -31,6 +29,8 @@ export default class Player {
   }
 
   public init() {
+    clearTimeout(this.timer);
+    this.timer = null;
     this.innerHealth = PLAYER_MAX_HEALTH;
     this.gameObject = Helper.createInitialGameObject();
     this.stateName = 'playing';

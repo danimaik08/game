@@ -20,11 +20,8 @@ export default class Enemy {
 
   constructor() {
     if (!Enemy.instance) {
-      this.gameObject = Helper.createInitialGameObject();
-      this.innerHealth = ENEMY_MAX_HEALTH;
-      this.state = new BeforePlayingState(this.gameObject, this.innerHealth);
-      this.stateNameBefore = this.state.stateName;
-      this.timer = null;
+      this.stateNameBefore = 'before-playing';
+      this.stateName = 'before-playing';
 
       Enemy.instance = this;
     }
@@ -33,6 +30,8 @@ export default class Enemy {
   }
 
   public init() {
+    clearTimeout(this.timer);
+    this.timer = null;
     this.innerHealth = ENEMY_MAX_HEALTH;
     this.gameObject = Helper.createInitialGameObject();
     this.stateName = 'playing';
