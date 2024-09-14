@@ -8,16 +8,12 @@ import { HEADER, HINT, NEW_GAME_BUTTON, SETTINGS_BUTTON } from './layout';
 export default class MenuState extends AppState {
   private newGameButton: GameObject;
   private settingsButton: GameObject;
-  private hint: GameObject;
-  private header: GameObject;
   private chosenOptionIdx: number;
 
   constructor() {
     super();
     this.stateName = 'menu';
     this.chosenOptionIdx = 0;
-    this.hint = HINT.clone();
-    this.header = HEADER.clone();
     this.newGameButton = NEW_GAME_BUTTON.clone();
     this.settingsButton = SETTINGS_BUTTON.clone();
   }
@@ -34,8 +30,8 @@ export default class MenuState extends AppState {
   }
 
   private addToRenderElements() {
-    this.virtualDOM.addElement(this.hint);
-    this.virtualDOM.addElement(this.header);
+    this.virtualDOM.addElement(HINT);
+    this.virtualDOM.addElement(HEADER);
     this.virtualDOM.addElement(this.newGameButton);
     this.virtualDOM.addElement(this.settingsButton);
   }

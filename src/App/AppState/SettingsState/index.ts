@@ -1,16 +1,12 @@
-import GameObject from '~/structs/GameObject';
 import { KEY_ESCAPE } from '~/consts';
 
 import AppState from '../.';
 import { HINT } from './layout';
 
 export default class SettingsState extends AppState {
-  private hint: GameObject;
-
   constructor() {
     super();
     this.stateName = 'settings';
-    this.hint = HINT.clone();
   }
 
   public doFrameBehavior() {
@@ -21,7 +17,7 @@ export default class SettingsState extends AppState {
   }
 
   private addToRenderElements() {
-    this.virtualDOM.addElement(this.hint);
+    this.virtualDOM.addElement(HINT);
   }
   private processKeyboard() {
     if (this.keyboard.isActiveKey(KEY_ESCAPE)) {
