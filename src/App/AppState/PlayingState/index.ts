@@ -3,6 +3,7 @@ import Enemy from '~/components/Enemy';
 import Lifebar from '~/components/Lifebar';
 import BulletsStore from '~/stores/BulletsStore';
 import { PAUSE_DELAY } from '~/consts';
+import GameObject from '~/structs/GameObject';
 
 import AppState from '../.';
 import { PAUSE_HINT } from './layout';
@@ -12,6 +13,7 @@ export default class PlayingState extends AppState {
   private enemy: Enemy;
   private bulletsStore: BulletsStore;
   private lifebar: Lifebar;
+  private pauseHint: GameObject;
 
   private isPause: boolean;
   private isPauseHintRendered: boolean;
@@ -34,6 +36,9 @@ export default class PlayingState extends AppState {
     this.player.init();
     this.enemy.init();
     this.bulletsStore.init();
+
+    this.pauseHint = PAUSE_HINT.clone();
+    this.pauseHint.text = `Игра на паузе. Нажмите ${this.keyboard.getKey('PAUSE')}, чтобы продолжить`;
   }
 
   public doFrameBehavior() {
@@ -88,7 +93,7 @@ export default class PlayingState extends AppState {
     }
   }
   private addToRenderPauseHint() {
-    this.virtualDOM.addElement(PAUSE_HINT);
+    this.virtualDOM.addElement(this.pauseHint);
   }
   private isPausePreventsRender() {
     return this.isPause && this.isPauseHintRendered;
