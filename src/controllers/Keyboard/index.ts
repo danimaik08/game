@@ -1,6 +1,7 @@
 export default class Keyboard {
   private static instance: Keyboard;
   private keys: Set<string>;
+  private innerLastKey: string;
 
   constructor() {
     if (!Keyboard.instance) {
@@ -8,7 +9,10 @@ export default class Keyboard {
       Keyboard.instance = this;
 
       document.addEventListener('keydown', (evt) => {
-        this.keys.add(evt.key.toUpperCase());
+        const key = evt.key.toUpperCase();
+
+        this.keys.add(key);
+        this.innerLastKey = key;
       });
 
       document.addEventListener('keyup', (evt) => {
@@ -21,5 +25,8 @@ export default class Keyboard {
 
   public isActiveKey(key: string): boolean {
     return this.keys.has(key.toUpperCase());
+  }
+  public get lastKey() {
+    return this.innerLastKey;
   }
 }

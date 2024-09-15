@@ -1,5 +1,4 @@
 import GameObject from '~/structs/GameObject';
-import { KEY_ENTER, KEY_TOP, KEY_BOTTOM, KEY_ARROW_UP, KEY_ARROW_DOWN } from '~/consts';
 
 import AppState from '../.';
 import { COLOR_CHOSEN, COLOR_DEFAULT, MENU_OPTIONS } from './consts';
@@ -40,7 +39,7 @@ export default class MenuState extends AppState {
     this.processKeysForChoiceOfOption();
   }
   private processPressingEnter() {
-    if (this.keyboard.isActiveKey(KEY_ENTER)) {
+    if (this.keyboard.isActiveKey('ENTER')) {
       if (this.chosenOption === 'new-game') {
         this.stateName = 'playing';
       }
@@ -54,12 +53,12 @@ export default class MenuState extends AppState {
     this.processKeysForMovementToBottom();
   }
   private processKeysForMovementToTop() {
-    if (this.keyboard.isActiveKey(KEY_ARROW_UP) || this.keyboard.isActiveKey(KEY_TOP)) {
+    if (this.keyboard.isActiveKey('ARROWUP') || this.keyboard.isActiveKey('TOP')) {
       this.chosenOptionIdx = this.chosenOptionIdx <= 0 ? 0 : this.chosenOptionIdx - 1;
     }
   }
   private processKeysForMovementToBottom() {
-    if (this.keyboard.isActiveKey(KEY_ARROW_DOWN) || this.keyboard.isActiveKey(KEY_BOTTOM)) {
+    if (this.keyboard.isActiveKey('ARROWDOWN') || this.keyboard.isActiveKey('BOTTOM')) {
       const lastIdx = MENU_OPTIONS.length - 1;
 
       this.chosenOptionIdx = this.chosenOptionIdx >= lastIdx ? lastIdx : this.chosenOptionIdx + 1;

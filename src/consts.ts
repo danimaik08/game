@@ -36,16 +36,3 @@ export const LIFEBAR_ENEMY_FULL_HEALTH_COLOR = '#f00';
 export const PLAYER_HEALTH_ICON_SIZE = new Size(30, 27);
 
 export const BULLET_SIZE = new Size(14, 14);
-
-export const KEY_TOP = localStorage.getItem('KEY_TOP') ?? 'W';
-export const KEY_LEFT = localStorage.getItem('KEY_LEFT') ?? 'A';
-export const KEY_BOTTOM = localStorage.getItem('KEY_BOTTOM') ?? 'S';
-export const KEY_RIGHT = localStorage.getItem('KEY_RIGHT') ?? 'D';
-export const KEY_ATTACK = localStorage.getItem('KEY_ATTACK') ?? 'K';
-export const KEY_PAUSE = localStorage.getItem('KEY_PAUSE') ?? 'P';
-export const KEY_ENTER = 'Enter';
-export const KEY_ESCAPE = 'Escape';
-export const KEY_ARROW_UP = 'ArrowUp';
-export const KEY_ARROW_DOWN = 'ArrowDown';
-
-console.log('keys', KEY_TOP, KEY_LEFT, KEY_BOTTOM, KEY_RIGHT, KEY_ATTACK, KEY_PAUSE);

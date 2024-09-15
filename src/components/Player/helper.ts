@@ -1,5 +1,4 @@
 import GameObject from '~/structs/GameObject';
-import Keyboard from '~/controllers/Keyboard';
 import Speed from '~/structs/Speed';
 import playerPng from '~/assets/img/wizard.png';
 import {
@@ -10,12 +9,9 @@ import {
   GAME_WINDOW_HEIGHT,
   GAME_WINDOW_WIDTH,
   PLAYER_MOVEMENT_SPEED,
-  KEY_TOP,
-  KEY_LEFT,
-  KEY_RIGHT,
-  KEY_BOTTOM,
 } from '~/consts';
 import zIndex from '~/zIndex';
+import KeyboardFacade from '~/facades/keyboard';
 
 export const createInitialGameObject = () => {
   return new GameObject({
@@ -27,7 +23,7 @@ export const createInitialGameObject = () => {
   });
 };
 
-export const getSpeedByKeyboardsKeys = (obj: GameObject, keyboard: Keyboard) => {
+export const getSpeedByKeyboardsKeys = (obj: GameObject, keyboard: KeyboardFacade) => {
   const needPreventTop = obj.point.y <= PLAYER_MIN_TOP;
   const needPreventLeft = obj.point.x <= 0;
   const needPreventBottom = obj.point.y >= GAME_WINDOW_HEIGHT - obj.size.height;
@@ -36,16 +32,16 @@ export const getSpeedByKeyboardsKeys = (obj: GameObject, keyboard: Keyboard) => 
   let speedX = 0;
   let speedY = 0;
 
-  if (keyboard.isActiveKey(KEY_TOP) && !needPreventTop) {
+  if (keyboard.isActiveKey('TOP') && !needPreventTop) {
     speedY = -PLAYER_MOVEMENT_SPEED;
   }
-  if (keyboard.isActiveKey(KEY_LEFT) && !needPreventLeft) {
+  if (keyboard.isActiveKey('LEFT') && !needPreventLeft) {
     speedX = -PLAYER_MOVEMENT_SPEED;
   }
-  if (keyboard.isActiveKey(KEY_BOTTOM) && !needPreventBottom) {
+  if (keyboard.isActiveKey('BOTTOM') && !needPreventBottom) {
     speedY = PLAYER_MOVEMENT_SPEED;
   }
-  if (keyboard.isActiveKey(KEY_RIGHT) && !needPreventRight) {
+  if (keyboard.isActiveKey('RIGHT') && !needPreventRight) {
     speedX = PLAYER_MOVEMENT_SPEED;
   }
 

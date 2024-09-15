@@ -1,13 +1,6 @@
 # game
 
 - Управление WASD, Атака - K, Пауза - P, остальное интуитивно
-- настройки управления можно поменять в localStorage, для этого вставьте в консоль браузера
-  `localStorage.setItem('KEY_TOP', YOUR_KEY);`
-  `localStorage.setItem('KEY_LEFT', YOUR_KEY);`
-  `localStorage.setItem('KEY_BOTTOM', YOUR_KEY);`
-  `localStorage.setItem('KEY_RIGHT', YOUR_KEY);`
-  `localStorage.setItem('KEY_ATTACK', YOUR_KEY);`
-  `localStorage.setItem('KEY_PAUSE', YOUR_KEY);`
 
 - Production: https://danimaik08.github.io/game/
 - screen size 800x600

@@ -1,17 +1,17 @@
-import { PLAYER_ATTACK_DELAY, KEY_ATTACK } from '~/consts';
+import { PLAYER_ATTACK_DELAY } from '~/consts';
 import VirtualDOM from '~/VirtualDOM';
 import Bullet from '~/components/Bullet';
-import Keyboard from '~/controllers/Keyboard';
 import GameObject from '~/structs/GameObject';
 import BulletsCollider from '~/colliders/BulletsCollider';
 import BulletsStore from '~/stores/BulletsStore';
 import Speed from '~/structs/Speed';
+import KeyboardFacade from '~/facades/keyboard';
 
 import * as Helper from './helper';
 import { PlayerStateName } from './types';
 
 export default abstract class PlayerState {
-  protected keyboardController: Keyboard;
+  protected keyboard: KeyboardFacade;
   protected gameObject: GameObject;
   protected virtualDOM: VirtualDOM;
   protected bulletsCollider: BulletsCollider;
@@ -22,7 +22,7 @@ export default abstract class PlayerState {
   public stateName: PlayerStateName;
 
   constructor(gameObject: GameObject, health: number) {
-    this.keyboardController = new Keyboard();
+    this.keyboard = new KeyboardFacade();
     this.gameObject = gameObject;
     this.virtualDOM = new VirtualDOM();
     this.bulletsCollider = new BulletsCollider(this.gameObject, 'enemy');
@@ -33,10 +33,7 @@ export default abstract class PlayerState {
   }
 
   public processMovement() {
-    this.gameObject.speed = Helper.getSpeedByKeyboardsKeys(
-      this.gameObject,
-      this.keyboardController
-    );
+    this.gameObject.speed = Helper.getSpeedByKeyboardsKeys(this.gameObject, this.keyboard);
     this.gameObject.move();
   }
   public addToNextRender() {
@@ -55,14 +52,11 @@ export default abstract class PlayerState {
   }
   public attack() {
     const currentTime = Date.now();
-    const readyToAttack =
-      currentTime > this.lastAttackTime + PLAYER_ATTACK_DELAY;
+    const readyToAttack = currentTime > this.lastAttackTime + PLAYER_ATTACK_DELAY;
 
-    if (readyToAttack && this.keyboardController.isActiveKey(KEY_ATTACK)) {
+    if (readyToAttack && this.keyboard.isActiveKey('ATTACK')) {
       this.lastAttackTime = currentTime;
-      this.bulletsStore.addElement(
-        new Bullet('player', this.gameObject.point.clone(), new Speed(0, -4))
-      );
+      this.bulletsStore.addElement(new Bullet('player', this.gameObject.point.clone(), new Speed(0, -4)));
     }
   }
 }
