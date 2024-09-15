@@ -22,7 +22,7 @@ export const ENEMY_INITIAL_SPEED = new Speed(4, 0);
 export const ENEMY_LEFT_BORDER = 50;
 export const ENEMY_RIGHT_BORDER = 50;
 export const ENEMY_RECEIVING_DAMAGE = 10;
-export const ENEMY_ATTACK_DELAY = 200;
+export const ENEMY_ATTACK_DELAY = 150;
 export const ENEMY_AFTER_DAMAGE_DURATION = 500;
 
 export const PLAYER_MAX_HEALTH = 3;
