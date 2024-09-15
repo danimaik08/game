@@ -85,8 +85,8 @@ export default class SettingsState extends AppState {
   private processKeyboard() {
     this.processEscapeForExit();
     this.processEnterForSwitchOnEditingMode();
-    this.processKeysForChoiceOfOption();
     this.applyNewKey();
+    this.processKeysForChoiceOfOption();
   }
   private applyNewKey() {
     if (this.isEditingMode && !['ESCAPE', 'ENTER'].includes(this.keyboard.lastKey)) {
