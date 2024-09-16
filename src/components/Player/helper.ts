@@ -11,7 +11,7 @@ import {
   PLAYER_MOVEMENT_SPEED,
 } from '~/consts';
 import zIndex from '~/zIndex';
-import KeyboardFacade from '~/facades/keyboard';
+import KeyboardFacade from '~/controllers/keyboard';
 
 export const createInitialGameObject = () => {
   return new GameObject({

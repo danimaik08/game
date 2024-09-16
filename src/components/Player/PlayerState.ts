@@ -5,7 +5,7 @@ import GameObject from '~/structs/GameObject';
 import BulletsCollider from '~/colliders/BulletsCollider';
 import BulletsStore from '~/stores/BulletsStore';
 import Speed from '~/structs/Speed';
-import KeyboardFacade from '~/facades/keyboard';
+import KeyboardFacade from '~/controllers/keyboard';
 
 import * as Helper from './helper';
 import { PlayerStateName } from './types';

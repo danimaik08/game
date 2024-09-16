@@ -1,7 +1,7 @@
 import RenderAPI from '~/RenderAPI';
 import getRenderAPI from '~/RenderAPI/getRenderAPI';
 import VirtualDOM from '~/VirtualDOM';
-import KeyboardFacade from '~/facades/keyboard';
+import KeyboardFacade from '~/controllers/keyboard';
 
 import { AppStateName } from './types';
 

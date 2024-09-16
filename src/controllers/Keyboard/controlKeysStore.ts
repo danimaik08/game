@@ -1,15 +1,15 @@
 import { KeyChangeable, KeyReadonly, Key } from './types';
 import { PREFIX, READONLY, DEFAULT } from './consts';
 
-export default class KeysStore {
-  private static instance: KeysStore;
+export default class ControlKeysStore {
+  private static instance: ControlKeysStore;
 
   constructor() {
-    if (!KeysStore.instance) {
-      KeysStore.instance = this;
+    if (!ControlKeysStore.instance) {
+      ControlKeysStore.instance = this;
     }
 
-    return KeysStore.instance;
+    return ControlKeysStore.instance;
   }
 
   public getKey(type: Key): string {

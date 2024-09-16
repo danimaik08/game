@@ -1,32 +1,33 @@
-export default class Keyboard {
-  private static instance: Keyboard;
-  private keys: Set<string>;
-  private innerLastKey: string;
+import Keyboard from './controller';
+import KeysStore from './controlKeysStore';
+import { Key, KeyChangeable } from './types';
+
+export default class KeyboardFacade {
+  private static instance: KeyboardFacade;
+  private keyboard: Keyboard;
+  private keysStore: KeysStore;
 
   constructor() {
-    if (!Keyboard.instance) {
-      this.keys = new Set();
-      Keyboard.instance = this;
-
-      document.addEventListener('keydown', (evt) => {
-        const key = evt.key.toUpperCase();
-
-        this.keys.add(key);
-        this.innerLastKey = key;
-      });
-
-      document.addEventListener('keyup', (evt) => {
-        this.keys.delete(evt.key.toUpperCase());
-      });
+    if (!KeyboardFacade.instance) {
+      this.keyboard = new Keyboard();
+      this.keysStore = new KeysStore();
+      KeyboardFacade.instance = this;
     }
 
-    return Keyboard.instance;
+    return KeyboardFacade.instance;
   }
 
-  public isActiveKey(key: string): boolean {
-    return this.keys.has(key.toUpperCase());
+  get lastKey() {
+    return this.keyboard.lastKey;
   }
-  public get lastKey() {
-    return this.innerLastKey;
+
+  public isActiveKey(key: Key): boolean {
+    return this.keyboard.isActiveKey(this.getKey(key));
+  }
+  public getKey(key: Key) {
+    return this.keysStore.getKey(key);
+  }
+  public setKey(key: KeyChangeable, value: string) {
+    this.keysStore.setKey(key, value);
   }
 }

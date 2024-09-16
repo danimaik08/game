@@ -1,3 +1,3 @@
-import { KeyChangeable } from '~/stores/KeysStore/types';
+import { KeyChangeable } from '~/controllers/keyboard/types';
 
 export type KeysViewType = KeyChangeable;
