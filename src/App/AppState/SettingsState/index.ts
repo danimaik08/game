@@ -1,10 +1,13 @@
-import PartTimeWorker from '~/shared/PartTimeWorker';
+import PartTimeMaker from '~/shared/PartTimeMaker';
 
 import AppState from '../.';
 import KeysView from './KeysView';
 import createKeysView from './createKeysView';
 import { HEADER, ESCAPE_HINT, HOW_TO_UNLOCK_EDIT_KEY_HINT, HOW_TO_EDIT_KEY_HINT } from './layout';
 import { COLOR_CHOSEN, COLOR_DEFAULT, KEYS_VIEW_TYPES, SELECT_ITEM_DELAY } from './consts';
+
+const CALLS_BEFORE_TOGGLE_IS_MAKING = 25;
+const IS_MAKING = false;
 
 export default class SettingsState extends AppState {
   private static PREVENT_USING_EDITING_MODE_DELAY = 200;
@@ -13,7 +16,7 @@ export default class SettingsState extends AppState {
   private forbiddenChoiceOptions: boolean;
   private isEditingMode: boolean;
   private allowSwitchOnEditingMode: boolean;
-  private partTimeWorker: PartTimeWorker;
+  private partTimeMaker: PartTimeMaker;
 
   constructor() {
     super();
@@ -22,7 +25,10 @@ export default class SettingsState extends AppState {
     this.keysViewArray = KEYS_VIEW_TYPES.map((type) => createKeysView(type));
     this.forbiddenChoiceOptions = false;
     this.allowSwitchOnEditingMode = false;
-    this.partTimeWorker = new PartTimeWorker();
+    this.partTimeMaker = new PartTimeMaker({
+      callsBeforeToggleIsMaking: CALLS_BEFORE_TOGGLE_IS_MAKING,
+      isMaking: IS_MAKING,
+    });
     setTimeout(() => {
       if (this) {
         this.allowSwitchOnEditingMode = true;
@@ -48,7 +54,7 @@ export default class SettingsState extends AppState {
   private addToRenderKeysViewArray() {
     this.keysViewArray.forEach((keysView, idx) => {
       if (this.isEditingMode && this.chosenOptionIdx === idx) {
-        this.partTimeWorker.tryToWork(() => {
+        this.partTimeMaker.tryToMake(() => {
           this.addToRenderKeysView(keysView);
         });
       } else {
@@ -92,7 +98,7 @@ export default class SettingsState extends AppState {
   }
   private processEnterForSwitchOnEditingMode() {
     if (this.allowSwitchOnEditingMode && !this.isEditingMode && this.keyboard.isActiveKey('ENTER')) {
-      this.partTimeWorker.reset();
+      this.partTimeMaker.reset();
       this.isEditingMode = true;
     }
   }
