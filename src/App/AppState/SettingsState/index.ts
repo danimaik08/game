@@ -1,3 +1,5 @@
+import PartTimeWorker from '~/shared/PartTimeWorker';
+
 import AppState from '../.';
 import KeysView from './KeysView';
 import createKeysView from './createKeysView';
@@ -5,15 +7,13 @@ import { HEADER, ESCAPE_HINT, HOW_TO_UNLOCK_EDIT_KEY_HINT, HOW_TO_EDIT_KEY_HINT 
 import { COLOR_CHOSEN, COLOR_DEFAULT, KEYS_VIEW_TYPES, SELECT_ITEM_DELAY } from './consts';
 
 export default class SettingsState extends AppState {
-  private static FRAMES_BEFORE_TOGGLE_VISIBILITY = 25;
   private static PREVENT_USING_EDITING_MODE_DELAY = 200;
   private keysViewArray: KeysView[];
   private chosenOptionIdx: number;
   private forbiddenChoiceOptions: boolean;
   private isEditingMode: boolean;
-  private isInvisibleEditingKey: boolean;
-  private framesCount: number;
   private allowSwitchOnEditingMode: boolean;
+  private partTimeWorker: PartTimeWorker;
 
   constructor() {
     super();
@@ -22,6 +22,7 @@ export default class SettingsState extends AppState {
     this.keysViewArray = KEYS_VIEW_TYPES.map((type) => createKeysView(type));
     this.forbiddenChoiceOptions = false;
     this.allowSwitchOnEditingMode = false;
+    this.partTimeWorker = new PartTimeWorker();
     setTimeout(() => {
       if (this) {
         this.allowSwitchOnEditingMode = true;
@@ -47,16 +48,9 @@ export default class SettingsState extends AppState {
   private addToRenderKeysViewArray() {
     this.keysViewArray.forEach((keysView, idx) => {
       if (this.isEditingMode && this.chosenOptionIdx === idx) {
-        if (!this.isInvisibleEditingKey) {
+        this.partTimeWorker.tryToWork(() => {
           this.addToRenderKeysView(keysView);
-        }
-
-        this.framesCount++;
-
-        if (this.framesCount > SettingsState.FRAMES_BEFORE_TOGGLE_VISIBILITY) {
-          this.framesCount = 0;
-          this.isInvisibleEditingKey = !this.isInvisibleEditingKey;
-        }
+        });
       } else {
         this.addToRenderKeysView(keysView);
       }
@@ -98,9 +92,8 @@ export default class SettingsState extends AppState {
   }
   private processEnterForSwitchOnEditingMode() {
     if (this.allowSwitchOnEditingMode && !this.isEditingMode && this.keyboard.isActiveKey('ENTER')) {
-      this.framesCount = 0;
+      this.partTimeWorker.reset();
       this.isEditingMode = true;
-      this.isInvisibleEditingKey = true;
     }
   }
   private processEscapeForExit() {
