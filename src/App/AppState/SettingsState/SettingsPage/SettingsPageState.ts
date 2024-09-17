@@ -11,16 +11,17 @@ export default abstract class SettingsPageState {
   protected virtualDOM: VirtualDOM;
   protected keyboard: KeyboardFacade;
   protected keysViewArray: KeysView[];
-  protected chosenOptionIdx: number;
+
+  public chosenOptionIdx: number;
   public stateName: SettingsPageStateName;
 
-  constructor() {
+  constructor(chosenOptionIdx: number) {
     this.virtualDOM = new VirtualDOM();
     this.keyboard = new KeyboardFacade();
     this.keysViewArray = KEYS_VIEW_TYPES.map((type) => createKeysView(type));
     this.changeKeysInPlaces();
     this.changeColorOfKeysByChosenOption();
-    this.chosenOptionIdx = 0;
+    this.chosenOptionIdx = chosenOptionIdx;
     this.stateName = 'initial';
   }
 

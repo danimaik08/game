@@ -8,8 +8,8 @@ export default class EditingState extends SettingsPageState {
 
   private partTimeMaker: PartTimeMaker;
 
-  constructor() {
-    super();
+  constructor(chosenOptionIdx: number) {
+    super(chosenOptionIdx);
     this.stateName = 'editing';
     this.partTimeMaker = new PartTimeMaker(EditingState.PART_TIME_MAKER_SETTINGS);
   }

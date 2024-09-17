@@ -1,8 +1,8 @@
 import SettingsPageState from './SettingsPageState';
 
 export default class InitialState extends SettingsPageState {
-  constructor() {
-    super();
+  constructor(chosenOptionIdx: number) {
+    super(chosenOptionIdx);
     this.stateName = 'initial';
   }
 

@@ -10,11 +10,13 @@ export default class SettingsPage {
   private timer: NodeJS.Timeout;
   private state: SettingsPageState;
   private stateNameBefore: SettingsPageStateName;
+  private chosenOptionIdx: number;
 
   constructor() {
     if (!SettingsPage.instance) {
       this.stateNameBefore = 'initial';
       this.stateName = 'initial';
+      this.chosenOptionIdx = 0;
 
       SettingsPage.instance = this;
     }
@@ -27,6 +29,7 @@ export default class SettingsPage {
     this.timer = null;
     this.stateName = 'initial';
     this.stateNameBefore = 'initial';
+    this.chosenOptionIdx = 0;
   }
   public doFrameBehavior() {
     this.state.processKeyboard();
@@ -49,7 +52,7 @@ export default class SettingsPage {
 
     switch (newState) {
       case 'initial': {
-        this.state = new InitialState();
+        this.state = new InitialState(this.chosenOptionIdx);
         this.timer = setTimeout(() => {
           if (this) {
             this.stateName = 'ready-to-edit';
@@ -58,11 +61,13 @@ export default class SettingsPage {
         break;
       }
       case 'ready-to-edit': {
-        this.state = new ReadyToEditState();
+        this.chosenOptionIdx = this.state.chosenOptionIdx;
+        this.state = new ReadyToEditState(this.chosenOptionIdx);
         break;
       }
       case 'editing': {
-        this.state = new EditingState();
+        this.chosenOptionIdx = this.state.chosenOptionIdx;
+        this.state = new EditingState(this.chosenOptionIdx);
         break;
       }
     }

@@ -7,8 +7,8 @@ import SettingsPageState from './SettingsPageState';
 export default class ReadyToEditState extends SettingsPageState {
   private ableToChooseOptions: boolean;
 
-  constructor() {
-    super();
+  constructor(chosenOptionIdx: number) {
+    super(chosenOptionIdx);
     this.stateName = 'ready-to-edit';
     this.ableToChooseOptions = true;
   }
