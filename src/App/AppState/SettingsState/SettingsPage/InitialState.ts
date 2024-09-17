@@ -8,7 +8,6 @@ export default class InitialState extends SettingsPageState {
 
   public processKeyboard(): void {}
   public addToRenderElements(): void {
-    super.addToRenderHeader();
-    super.addToRenderKeysViewArray();
+    super.addToRenderElements();
   }
 }
