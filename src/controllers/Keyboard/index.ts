@@ -1,6 +1,7 @@
 import Keyboard from './controller';
-import KeysStore from './controlKeysStore';
-import { Key, KeyChangeable } from './types';
+import KeysStore from './ControlKeysStore';
+import RussianKeysAdapter from './RussianKeysAdapter';
+import { Key as NameOfKey, KeyChangeable as NameOfChangeableKey } from './types';
 
 export default class KeyboardFacade {
   private static instance: KeyboardFacade;
@@ -9,7 +10,12 @@ export default class KeyboardFacade {
 
   constructor() {
     if (!KeyboardFacade.instance) {
-      this.keyboard = new Keyboard();
+      const russianKeysAdapter = new RussianKeysAdapter();
+
+      this.keyboard = new Keyboard({
+        keysConverter: (key) => russianKeysAdapter.convertKeyToEngFromSameButton(key.toUpperCase()),
+      });
+
       this.keysStore = new KeysStore();
       KeyboardFacade.instance = this;
     }
@@ -21,13 +27,13 @@ export default class KeyboardFacade {
     return this.keyboard.lastKey;
   }
 
-  public isActiveKey(key: Key): boolean {
+  public isActiveKey(key: NameOfKey): boolean {
     return this.keyboard.isActiveKey(this.getKey(key));
   }
-  public getKey(key: Key) {
+  public getKey(key: NameOfKey) {
     return this.keysStore.getKey(key);
   }
-  public setKey(key: KeyChangeable, value: string) {
+  public setKey(key: NameOfChangeableKey, value: string) {
     this.keysStore.setKey(key, value);
   }
 }
